@@ -1,5 +1,8 @@
 #include "AppDelegate.h"
 #include "HelloWorldScene.h"
+#include "DownloadManager.hpp"
+#include "HomeScene.hpp"
+#include "SearchPathManager.hpp"
 
 USING_NS_CC;
 
@@ -73,12 +76,16 @@ bool AppDelegate::applicationDidFinishLaunching() {
     }
 
     register_all_packages();
+    log("%s",FileUtils::getInstance()->getWritablePath().c_str());
+    
+    SearchPathManager::getInstance()->updateSearchPath();
+//    xDownload->downloadCarttonCsv();
 
     // create a scene. it's an autorelease object
-    auto scene = HelloWorld::createScene();
+//    auto scene = HelloWorld::createScene();
 
     // run
-    director->runWithScene(scene);
+    director->runWithScene(HomeScene::create());
 
     return true;
 }

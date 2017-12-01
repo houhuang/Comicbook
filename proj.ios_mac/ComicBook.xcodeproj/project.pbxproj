@@ -11,6 +11,14 @@
 		1AC6FB30180E99EB004C840B /* libcocos2d iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AC6FB07180E9839004C840B /* libcocos2d iOS.a */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
+		2749CDE51FD1413100833B44 /* DownloadManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2749CDE31FD1413100833B44 /* DownloadManager.cpp */; };
+		2749CDE91FD1436C00833B44 /* CartoonManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2749CDE71FD1436C00833B44 /* CartoonManager.cpp */; };
+		2749CDEF1FD1454E00833B44 /* CSVParse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2749CDEB1FD1454E00833B44 /* CSVParse.cpp */; };
+		2749CDF01FD1454E00833B44 /* STVisibleRect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2749CDED1FD1454E00833B44 /* STVisibleRect.cpp */; };
+		2749CDF31FD1458700833B44 /* SearchPathManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2749CDF11FD1458700833B44 /* SearchPathManager.cpp */; };
+		2749CDF71FD146C300833B44 /* HomeScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2749CDF51FD146C300833B44 /* HomeScene.cpp */; };
+		2749CDFB1FD1473800833B44 /* CoverSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2749CDF91FD1473800833B44 /* CoverSprite.cpp */; };
+		2749CDFF1FD1499200833B44 /* ThreadManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2749CDFD1FD1499200833B44 /* ThreadManager.cpp */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
 		3EACC98F19EE6D4300EB3C5E /* res in Resources */ = {isa = PBXBuildFile; fileRef = 3EACC98E19EE6D4300EB3C5E /* res */; };
 		3EACC99019EE6D4300EB3C5E /* res in Resources */ = {isa = PBXBuildFile; fileRef = 3EACC98E19EE6D4300EB3C5E /* res */; };
@@ -108,6 +116,22 @@
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D6058910D05DD3D006BFB54 /* ComicBook-mobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ComicBook-mobile.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		2749CDE31FD1413100833B44 /* DownloadManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DownloadManager.cpp; sourceTree = "<group>"; };
+		2749CDE41FD1413100833B44 /* DownloadManager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = DownloadManager.hpp; sourceTree = "<group>"; };
+		2749CDE71FD1436C00833B44 /* CartoonManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CartoonManager.cpp; sourceTree = "<group>"; };
+		2749CDE81FD1436C00833B44 /* CartoonManager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CartoonManager.hpp; sourceTree = "<group>"; };
+		2749CDEB1FD1454E00833B44 /* CSVParse.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CSVParse.cpp; sourceTree = "<group>"; };
+		2749CDEC1FD1454E00833B44 /* CSVParse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSVParse.h; sourceTree = "<group>"; };
+		2749CDED1FD1454E00833B44 /* STVisibleRect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = STVisibleRect.cpp; sourceTree = "<group>"; };
+		2749CDEE1FD1454E00833B44 /* STVisibleRect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STVisibleRect.h; sourceTree = "<group>"; };
+		2749CDF11FD1458700833B44 /* SearchPathManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SearchPathManager.cpp; sourceTree = "<group>"; };
+		2749CDF21FD1458700833B44 /* SearchPathManager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SearchPathManager.hpp; sourceTree = "<group>"; };
+		2749CDF51FD146C300833B44 /* HomeScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HomeScene.cpp; sourceTree = "<group>"; };
+		2749CDF61FD146C300833B44 /* HomeScene.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = HomeScene.hpp; sourceTree = "<group>"; };
+		2749CDF91FD1473800833B44 /* CoverSprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CoverSprite.cpp; sourceTree = "<group>"; };
+		2749CDFA1FD1473800833B44 /* CoverSprite.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CoverSprite.hpp; sourceTree = "<group>"; };
+		2749CDFD1FD1499200833B44 /* ThreadManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ThreadManager.cpp; sourceTree = "<group>"; };
+		2749CDFE1FD1499200833B44 /* ThreadManager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ThreadManager.hpp; sourceTree = "<group>"; };
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		3EACC98E19EE6D4300EB3C5E /* res */ = {isa = PBXFileReference; lastKnownFileType = folder; path = res; sourceTree = "<group>"; };
 		46880B7619C43A67006E1F66 /* CloseNormal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CloseNormal.png; sourceTree = "<group>"; };
@@ -241,12 +265,63 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		2749CDE21FD13FE500833B44 /* manager */ = {
+			isa = PBXGroup;
+			children = (
+				2749CDFD1FD1499200833B44 /* ThreadManager.cpp */,
+				2749CDFE1FD1499200833B44 /* ThreadManager.hpp */,
+				2749CDF11FD1458700833B44 /* SearchPathManager.cpp */,
+				2749CDF21FD1458700833B44 /* SearchPathManager.hpp */,
+				2749CDE31FD1413100833B44 /* DownloadManager.cpp */,
+				2749CDE41FD1413100833B44 /* DownloadManager.hpp */,
+				2749CDE71FD1436C00833B44 /* CartoonManager.cpp */,
+				2749CDE81FD1436C00833B44 /* CartoonManager.hpp */,
+			);
+			name = manager;
+			sourceTree = "<group>";
+		};
+		2749CDEA1FD1452800833B44 /* helper */ = {
+			isa = PBXGroup;
+			children = (
+				2749CDEB1FD1454E00833B44 /* CSVParse.cpp */,
+				2749CDEC1FD1454E00833B44 /* CSVParse.h */,
+				2749CDED1FD1454E00833B44 /* STVisibleRect.cpp */,
+				2749CDEE1FD1454E00833B44 /* STVisibleRect.h */,
+			);
+			name = helper;
+			sourceTree = "<group>";
+		};
+		2749CDF41FD146A800833B44 /* scene */ = {
+			isa = PBXGroup;
+			children = (
+				2749CDF51FD146C300833B44 /* HomeScene.cpp */,
+				2749CDF61FD146C300833B44 /* HomeScene.hpp */,
+			);
+			name = scene;
+			sourceTree = "<group>";
+		};
+		2749CDF81FD1472400833B44 /* Sprite */ = {
+			isa = PBXGroup;
+			children = (
+				2749CDF91FD1473800833B44 /* CoverSprite.cpp */,
+				2749CDFA1FD1473800833B44 /* CoverSprite.hpp */,
+			);
+			name = Sprite;
+			sourceTree = "<group>";
+		};
+		2749CDFC1FD1495B00833B44 /* util */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = util;
+			sourceTree = "<group>";
+		};
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				1AC6FAE5180E9839004C840B /* cocos2d_libs.xcodeproj */,
 				46880B8319C43A87006E1F66 /* Classes */,
 				46880B7519C43A67006E1F66 /* Resources */,
-				1AC6FAE5180E9839004C840B /* cocos2d_libs.xcodeproj */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				080E96DDFE201D6D7F000001 /* ios */,
 				503AE10617EB990700D1A890 /* mac */,
@@ -297,6 +372,11 @@
 		46880B8319C43A87006E1F66 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				2749CDFC1FD1495B00833B44 /* util */,
+				2749CDF81FD1472400833B44 /* Sprite */,
+				2749CDF41FD146A800833B44 /* scene */,
+				2749CDEA1FD1452800833B44 /* helper */,
+				2749CDE21FD13FE500833B44 /* manager */,
 				46880B8419C43A87006E1F66 /* AppDelegate.cpp */,
 				46880B8519C43A87006E1F66 /* AppDelegate.h */,
 				46880B8619C43A87006E1F66 /* HelloWorldScene.cpp */,
@@ -497,8 +577,16 @@
 				46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */,
 				46880B8A19C43A87006E1F66 /* HelloWorldScene.cpp in Sources */,
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
+				2749CDE91FD1436C00833B44 /* CartoonManager.cpp in Sources */,
+				2749CDEF1FD1454E00833B44 /* CSVParse.cpp in Sources */,
+				2749CDE51FD1413100833B44 /* DownloadManager.cpp in Sources */,
+				2749CDFB1FD1473800833B44 /* CoverSprite.cpp in Sources */,
+				2749CDF31FD1458700833B44 /* SearchPathManager.cpp in Sources */,
+				2749CDFF1FD1499200833B44 /* ThreadManager.cpp in Sources */,
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
 				503AE10117EB989F00D1A890 /* main.m in Sources */,
+				2749CDF01FD1454E00833B44 /* STVisibleRect.cpp in Sources */,
+				2749CDF71FD146C300833B44 /* HomeScene.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -551,7 +639,7 @@
 					"$(SRCROOT)/../cocos2d/cocos/platform/ios/Simulation",
 				);
 				INFOPLIST_FILE = ios/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LIBRARY_SEARCH_PATHS = "";
 				OTHER_LDFLAGS = (
 					"$(_COCOS_LIB_IOS_BEGIN)",
@@ -585,7 +673,7 @@
 					"$(SRCROOT)/../cocos2d/cocos/platform/ios/Simulation",
 				);
 				INFOPLIST_FILE = ios/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LIBRARY_SEARCH_PATHS = "";
 				OTHER_LDFLAGS = (
 					"$(_COCOS_LIB_IOS_BEGIN)",
