@@ -41,8 +41,11 @@ bool CoverSprite::init(const string folder, string url, Size size)
     _folder = folder;
     _url = url;
     
-    this->setContentSize(size);
+    this->setContentSize(Size(346, 608));
     
+    Sprite* lbg = Sprite::create("library_mask.png");
+    lbg->setPosition(this->getContentSize()/2);
+    this->addChild(lbg, 10);
     
     auto threadLoadedEvent = EventListenerCustom::create(st_multiThread_loadImage_finish, CC_CALLBACK_1(CoverSprite::LoadMapSprite, this));
     _eventDispatcher->addEventListenerWithSceneGraphPriority(threadLoadedEvent, this);
@@ -82,12 +85,11 @@ void CoverSprite::imageLoadedCallback(Texture2D* texture)
     Sprite* lSprite = Sprite::createWithTexture(texture);
     if (lSprite)
     {
-        float scale1 = this->getContentSize().width/lSprite->getContentSize().width;
-        float scale2 = this->getContentSize().height/lSprite->getContentSize().height;
-        float scale = scale1 > scale2 ? scale1 :scale2;
-        
-        lSprite->setScale(scale);
-        lSprite->setPosition(this->getContentSize()/2);
+        lSprite->setScaleX(this->getContentSize().width/lSprite->getContentSize().width);
+        lSprite->setScaleY(504./lSprite->getContentSize().height);
+        lSprite->setAnchorPoint(Vec2(0.5, 1));
+        lSprite->setPosition(Vec2(this->getContentSize().width/2, this->getContentSize().height));
+
         this->addChild(lSprite);
     }
 }

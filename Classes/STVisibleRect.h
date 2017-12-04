@@ -1,7 +1,21 @@
+#ifndef _STVISIBLE_H_
+#define _STVISIBLE_H_
 
 #include "cocos2d.h"
 
+#ifdef __cplusplus
+#define NS_ST_BEGIN                     namespace namespaceST {
+#define NS_ST_END                       }
+#define USING_NS_ST                     using namespace namespaceST
+#else
+#define NS_ST_BEGIN
+#define NS_ST_END
+#define USING_NS_ST
+#endif
+
+NS_ST_BEGIN
 USING_NS_CC;
+
 
 #define V   namespaceST::STVisibleRect
 
@@ -57,4 +71,8 @@ public:
     static ClippingNode* drawRoundRect(Node *newNode, float radius, unsigned int segments);
     static Sprite* maskedSprite(Sprite *textureSprite);
     
+    static bool isIpad();
 };
+
+NS_ST_END
+#endif

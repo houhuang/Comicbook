@@ -29,17 +29,34 @@ public:
     string isfinish;
 };
 
+class Category
+{
+public:
+    string name;
+    string id;
+    string cover;
+    vector<CartoonInfo> _cartoonVec;
+};
+
 class CartoonManager
 {
 public:
     static CartoonManager* getInstance();
     
 public:
-    void readCartoonCsv();
-    vector<CartoonInfo>& getCartoonInfo();
+    void readCategoryCsv();
+    vector<Category>& getCategoryInfo();
+    
+    Category& getCurrentCategory();
+    void setCurrentCategory(int index);
 protected:
     vector<CartoonInfo> _cartoonInfo;
+
+private:
+    void readCartoonCsv();
+    vector<Category>  _categoryInfo;
     
+    int _cateIndex;
 };
 
 #endif /* CartoonManager_hpp */

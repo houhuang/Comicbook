@@ -1,37 +1,37 @@
 //
-//  HomeScene.hpp
+//  ComicScene.hpp
 //  ComicBook
 //
-//  Created by houhuang on 17/12/1.
+//  Created by houhuang on 17/12/4.
 //
 //
 
-#ifndef HomeScene_hpp
-#define HomeScene_hpp
+#ifndef ComicScene_hpp
+#define ComicScene_hpp
 
 #include <stdio.h>
 #include "cocos-ext.h"
 USING_NS_CC;
+using namespace std;
 USING_NS_CC_EXT;
 
-class HomeScene : public Scene, public TableViewDelegate, public TableViewDataSource
+class ComicScene : public Scene, public TableViewDelegate, public TableViewDataSource
 {
 public:
-    CREATE_FUNC(HomeScene);
+    CREATE_FUNC(ComicScene);
+    ComicScene();
     virtual bool init();
     
-    HomeScene();
 public:
-    void createTable();
-    
+    void createTableView();
 public:
     virtual void tableCellTouched(TableView* table, TableViewCell* cell);
     virtual Size tableCellSizeForIndex(TableView *table, ssize_t idx);
     virtual TableViewCell* tableCellAtIndex(TableView *table, ssize_t idx);
     virtual ssize_t numberOfCellsInTableView(TableView *table);
     
-private:
-    float topBar_realHeight;
+    
 };
 
-#endif /* HomeScene_hpp */
+
+#endif /* ComicScene_hpp */

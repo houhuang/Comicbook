@@ -9,15 +9,35 @@
 #include "HomeScene.hpp"
 #include "CartoonManager.hpp"
 #include "CoverSprite.hpp"
+#include "STVisibleRect.h"
+#include "ComicScene.hpp"
+
+#define top_bar     228
+#define SPACE       40
+#define col         (V::isIpad()? 3:2)
+
+
+
+HomeScene::HomeScene()
+{
+    topBar_realHeight = 0.0f;
+}
 
 bool HomeScene::init()
 {
     if (!Scene::init()) return false;
     
-    LayerColor* layer = LayerColor::create(Color4B::WHITE);
+    LayerColor* layer = LayerColor::create(Color4B(245, 245, 245, 255));
     this->addChild(layer);
-
-    xCartoon->readCartoonCsv();
+    
+    Sprite* topBanner = Sprite::create("title.png");
+    topBanner->setAnchorPoint(Vec2(0.5, 1));
+    topBanner->setScale(this->getContentSize().width/topBanner->getContentSize().width);
+    topBanner->setPosition(Vec2(this->getContentSize().width/2, this->getContentSize().height));
+    this->addChild(topBanner);
+    topBar_realHeight = topBanner->getBoundingBox().size.height;
+    
+    xCartoon->readCategoryCsv();
     
     this->createTable();
     return true;
@@ -25,14 +45,14 @@ bool HomeScene::init()
 
 void HomeScene::createTable()
 {
-    TableView* table = TableView::create(this, Size(this->getContentSize().width, this->getContentSize().height));
+    TableView* table = TableView::create(this, Size(this->getContentSize().width, this->getContentSize().height - topBar_realHeight));
     table->setDirection(cocos2d::extension::ScrollView::Direction::VERTICAL);
     table->setVerticalFillOrder(cocos2d::extension::TableView::VerticalFillOrder::TOP_DOWN);
     
     table->setDelegate(this);
     table->ignoreAnchorPointForPosition(false);
-    table->setAnchorPoint(Vec2(0.5, 0.5));
-    table->setPosition(this->getContentSize()/2);
+    table->setAnchorPoint(Vec2(0.5, 1));
+    table->setPosition(Vec2(this->getContentSize().width/2, this->getContentSize().height - topBar_realHeight));
     table->reloadData();
     
     this->addChild(table);
@@ -40,12 +60,19 @@ void HomeScene::createTable()
 
 void HomeScene::tableCellTouched(TableView* table, TableViewCell* cell)
 {
-    
+    xCartoon->setCurrentCategory(0);
+    Director::getInstance()->replaceScene(ComicScene::create());
 }
 
 Size HomeScene::tableCellSizeForIndex(TableView *table, ssize_t idx)
 {
-    return Size(this->getContentSize().width, 300);
+    float height = ((this->getContentSize().width - (col + 1)*SPACE)/col)*608./346 + SPACE;
+    if (idx == this->numberOfCellsInTableView(nullptr) -1)
+    {
+        height += 100;
+    }
+
+    return Size(this->getContentSize().width, height);
 }
 
 TableViewCell* HomeScene::tableCellAtIndex(TableView *table, ssize_t idx)
@@ -59,18 +86,53 @@ TableViewCell* HomeScene::tableCellAtIndex(TableView *table, ssize_t idx)
     
     cell->removeAllChildrenWithCleanup(true);
     
-    CartoonInfo info = xCartoon->getCartoonInfo().at(idx);
-    CoverSprite* lSprite = CoverSprite::create(info.folder, info.coverUrl, Size(200, 300));
-    lSprite->setPosition(Vec2(this->getContentSize().width/2, 150));
-    lSprite->diaplay();
-    cell->addChild(lSprite);
+    float width = (this->getContentSize().width - (col+1)*SPACE)/col;
+    
+    
+    for (int i = 0; i < col; ++i)
+    {
+        int index = (int)idx*col + i;
+        if (index >= xCartoon->getCategoryInfo().size())
+        {
+            break;
+        }
+        
+        Sprite* lBg = Sprite::create("library_mask.png");
+        lBg->setScale(width/346.);
+        lBg->setAnchorPoint(Vec2(0.5, 0.0174));
+        lBg->setPosition(Vec2((i + 1)*SPACE + (i + 0.5)*width, 0));
+        
+        Sprite* cover = Sprite::create(xCartoon->getCategoryInfo().at(index).cover);
+        cover->setAnchorPoint(Vec2(0.5, 1));
+        cover->setScaleX(346./cover->getContentSize().width);
+        cover->setScaleY(502./cover->getContentSize().height);
+        cover->setPosition(Vec2(lBg->getContentSize().width/2, lBg->getContentSize().height - 11));
+        lBg->addChild(cover, -1);
+        
+        if (idx == this->numberOfCellsInTableView(NULL)-1)
+        {
+            lBg->setPosition(Vec2((i + 1)*SPACE + (i + 0.5)*width, 100));
+        }
+        
+        cell->addChild(lBg);
+        
+    }
     
     return cell;
 }
 
 ssize_t HomeScene::numberOfCellsInTableView(TableView *table)
 {
-    return xCartoon->getCartoonInfo().size();
+    int length = (int)xCartoon->getCategoryInfo().size();
+    if (length%col == 0)
+    {
+        length /= col;
+    }else
+    {
+        length = length/col + 1;
+    }
+    
+    return length;
 }
 
 

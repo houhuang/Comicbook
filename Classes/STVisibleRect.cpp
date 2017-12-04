@@ -1,6 +1,7 @@
 #include "STVisibleRect.h"
 
 USING_NS_CC;
+USING_NS_ST;
 
 static Size s_FrameSize;
 static Size s_DesignSize;
@@ -322,4 +323,17 @@ Sprite * STVisibleRect::maskedSprite(Sprite *textureSprite)
 //    retval->setFlipY(true);
     retval->setFlippedY(true);
     return retval;
+}
+
+bool STVisibleRect::isIpad()
+{
+    Size frameSize =  Director::getInstance()->getOpenGLView()->getFrameSize();
+    float scale = frameSize.width/frameSize.height;
+    if(scale > 0.7)
+    {
+        return true;
+    }else
+    {
+        return false;
+    }
 }

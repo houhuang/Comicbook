@@ -26,6 +26,7 @@ void SearchPathManager::updateSearchPath()
     vector<string> searchPaths;
     searchPaths.push_back(FileUtils::getInstance()->getWritablePath());
     searchPaths.push_back("data");
+    searchPaths.push_back("ui");
     
     FileUtils::getInstance()->setSearchPaths(searchPaths);
     

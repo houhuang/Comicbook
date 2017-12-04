@@ -16,6 +16,7 @@ CartoonManager* CartoonManager::getInstance()
     if (!_instance)
     {
         _instance = new CartoonManager();
+
     }
     
     return _instance;
@@ -45,7 +46,46 @@ void CartoonManager::readCartoonCsv()
     }
 }
 
-vector<CartoonInfo>& CartoonManager::getCartoonInfo()
+void CartoonManager::readCategoryCsv()
 {
-    return _cartoonInfo;
+    CSVParse* lCsv = CSVParse::create("category.csv");
+    if (lCsv)
+    {
+        unsigned int row = lCsv->getRows();
+        for (int i = 1; i < row; ++i)
+        {
+            Category category;
+            category.name = lCsv->getDatas(i, "name");
+            category.id = lCsv->getDatas(i, "id");
+            category.cover = lCsv->getDatas(i, "cover");
+            _categoryInfo.push_back(category);
+        }
+    }
+    
+    this->readCartoonCsv();
+    for (int i = 0; i < _categoryInfo.size(); ++i)
+    {
+        for (int j = 0; j < _cartoonInfo.size(); ++j)
+        {
+            if (_categoryInfo.at(i).id == _cartoonInfo.at(j).cateId)
+            {
+                _categoryInfo.at(i)._cartoonVec.push_back(_cartoonInfo.at(j));
+            }
+        }
+    }
+  
+}
+
+Category& CartoonManager::getCurrentCategory()
+{
+    return _categoryInfo.at(_cateIndex);
+}
+void CartoonManager::setCurrentCategory(int index)
+{
+    _cateIndex = index;
+}
+
+vector<Category>& CartoonManager::getCategoryInfo()
+{
+    return _categoryInfo;
 }
