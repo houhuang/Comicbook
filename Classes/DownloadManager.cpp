@@ -80,7 +80,7 @@ void DownloadManager::downloadCover(string url, string folder)
         std::vector<char>* buffer = response->getResponseData();
         std::string buffff(buffer->begin(), buffer->end());
         
-        string path = FileUtils::getInstance()->getWritablePath() + "data/";
+        string path = FileUtils::getInstance()->getWritablePath() + "cover/";
         if (!FileUtils::getInstance()->isFileExist(path))
         {
             this->createDirectory(path.c_str());

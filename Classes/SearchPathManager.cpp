@@ -25,6 +25,7 @@ void SearchPathManager::updateSearchPath()
     //set resource search path
     vector<string> searchPaths;
     searchPaths.push_back(FileUtils::getInstance()->getWritablePath());
+    searchPaths.push_back("cover");
     searchPaths.push_back("data");
     searchPaths.push_back("ui");
     

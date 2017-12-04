@@ -161,7 +161,8 @@ void CoverSprite::responseDownloadSuc(EventCustom* event)
 
 string CoverSprite::getFullPathFromFolder()
 {
-    string psth = FileUtils::getInstance()->getWritablePath() + "data/" + _folder + "_cover.png";
+//    string psth = FileUtils::getInstance()->getWritablePath() + "cover/" + _folder + "_cover.png";
+    string psth = "cover/" + _folder + "_cover.png";
     return psth;
 }
 
