@@ -32,6 +32,11 @@ CoverSprite::CoverSprite()
 {
     _folder = "";
     _url = "";
+    
+    _firstVec = Vec2(0, 0);
+    _target = nullptr;
+    _callBack = nullptr;
+    _loadedSuc = false;
 }
 
 bool CoverSprite::init(const string folder, string url, Size size)
@@ -54,6 +59,48 @@ bool CoverSprite::init(const string folder, string url, Size size)
     _eventDispatcher->addEventListenerWithSceneGraphPriority(downLoadedEvent, this);
     
     return true;
+}
+
+void CoverSprite::addListener(Ref* target, SEL_CallFuncO callBack, bool isSwallow)
+{
+    _target = target;
+    _callBack = callBack;
+    
+    auto listener = EventListenerTouchOneByOne::create();
+    listener->setSwallowTouches(isSwallow);
+    listener->onTouchBegan = [&](Touch* touch, Event* event)->bool{
+        Vec2 lPos = touch->getLocation();
+        _firstVec = lPos;
+        lPos = this->getParent()->convertToNodeSpace(lPos);
+        if (this->getBoundingBox().containsPoint(lPos))
+        {
+            return true;
+        }
+        
+        return false;
+    };
+    
+    listener->onTouchMoved = [&](Touch* touch, Event* event){
+        
+    };
+    
+    listener->onTouchEnded = [&](Touch* touch, Event* event){
+        float distance = _firstVec.distance(touch->getLocation());
+        if (distance < 10 && _loadedSuc)
+        {
+            (_target->*_callBack)(this);
+        }
+    };
+    
+    listener->onTouchCancelled = [&](Touch* touch, Event* event){
+        float distance = _firstVec.distance(touch->getLocation());
+        if (distance < 10 && _loadedSuc)
+        {
+            (_target->*_callBack)(this);
+        }
+    };
+    
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 }
 
 void CoverSprite::diaplay()
@@ -91,6 +138,7 @@ void CoverSprite::imageLoadedCallback(Texture2D* texture)
         lSprite->setPosition(Vec2(this->getContentSize().width/2, this->getContentSize().height));
 
         this->addChild(lSprite);
+        _loadedSuc = true;
     }
 }
 
@@ -113,7 +161,7 @@ void CoverSprite::responseDownloadSuc(EventCustom* event)
 
 string CoverSprite::getFullPathFromFolder()
 {
-    string psth = FileUtils::getInstance()->getWritablePath() + _folder + "/cover.png";
+    string psth = FileUtils::getInstance()->getWritablePath() + "data/" + _folder + "_cover.png";
     return psth;
 }
 

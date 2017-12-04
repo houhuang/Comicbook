@@ -80,17 +80,17 @@ void DownloadManager::downloadCover(string url, string folder)
         std::vector<char>* buffer = response->getResponseData();
         std::string buffff(buffer->begin(), buffer->end());
         
-        string path = FileUtils::getInstance()->getWritablePath() + lRequest->getTag() + "/";
+        string path = FileUtils::getInstance()->getWritablePath() + "data/";
         if (!FileUtils::getInstance()->isFileExist(path))
         {
             this->createDirectory(path.c_str());
-            
-            string name = path + "cover.png";
-            
-            FILE* fp = fopen(name.c_str(), "wb+");
-            fwrite(buffff.c_str(), 1, buffer->size(), fp);
-            fclose(fp);
         }
+        
+        string name = path + lRequest->getTag() + "_cover.png";
+        
+        FILE* fp = fopen(name.c_str(), "wb+");
+        fwrite(buffff.c_str(), 1, buffer->size(), fp);
+        fclose(fp);
         
         _isDownloadingCover = false;
         

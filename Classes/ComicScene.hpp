@@ -11,6 +11,7 @@
 
 #include <stdio.h>
 #include "cocos-ext.h"
+#include "ShwoCartoonInfoLayer.hpp"
 USING_NS_CC;
 using namespace std;
 USING_NS_CC_EXT;
@@ -24,12 +25,17 @@ public:
     
 public:
     void createTableView();
+    
+    void responseSpriteClick(Ref* ref);
+    void responseRemoveCartoonLayer(EventCustom* event);
 public:
     virtual void tableCellTouched(TableView* table, TableViewCell* cell);
     virtual Size tableCellSizeForIndex(TableView *table, ssize_t idx);
     virtual TableViewCell* tableCellAtIndex(TableView *table, ssize_t idx);
     virtual ssize_t numberOfCellsInTableView(TableView *table);
     
+protected:
+    ShowCartoonInfoLayer*   _cartoonLayer;
     
 };
 

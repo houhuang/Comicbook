@@ -28,12 +28,20 @@ public:
     void LoadMapSprite(EventCustom* event);
     
     void responseDownloadSuc(EventCustom* event);
+    
+public:
+    void addListener(Ref* target, SEL_CallFuncO callBack, bool isSwallow = false);
 protected:
     string getFullPathFromFolder();
     
 protected:
     string _folder;
     string _url;
+
+    Ref* _target;
+    SEL_CallFuncO _callBack;
+    Vec2    _firstVec;
+    bool    _loadedSuc;
 };
 
 #endif /* CoverSprite_hpp */

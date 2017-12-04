@@ -17,7 +17,7 @@
 
 ComicScene::ComicScene()
 {
-
+    _cartoonLayer = nullptr;
 }
 
 bool ComicScene::init()
@@ -33,7 +33,13 @@ bool ComicScene::init()
     topBar->setAnchorPoint(Vec2(0.5, 1));
     topBar->setPosition(Vec2(this->getContentSize().width/2, this->getContentSize().height + 5));
     this->addChild(topBar);
+    
+    Label* title = Label::createWithTTF(xCartoon->getCurrentCategory().name, "fonts/font1.ttf", 50);
+    title->setPosition(Vec2(topBar->getContentSize().width/2, topBar->getContentSize().height/2));
+    topBar->addChild(title);
 
+    auto removeCartoonEvent = EventListenerCustom::create("remove_cartoonLayer", CC_CALLBACK_1(ComicScene::responseRemoveCartoonLayer, this));
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(removeCartoonEvent, this);
     this->createTableView();
     
     return true;
@@ -52,6 +58,25 @@ void ComicScene::createTableView()
     table->reloadData();
 
     this->addChild(table);
+}
+
+void ComicScene::responseRemoveCartoonLayer(EventCustom* event)
+{
+    if (_cartoonLayer)
+    {
+        _cartoonLayer->removeFromParentAndCleanup(true);
+        _cartoonLayer = nullptr;
+    }
+}
+
+void ComicScene::responseSpriteClick(Ref* ref)
+{
+    CoverSprite* lSprite = (CoverSprite*)ref;
+    int index = lSprite->getTag();
+    
+    ShowCartoonInfoLayer* layer = ShowCartoonInfoLayer::create(xCartoon->getCurrentCategory()._cartoonVec.at(index));
+    this->addChild(layer);
+    _cartoonLayer = layer;
 }
 
 void ComicScene::tableCellTouched(TableView* table, TableViewCell* cell)
@@ -93,10 +118,12 @@ TableViewCell* ComicScene::tableCellAtIndex(TableView *table, ssize_t idx)
         CartoonInfo info = xCartoon->getCurrentCategory()._cartoonVec.at(index);
         
         CoverSprite* lSprite = CoverSprite::create(info.folder, info.coverUrl, Size(0, 0));
+        lSprite->setTag(index);
         lSprite->diaplay();
         lSprite->setAnchorPoint(Vec2(0.5, 0));
         lSprite->setScale(width/lSprite->getContentSize().width);
         lSprite->setPosition(Vec2((i + 1)*SPACE + (i + 0.5)*width, 0));
+        lSprite->addListener(this, callfuncO_selector(ComicScene::responseSpriteClick));
         
         Label* name = Label::createWithSystemFont(info.name, "Arial", 40);
         name->setPosition(Vec2(lSprite->getContentSize().width/2, 52));
