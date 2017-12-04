@@ -37,7 +37,7 @@ public:
 public:
     void downloadCarttonCsv();
     
-    void downloadPictureCsv(string );
+//    void downloadPictureCsv(string folder,);
     
     //download cover
     void addNeedDownloadCover(DownloadCoverInfo info);

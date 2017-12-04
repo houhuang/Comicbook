@@ -23,6 +23,7 @@
 		2749CDF71FD146C300833B44 /* HomeScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2749CDF51FD146C300833B44 /* HomeScene.cpp */; };
 		2749CDFB1FD1473800833B44 /* CoverSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2749CDF91FD1473800833B44 /* CoverSprite.cpp */; };
 		2749CDFF1FD1499200833B44 /* ThreadManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2749CDFD1FD1499200833B44 /* ThreadManager.cpp */; };
+		27C30AE41FD54D83005AF86D /* cover in Resources */ = {isa = PBXBuildFile; fileRef = 27C30AE31FD54D83005AF86D /* cover */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
 		3EACC98F19EE6D4300EB3C5E /* res in Resources */ = {isa = PBXBuildFile; fileRef = 3EACC98E19EE6D4300EB3C5E /* res */; };
 		3EACC99019EE6D4300EB3C5E /* res in Resources */ = {isa = PBXBuildFile; fileRef = 3EACC98E19EE6D4300EB3C5E /* res */; };
@@ -134,6 +135,7 @@
 		2749CDFA1FD1473800833B44 /* CoverSprite.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CoverSprite.hpp; sourceTree = "<group>"; };
 		2749CDFD1FD1499200833B44 /* ThreadManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ThreadManager.cpp; sourceTree = "<group>"; };
 		2749CDFE1FD1499200833B44 /* ThreadManager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ThreadManager.hpp; sourceTree = "<group>"; };
+		27C30AE31FD54D83005AF86D /* cover */ = {isa = PBXFileReference; lastKnownFileType = folder; path = cover; sourceTree = "<group>"; };
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		3EACC98E19EE6D4300EB3C5E /* res */ = {isa = PBXFileReference; lastKnownFileType = folder; path = res; sourceTree = "<group>"; };
 		46880B8419C43A87006E1F66 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
@@ -367,6 +369,7 @@
 		46880B7519C43A67006E1F66 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				27C30AE31FD54D83005AF86D /* cover */,
 				270D77E71FD4D62A008E1BD9 /* data */,
 				270D77E41FD4D39B008E1BD9 /* ui */,
 				521A8EA819F11F5000D177D7 /* fonts */,
@@ -549,6 +552,7 @@
 				50EF62A217ECD613001EB2F8 /* Icon-29.png in Resources */,
 				50EF629617ECD46A001EB2F8 /* Icon-40.png in Resources */,
 				270D77E81FD4D62A008E1BD9 /* data in Resources */,
+				27C30AE41FD54D83005AF86D /* cover in Resources */,
 				5087E78217EB970100C73F5D /* Icon-144.png in Resources */,
 				3EACC98F19EE6D4300EB3C5E /* res in Resources */,
 				50EF629817ECD46A001EB2F8 /* Icon-80.png in Resources */,
