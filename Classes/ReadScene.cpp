@@ -8,6 +8,7 @@
 
 #include "ReadScene.hpp"
 #include "STVisibleRect.h"
+#include "CartoonManager.hpp"
 
 #define THIS_SIZE   this->getContentSize()
 #define MOVE_TIME   0.3f
@@ -88,6 +89,7 @@ void ReadScene::onButton(Ref* ref)
             if (!_isMoving)
             {
                 _isMoving = true;
+                resetCenterLayer();
                 towardRightMove();
             }
         }
@@ -98,6 +100,7 @@ void ReadScene::onButton(Ref* ref)
             if (!_isMoving)
             {
                 _isMoving = true;
+                resetCenterLayer();
                 towardLeftMove();
             }
             
@@ -148,27 +151,89 @@ void ReadScene::resetLayerPointer(bool towardLeftMove)
 
 void ReadScene::addListener()
 {
-    auto listener = EventListenerTouchOneByOne::create();
-    listener->setSwallowTouches(false);
-    listener->onTouchBegan = [&](Touch* touch, Event* event)->bool{
-    
-        return true;
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesBegan = [&](const vector<Touch*>& touches, Event* events){
+        
+
     };
     
-    listener->onTouchMoved = [&](Touch* touch, Event* event){
+    listener->onTouchesMoved = [&](const vector<Touch*>& touches, Event* events){
+        
+        if (touches.size() == 1)
+        {
+            _centerLayer->setPosition(_centerLayer->getPosition() + touches[0]->getDelta());
+        }else if (touches.size() == 2)
+        {
+            auto currDistance = touches[0]->getLocation().distance(touches[1]->getLocation());
+            auto prevDistance = touches[0]->getPreviousLocation().distance(touches[1]->getPreviousLocation());
+         
+            float scale = _centerLayer->getScale() * (currDistance / prevDistance);
+            scale = MIN(2, MAX(0.5, scale));
+            
+            Vec2 mPoint1=_centerLayer->convertToNodeSpace(touches[0]->getLocation());
+            Vec2 mPoint2=_centerLayer->convertToNodeSpace(touches[1]->getLocation());
+            
+            Vec2 centerPos=(mPoint1+mPoint2)/2;
+            Vec2 offsetPos=Vec2(_centerLayer->getContentSize().width/2, _centerLayer->getContentSize().height/2)-centerPos;
+            offsetPos*=_centerLayer->getScale();
+            
+            Vec2 lAnchor=Vec2(centerPos.x/this->getContentSize().width, centerPos.y/this->getContentSize().height);
+            
+            _centerLayer->setPosition(_centerLayer->getPosition()-offsetPos);
+            _centerLayer->setAnchorPoint(lAnchor);
+            _centerLayer->setScale(scale);
+            offsetPos=Vec2(_centerLayer->getContentSize().width/2, _centerLayer->getContentSize().height/2)-centerPos;
+            offsetPos*=_centerLayer->getScale();
+            _centerLayer->setPosition(_centerLayer->getPosition()+offsetPos);
+            _centerLayer->setAnchorPoint(Vec2(0.5f, 0.5f));
+        
+            
+            auto prevCenter=(touches[0]->getPreviousLocation()+touches[1]->getPreviousLocation())*0.5f;
+            auto currCneter=(touches[0]->getLocation()+touches[1]->getLocation())*0.5f;
+            
+            auto offset=currCneter-prevCenter;
+            auto newPos=_centerLayer->getPosition()+offset;
+            _centerLayer->setPosition(newPos);
+        }
+        
+        if (_centerLayer->getPositionX() < (THIS_SIZE.width/2 - _centerLayer->getBoundingBox().size.width/2))
+        {
+            _centerLayer->setPositionX((THIS_SIZE.width/2 - _centerLayer->getBoundingBox().size.width/2));
+        }
+        
+        if (_centerLayer->getPositionX() > (THIS_SIZE.width/2 + _centerLayer->getBoundingBox().size.width/2))
+        {
+            _centerLayer->setPositionX(THIS_SIZE.width/2 + _centerLayer->getBoundingBox().size.width/2);
+        }
+        
+        if (_centerLayer->getPositionY() < (THIS_SIZE.height/2 - _centerLayer->getBoundingBox().size.height/2))
+        {
+            _centerLayer->setPositionY(THIS_SIZE.height/2 - _centerLayer->getBoundingBox().size.height/2);
+        }
+        
+        if (_centerLayer->getPositionY() > (THIS_SIZE.height/2 + _centerLayer->getBoundingBox().size.height/2))
+        {
+            _centerLayer->setPositionY(THIS_SIZE.height/2 + _centerLayer->getBoundingBox().size.height/2);
+        }
+    };
+    
+    listener->onTouchesEnded = [&](const vector<Touch*>& touches, Event* events){
         
     };
     
-    listener->onTouchEnded = [&](Touch* touch, Event* event){
+    listener->onTouchesCancelled = [&](const vector<Touch*>& touches, Event* events){
         
     };
     
-    listener->onTouchCancelled = [&](Touch* touch, Event* event){
-        
-    };
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 }
 
 
+void ReadScene::resetCenterLayer()
+{
+    _centerLayer->setScale(1.0f);
+    _centerLayer->setPosition(Vec2(0.5*THIS_SIZE.width, THIS_SIZE.height/2));
+}
 
 
 

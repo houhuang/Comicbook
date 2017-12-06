@@ -30,6 +30,8 @@ public:
     void towardRightMove();
     
     void resetLayerPointer(bool towardLeftMove);
+    
+    void resetCenterLayer();
 private:
     LayerColor* _leftLayer;
     LayerColor* _centerLayer;
