@@ -16,7 +16,7 @@
 #include <vector>
 #endif
 
-#define st_cartooncsv_url   "https://firebasestorage.googleapis.com/v0/b/cartoonbook-f83f9.appspot.com/o/cartoon.csv?alt=media"
+#define st_cartooncsv_url   "https://firebasestorage.googleapis.com/v0/b/cartoonbook-f83f9.appspot.com/o/cartoon.csv?alt=media&token=b8209a81-c652-429d-91fc-37003f38d251"
 
 static DownloadManager* _instance = nullptr;
 
@@ -135,6 +135,49 @@ void DownloadManager::downloadCarttonCsv()
         
     });
 
+    HttpClient::getInstance()->send(lRequest);
+}
+
+void DownloadManager::downloadPictureCsv(string folder)
+{
+
+    string url;
+    url.append("https://firebasestorage.googleapis.com/v0/b/cartoonbook-f83f9.appspot.com/o/piccsv%2F").append(folder).append("_picture.csv?alt=media");
+    
+    HttpRequest* lRequest = new HttpRequest();
+    lRequest->setUrl(url.c_str());
+    lRequest->setRequestType(cocos2d::network::HttpRequest::Type::GET);
+    lRequest->setResponseCallback([this, lRequest](network::HttpClient* client, network::HttpResponse* response){
+        
+        if (!response || !response->isSucceed())
+        {
+            log("response failed!   获取网络资源失败！");
+        }
+        
+        std::vector<char>* buffer = response->getResponseData();
+        std::string buffff(buffer->begin(), buffer->end());
+        
+        string path = FileUtils::getInstance()->getWritablePath() + "piccsv/";
+        if (!FileUtils::getInstance()->isFileExist(path))
+        {
+            this->createDirectory(path.c_str());
+        }
+        
+        string name = path + lRequest->getTag() + "_picture.csv";
+        
+        FILE* fp = fopen(name.c_str(), "wb+");
+        fwrite(buffff.c_str(), 1, buffer->size(), fp);
+        fclose(fp);
+        
+        
+        Director::getInstance()->getEventDispatcher()->dispatchCustomEvent(st_download_picture_suc);
+        
+        
+        lRequest->release();
+        
+    });
+    
+    lRequest->setTag(folder.c_str());
     HttpClient::getInstance()->send(lRequest);
 }
 

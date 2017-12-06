@@ -73,6 +73,7 @@ void ComicScene::responseSpriteClick(Ref* ref)
 {
     CoverSprite* lSprite = (CoverSprite*)ref;
     int index = lSprite->getTag();
+    xCartoon->setCurrentCartoon(index);
     
     ShowCartoonInfoLayer* layer = ShowCartoonInfoLayer::create(xCartoon->getCurrentCategory()._cartoonVec.at(index));
     this->addChild(layer);

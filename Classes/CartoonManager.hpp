@@ -15,6 +15,14 @@ using namespace std;
 
 #define xCartoon CartoonManager::getInstance()
 
+class Picture
+{
+public:
+    string chaID;
+    string index;
+    string url;
+};
+
 class CartoonInfo
 {
 public:
@@ -47,8 +55,14 @@ public:
     void readCategoryCsv();
     vector<Category>& getCategoryInfo();
     
+    void readCurrentPictureCsv(string path);
+    vector<Picture>& getCurrentPictureInfo();
+    
     Category& getCurrentCategory();
     void setCurrentCategory(int index);
+    
+    CartoonInfo& getCurrentCartoon();
+    void setCurrentCartoon(int index);
 protected:
     vector<CartoonInfo> _cartoonInfo;
 
@@ -57,6 +71,9 @@ private:
     vector<Category>  _categoryInfo;
     
     int _cateIndex;
+    int _cartIndex;
+    
+    vector<Picture>   _currentPictureInfo;
 };
 
 #endif /* CartoonManager_hpp */

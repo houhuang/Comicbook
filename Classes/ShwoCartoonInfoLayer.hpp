@@ -22,14 +22,19 @@ public:
     ShowCartoonInfoLayer();
 public:
     void initUI();
-    
     void addListener();
+    
+    void loadPictureCsv();
+public:
+    void responseDownloadPicCsvSuc(EventCustom* event);
 protected:
     CartoonInfo _cartoonInfo;
     
     Sprite* _bgSprite;
     bool    _isClickThis;
     Vec2    _firstVec;
+    
+    Label*  _label;
 };
 
 #endif /* ShwoCartoonInfoLayer_hpp */

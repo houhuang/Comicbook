@@ -17,7 +17,8 @@ USING_NS_CC;
 
 #define xDownload DownloadManager::getInstance()
 
-#define st_download_cover_finish "st_download_cover_finish"
+#define st_download_cover_finish    "st_download_cover_finish"
+#define st_download_picture_suc     "st_download_picture_suc"
 
 using namespace std;
 using namespace network;
@@ -37,7 +38,7 @@ public:
 public:
     void downloadCarttonCsv();
     
-//    void downloadPictureCsv(string folder,);
+    void downloadPictureCsv(string folder);
     
     //download cover
     void addNeedDownloadCover(DownloadCoverInfo info);

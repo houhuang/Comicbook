@@ -60,7 +60,7 @@ void HomeScene::createTable()
 
 void HomeScene::tableCellTouched(TableView* table, TableViewCell* cell)
 {
-    xCartoon->setCurrentCategory(0);
+    xCartoon->setCurrentCategory(1);
     Director::getInstance()->replaceScene(ComicScene::create());
 }
 
