@@ -23,6 +23,7 @@
 		2749CDF71FD146C300833B44 /* HomeScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2749CDF51FD146C300833B44 /* HomeScene.cpp */; };
 		2749CDFB1FD1473800833B44 /* CoverSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2749CDF91FD1473800833B44 /* CoverSprite.cpp */; };
 		2749CDFF1FD1499200833B44 /* ThreadManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2749CDFD1FD1499200833B44 /* ThreadManager.cpp */; };
+		274F5B331FD778EA0042C9C6 /* ReadScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 274F5B311FD778EA0042C9C6 /* ReadScene.cpp */; };
 		27C30AE41FD54D83005AF86D /* cover in Resources */ = {isa = PBXBuildFile; fileRef = 27C30AE31FD54D83005AF86D /* cover */; };
 		27DE91441FD6966F001A859A /* piccsv in Resources */ = {isa = PBXBuildFile; fileRef = 27DE91431FD6966F001A859A /* piccsv */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
@@ -136,6 +137,8 @@
 		2749CDFA1FD1473800833B44 /* CoverSprite.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CoverSprite.hpp; sourceTree = "<group>"; };
 		2749CDFD1FD1499200833B44 /* ThreadManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ThreadManager.cpp; sourceTree = "<group>"; };
 		2749CDFE1FD1499200833B44 /* ThreadManager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ThreadManager.hpp; sourceTree = "<group>"; };
+		274F5B311FD778EA0042C9C6 /* ReadScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ReadScene.cpp; sourceTree = "<group>"; };
+		274F5B321FD778EA0042C9C6 /* ReadScene.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ReadScene.hpp; sourceTree = "<group>"; };
 		27C30AE31FD54D83005AF86D /* cover */ = {isa = PBXFileReference; lastKnownFileType = folder; path = cover; sourceTree = "<group>"; };
 		27DE91431FD6966F001A859A /* piccsv */ = {isa = PBXFileReference; lastKnownFileType = folder; path = piccsv; sourceTree = "<group>"; };
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -308,6 +311,8 @@
 				2749CDF61FD146C300833B44 /* HomeScene.hpp */,
 				270D77E91FD4E5CE008E1BD9 /* ComicScene.cpp */,
 				270D77EA1FD4E5CE008E1BD9 /* ComicScene.hpp */,
+				274F5B311FD778EA0042C9C6 /* ReadScene.cpp */,
+				274F5B321FD778EA0042C9C6 /* ReadScene.hpp */,
 			);
 			name = scene;
 			sourceTree = "<group>";
@@ -592,6 +597,7 @@
 				2749CDEF1FD1454E00833B44 /* CSVParse.cpp in Sources */,
 				2749CDE51FD1413100833B44 /* DownloadManager.cpp in Sources */,
 				2749CDFB1FD1473800833B44 /* CoverSprite.cpp in Sources */,
+				274F5B331FD778EA0042C9C6 /* ReadScene.cpp in Sources */,
 				2749CDF31FD1458700833B44 /* SearchPathManager.cpp in Sources */,
 				2749CDFF1FD1499200833B44 /* ThreadManager.cpp in Sources */,
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,

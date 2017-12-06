@@ -27,6 +27,7 @@ public:
     void loadPictureCsv();
 public:
     void responseDownloadPicCsvSuc(EventCustom* event);
+    void onButton(Ref* ref);
 protected:
     CartoonInfo _cartoonInfo;
     

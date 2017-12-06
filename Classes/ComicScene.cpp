@@ -11,6 +11,7 @@
 #include "CartoonManager.hpp"
 #include "CoverSprite.hpp"
 
+
 #define TOP_HEIGHT              (V::isIpad()? 55 : 86)
 #define col                     (V::isIpad()? 3 : 2)
 #define SPACE                   40

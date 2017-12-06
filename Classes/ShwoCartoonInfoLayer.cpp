@@ -9,6 +9,12 @@
 #include "ShwoCartoonInfoLayer.hpp"
 #include "STVisibleRect.h"
 #include "DownloadManager.hpp"
+#include "ReadScene.hpp"
+
+enum{
+    st_button_onLineRead = 10,
+    st_button_download
+};
 
 ShowCartoonInfoLayer* ShowCartoonInfoLayer::create(CartoonInfo& info)
 {
@@ -98,9 +104,53 @@ void ShowCartoonInfoLayer::initUI()
     des->setColor(Color3B(76, 76, 76));
     lSprite->addChild(des);
     
-    int x = desStr.length();
-    
     this->loadPictureCsv();
+    
+    
+    MenuItemImage* lOnlineRead = MenuItemImage::create("set_btn.png", "set_btn.png", CC_CALLBACK_1(ShowCartoonInfoLayer::onButton, this));
+    lOnlineRead->setPosition(Vec2(lSprite->getContentSize().width/2, 320));
+    lOnlineRead->setTag(st_button_onLineRead);
+    
+    Label* lReadText = Label::createWithTTF("在线阅读", "fonts/d2.ttf", 60);
+    lReadText->setPosition(lOnlineRead->getContentSize()/2);
+    lOnlineRead->addChild(lReadText);
+    
+    
+    MenuItemImage* lDownload = MenuItemImage::create("set_btn.png", "set_btn.png", CC_CALLBACK_1(ShowCartoonInfoLayer::onButton, this));
+    lDownload->setPosition(Vec2(lSprite->getContentSize().width/2, 180));
+    lDownload->setTag(st_button_download);
+    
+    Label* lDownloadText = Label::createWithTTF("下载到本地", "fonts/d2.ttf", 60);
+    lDownloadText->setPosition(lDownload->getContentSize()/2);
+    lDownload->addChild(lDownloadText);
+    
+    
+    Menu* lMenu = Menu::create(lOnlineRead, lDownload, NULL);
+    lMenu->setPosition(Vec2::ZERO);
+    lSprite->addChild(lMenu);
+}
+
+void ShowCartoonInfoLayer::onButton(Ref* ref)
+{
+    MenuItemImage* lMenuItem = (MenuItemImage*)ref;
+    
+    switch (lMenuItem->getTag())
+    {
+        case st_button_onLineRead:
+        {
+            Director::getInstance()->replaceScene(TransitionProgressInOut::create(0.2f, ReadScene::create()));
+        }
+            break;
+            
+        case st_button_download:
+        {
+            
+        }
+            break;
+            
+        default:
+            break;
+    }
 }
 
 void ShowCartoonInfoLayer::responseDownloadPicCsvSuc(EventCustom* event)
