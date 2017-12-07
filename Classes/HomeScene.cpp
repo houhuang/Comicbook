@@ -11,6 +11,8 @@
 #include "CoverSprite.hpp"
 #include "STVisibleRect.h"
 #include "ComicScene.hpp"
+#include "NewDialog.hpp"
+#include "ReadScene.hpp"
 
 #define top_bar     228
 #define SPACE       40
@@ -27,6 +29,8 @@ bool HomeScene::init()
 {
     if (!Scene::init()) return false;
     
+    setName("HomeScene");
+    
     LayerColor* layer = LayerColor::create(Color4B(245, 245, 245, 255));
     this->addChild(layer);
     
@@ -39,8 +43,28 @@ bool HomeScene::init()
     
     xCartoon->readCategoryCsv();
     
-    this->createTable();
+    createTable();
+    checkProgress();
     return true;
+}
+
+void HomeScene::checkProgress()
+{
+    string data = UserDefault::getInstance()->getStringForKey("CurrentCartoonProgress", "");
+    if (data != "")
+    {
+        ReadingCartoonInfo info;
+        info.folder = data.substr(0, data.find("@"));
+        string pa = data.substr(data.find("@") + 1, data.length());
+        info.csvPath = pa.substr(0, pa.find("@"));
+        info.pageNumber = pa.substr(pa.find("@") + 1, pa.length());
+        
+        xCartoon->getCurrentReadingCartoon() = info;
+        
+        NewDialog* lDialog = NewDialog::create("继续阅读？", "否", "是");
+        lDialog->addButtonListener(CC_CALLBACK_1(HomeScene::onDialog, this));
+        this->addChild(lDialog, 101);
+    }
 }
 
 void HomeScene::createTable()
@@ -56,6 +80,20 @@ void HomeScene::createTable()
     table->reloadData();
     
     this->addChild(table);
+}
+
+void HomeScene::onDialog(const string& name)
+{
+    if (name == "right")
+    {
+        xCartoon->setCurrentFolder(xCartoon->getCurrentReadingCartoon().folder);
+        xCartoon->readCurrentPictureCsv(xCartoon->getCurrentReadingCartoon().csvPath);
+        
+        Director::getInstance()->replaceScene(TransitionProgressInOut::create(0.2f, ReadScene::create(stoi(xCartoon->getCurrentReadingCartoon().pageNumber), "HomeScene")));
+        
+        
+        xCartoon->setCurrentFolder("");
+    }
 }
 
 void HomeScene::tableCellTouched(TableView* table, TableViewCell* cell)

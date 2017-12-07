@@ -15,6 +15,14 @@ using namespace std;
 
 #define xCartoon CartoonManager::getInstance()
 
+class ReadingCartoonInfo
+{
+public:
+    string folder;
+    string csvPath;
+    string pageNumber;
+};
+
 class Picture
 {
 public:
@@ -63,6 +71,14 @@ public:
     
     CartoonInfo& getCurrentCartoon();
     void setCurrentCartoon(int index);
+    
+    ReadingCartoonInfo& getCurrentReadingCartoon();
+    
+    void setCurrentFolder(string folder);
+    string getCurrentFolder();
+    
+public:
+    
 protected:
     vector<CartoonInfo> _cartoonInfo;
 
@@ -74,6 +90,12 @@ private:
     int _cartIndex;
     
     vector<Picture>   _currentPictureInfo;
+    
+    ReadingCartoonInfo  _currentReadingCartoon;
+    
+    string _currentFolder = "";
+    
+    
 };
 
 #endif /* CartoonManager_hpp */

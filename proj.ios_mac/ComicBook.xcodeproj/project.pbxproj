@@ -15,6 +15,7 @@
 		270D77E81FD4D62A008E1BD9 /* data in Resources */ = {isa = PBXBuildFile; fileRef = 270D77E71FD4D62A008E1BD9 /* data */; };
 		270D77EB1FD4E5CE008E1BD9 /* ComicScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 270D77E91FD4E5CE008E1BD9 /* ComicScene.cpp */; };
 		270D77EF1FD4FC62008E1BD9 /* ShwoCartoonInfoLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 270D77ED1FD4FC62008E1BD9 /* ShwoCartoonInfoLayer.cpp */; };
+		27335BFB1FD8D23E00D9E87B /* NewDialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27335BF91FD8D23E00D9E87B /* NewDialog.cpp */; };
 		2749CDE51FD1413100833B44 /* DownloadManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2749CDE31FD1413100833B44 /* DownloadManager.cpp */; };
 		2749CDE91FD1436C00833B44 /* CartoonManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2749CDE71FD1436C00833B44 /* CartoonManager.cpp */; };
 		2749CDEF1FD1454E00833B44 /* CSVParse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2749CDEB1FD1454E00833B44 /* CSVParse.cpp */; };
@@ -24,6 +25,7 @@
 		2749CDFB1FD1473800833B44 /* CoverSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2749CDF91FD1473800833B44 /* CoverSprite.cpp */; };
 		2749CDFF1FD1499200833B44 /* ThreadManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2749CDFD1FD1499200833B44 /* ThreadManager.cpp */; };
 		274F5B331FD778EA0042C9C6 /* ReadScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 274F5B311FD778EA0042C9C6 /* ReadScene.cpp */; };
+		274F5B3B1FD7D39D0042C9C6 /* ContentLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 274F5B391FD7D39D0042C9C6 /* ContentLayer.cpp */; };
 		27C30AE41FD54D83005AF86D /* cover in Resources */ = {isa = PBXBuildFile; fileRef = 27C30AE31FD54D83005AF86D /* cover */; };
 		27DE91441FD6966F001A859A /* piccsv in Resources */ = {isa = PBXBuildFile; fileRef = 27DE91431FD6966F001A859A /* piccsv */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
@@ -121,6 +123,8 @@
 		270D77EA1FD4E5CE008E1BD9 /* ComicScene.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ComicScene.hpp; sourceTree = "<group>"; };
 		270D77ED1FD4FC62008E1BD9 /* ShwoCartoonInfoLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ShwoCartoonInfoLayer.cpp; sourceTree = "<group>"; };
 		270D77EE1FD4FC62008E1BD9 /* ShwoCartoonInfoLayer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ShwoCartoonInfoLayer.hpp; sourceTree = "<group>"; };
+		27335BF91FD8D23E00D9E87B /* NewDialog.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NewDialog.cpp; sourceTree = "<group>"; };
+		27335BFA1FD8D23E00D9E87B /* NewDialog.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = NewDialog.hpp; sourceTree = "<group>"; };
 		2749CDE31FD1413100833B44 /* DownloadManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DownloadManager.cpp; sourceTree = "<group>"; };
 		2749CDE41FD1413100833B44 /* DownloadManager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = DownloadManager.hpp; sourceTree = "<group>"; };
 		2749CDE71FD1436C00833B44 /* CartoonManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CartoonManager.cpp; sourceTree = "<group>"; };
@@ -139,6 +143,8 @@
 		2749CDFE1FD1499200833B44 /* ThreadManager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ThreadManager.hpp; sourceTree = "<group>"; };
 		274F5B311FD778EA0042C9C6 /* ReadScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ReadScene.cpp; sourceTree = "<group>"; };
 		274F5B321FD778EA0042C9C6 /* ReadScene.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ReadScene.hpp; sourceTree = "<group>"; };
+		274F5B391FD7D39D0042C9C6 /* ContentLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ContentLayer.cpp; sourceTree = "<group>"; };
+		274F5B3A1FD7D39D0042C9C6 /* ContentLayer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ContentLayer.hpp; sourceTree = "<group>"; };
 		27C30AE31FD54D83005AF86D /* cover */ = {isa = PBXFileReference; lastKnownFileType = folder; path = cover; sourceTree = "<group>"; };
 		27DE91431FD6966F001A859A /* piccsv */ = {isa = PBXFileReference; lastKnownFileType = folder; path = piccsv; sourceTree = "<group>"; };
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -272,8 +278,12 @@
 		270D77EC1FD4FC3F008E1BD9 /* layer */ = {
 			isa = PBXGroup;
 			children = (
+				27335BF91FD8D23E00D9E87B /* NewDialog.cpp */,
+				27335BFA1FD8D23E00D9E87B /* NewDialog.hpp */,
 				270D77ED1FD4FC62008E1BD9 /* ShwoCartoonInfoLayer.cpp */,
 				270D77EE1FD4FC62008E1BD9 /* ShwoCartoonInfoLayer.hpp */,
+				274F5B391FD7D39D0042C9C6 /* ContentLayer.cpp */,
+				274F5B3A1FD7D39D0042C9C6 /* ContentLayer.hpp */,
 			);
 			name = layer;
 			sourceTree = "<group>";
@@ -596,8 +606,10 @@
 				2749CDE91FD1436C00833B44 /* CartoonManager.cpp in Sources */,
 				2749CDEF1FD1454E00833B44 /* CSVParse.cpp in Sources */,
 				2749CDE51FD1413100833B44 /* DownloadManager.cpp in Sources */,
+				27335BFB1FD8D23E00D9E87B /* NewDialog.cpp in Sources */,
 				2749CDFB1FD1473800833B44 /* CoverSprite.cpp in Sources */,
 				274F5B331FD778EA0042C9C6 /* ReadScene.cpp in Sources */,
+				274F5B3B1FD7D39D0042C9C6 /* ContentLayer.cpp in Sources */,
 				2749CDF31FD1458700833B44 /* SearchPathManager.cpp in Sources */,
 				2749CDFF1FD1499200833B44 /* ThreadManager.cpp in Sources */,
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,

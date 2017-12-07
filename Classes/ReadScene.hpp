@@ -10,14 +10,17 @@
 #define ReadScene_hpp
 
 #include <stdio.h>
+#include "CartoonManager.hpp"
+#include "ContentLayer.hpp"
 USING_NS_CC;
 using namespace std;
 
 class ReadScene : public Scene
 {
 public:
-    CREATE_FUNC(ReadScene);
-    virtual bool init();
+//    CREATE_FUNC(ReadScene);
+    static ReadScene* create(int page, string sceneName);
+    virtual bool init(int page, string sceneName);
     
     ReadScene();
     void initUILayer();
@@ -32,12 +35,23 @@ public:
     void resetLayerPointer(bool towardLeftMove);
     
     void resetCenterLayer();
+
+    void updateLeftContent();
+    void updateRightContent();
+    
+    void saveCurrentPage();
 private:
-    LayerColor* _leftLayer;
-    LayerColor* _centerLayer;
-    LayerColor* _rightLayer;
+    ContentLayer* _leftLayer;
+    ContentLayer* _centerLayer;
+    ContentLayer* _rightLayer;
     
     bool    _isMoving;
+    int     _currentPage;
+    
+    string  _folder;
+    vector<Picture> _currentPic;
+    
+    string  _preSceneName;
 };
 
 #endif /* ReadScene_hpp */

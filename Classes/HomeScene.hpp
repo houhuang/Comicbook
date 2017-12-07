@@ -13,6 +13,7 @@
 #include "cocos-ext.h"
 USING_NS_CC;
 USING_NS_CC_EXT;
+using namespace std;
 
 class HomeScene : public Scene, public TableViewDelegate, public TableViewDataSource
 {
@@ -24,6 +25,8 @@ public:
 public:
     void createTable();
     
+    void checkProgress();
+    void onDialog(const string& name);
 public:
     virtual void tableCellTouched(TableView* table, TableViewCell* cell);
     virtual Size tableCellSizeForIndex(TableView *table, ssize_t idx);

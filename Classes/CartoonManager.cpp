@@ -124,3 +124,24 @@ vector<Category>& CartoonManager::getCategoryInfo()
 {
     return _categoryInfo;
 }
+
+ReadingCartoonInfo& CartoonManager::getCurrentReadingCartoon()
+{
+    return _currentReadingCartoon;
+}
+
+void CartoonManager::setCurrentFolder(string folder)
+{
+    _currentFolder = folder;
+}
+
+string CartoonManager::getCurrentFolder()
+{
+    if (_currentFolder == "")
+    {
+        return getCurrentCartoon().folder;
+    }else
+    {
+        return _currentFolder;
+    }
+}

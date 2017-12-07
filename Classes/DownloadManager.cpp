@@ -181,6 +181,53 @@ void DownloadManager::downloadPictureCsv(string folder)
     HttpClient::getInstance()->send(lRequest);
 }
 
+void DownloadManager::downloadPicture(Picture picture)
+{
+    HttpRequest* lRequest = new HttpRequest();
+    lRequest->setUrl(picture.url.c_str());
+    lRequest->setRequestType(cocos2d::network::HttpRequest::Type::GET);
+    lRequest->setResponseCallback([this, lRequest](network::HttpClient* client, network::HttpResponse* response){
+        
+        if (!response || !response->isSucceed())
+        {
+            log("response failed!   获取网络资源失败！");
+        }
+        
+        std::vector<char>* buffer = response->getResponseData();
+        std::string buffff(buffer->begin(), buffer->end());
+        
+        string rr = lRequest->getTag();
+        rr = rr.substr(0, rr.find("/") + 1);
+        string path = FileUtils::getInstance()->getWritablePath() + "picture/";
+        if (!FileUtils::getInstance()->isFileExist(path))
+        {
+            this->createDirectory(path.c_str());
+        }
+        
+        if (!FileUtils::getInstance()->isFileExist(path + rr))
+        {
+            this->createDirectory((path + rr).c_str());
+        }
+        
+        string name = path + lRequest->getTag();
+        
+        FILE* fp = fopen(name.c_str(), "wb+");
+        fwrite(buffff.c_str(), 1, buffer->size(), fp);
+        fclose(fp);
+        
+        
+        Director::getInstance()->getEventDispatcher()->dispatchCustomEvent(st_download_picture_suc);
+        
+        
+        lRequest->release();
+        
+    });
+    
+    string name = xCartoon->getCurrentCartoon().folder + "/" + picture.chaID + "_" + picture.index + ".jpg";
+    lRequest->setTag(name.c_str());
+    HttpClient::getInstance()->send(lRequest);
+}
+
 bool DownloadManager::createDirectory(const char *path)
 {
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)

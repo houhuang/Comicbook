@@ -45,6 +45,8 @@ bool ShowCartoonInfoLayer::init(CartoonInfo& info)
 {
     if (!LayerColor::initWithColor(Color4B(0, 0, 0, 200))) return false;
     
+    setName("ComicScene");
+    
     _cartoonInfo = info;
     
     initUI();
@@ -138,7 +140,9 @@ void ShowCartoonInfoLayer::onButton(Ref* ref)
     {
         case st_button_onLineRead:
         {
-            Director::getInstance()->replaceScene(TransitionProgressInOut::create(0.2f, ReadScene::create()));
+            xCartoon->getCurrentReadingCartoon().folder = _cartoonInfo.folder;
+            xCartoon->getCurrentReadingCartoon().csvPath = "piccsv/" + _cartoonInfo.folder + "_picture.csv";
+            Director::getInstance()->replaceScene(TransitionProgressInOut::create(0.2f, ReadScene::create(0, "ComicScene")));
         }
             break;
             

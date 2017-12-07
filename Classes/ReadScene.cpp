@@ -8,7 +8,8 @@
 
 #include "ReadScene.hpp"
 #include "STVisibleRect.h"
-#include "CartoonManager.hpp"
+#include "ComicScene.hpp"
+#include "HomeScene.hpp"
 
 #define THIS_SIZE   this->getContentSize()
 #define MOVE_TIME   0.3f
@@ -16,8 +17,21 @@
 enum
 {
     st_button_right = 10,
-    st_button_left
+    st_button_left,
+    st_button_back
 };
+
+ReadScene* ReadScene::create(int page, string sceneName)
+{
+    ReadScene* scene = new ReadScene();
+    if (scene && scene->init(page, sceneName))
+    {
+        scene->autorelease();
+        return scene;
+    }
+    CC_SAFE_DELETE(scene);
+    return nullptr;
+}
 
 ReadScene::ReadScene()
 {
@@ -26,37 +40,49 @@ ReadScene::ReadScene()
     _rightLayer = nullptr;
     
     _isMoving = false;
+    _currentPage = 0;
+    
+    _folder = xCartoon->getCurrentCartoon().folder;
+    _currentPic = xCartoon->getCurrentPictureInfo();
 }
 
-bool ReadScene::init()
+bool ReadScene::init(int page, string sceneName)
 {
     if (!Scene::init()) return false;
+    
+    _preSceneName = sceneName;
+    this->setName("ReadScene");
+    
+    _currentPage = page;
     
     LayerColor* layer = LayerColor::create(Color4B(245, 245, 245, 255));
     this->addChild(layer);
     
     initUILayer();
     addListener();
+    
     return true;
 }
 
 void ReadScene::initUILayer()
 {
-    LayerColor* leftLayer = LayerColor::create(Color4B(100, 0, 0, 100), THIS_SIZE.width, THIS_SIZE.height);
+    int lIndex = (_currentPage - 1) < 0 ? 0:(_currentPage-1);
+    ContentLayer* leftLayer = ContentLayer::create(_currentPic.at(lIndex));
     leftLayer->ignoreAnchorPointForPosition(false);
     leftLayer->setAnchorPoint(Vec2(0.5, 0.5));
     leftLayer->setPosition(Vec2(-0.5*THIS_SIZE.width, THIS_SIZE.height/2));
     this->addChild(leftLayer);
     _leftLayer = leftLayer;
     
-    LayerColor* centerLayer = LayerColor::create(Color4B(0, 100, 0, 100), THIS_SIZE.width, THIS_SIZE.height);
+    ContentLayer* centerLayer = ContentLayer::create(_currentPic.at(_currentPage));;
     centerLayer->ignoreAnchorPointForPosition(false);
     centerLayer->setAnchorPoint(Vec2(0.5, 0.5));
     centerLayer->setPosition(Vec2(0.5*THIS_SIZE.width, THIS_SIZE.height/2));
     this->addChild(centerLayer);
     _centerLayer = centerLayer;
     
-    LayerColor* rightLayer = LayerColor::create(Color4B(0, 0, 100, 100), THIS_SIZE.width, THIS_SIZE.height);
+    int rIndex = (_currentPage + 1) > _currentPic.size() ? (int)_currentPic.size()-1:(_currentPage);
+    ContentLayer* rightLayer = ContentLayer::create(_currentPic.at(rIndex));;
     rightLayer->ignoreAnchorPointForPosition(false);
     rightLayer->setAnchorPoint(Vec2(0.5, 0.5));
     rightLayer->setPosition(Vec2(1.5*THIS_SIZE.width, THIS_SIZE.height/2));
@@ -73,11 +99,36 @@ void ReadScene::initUILayer()
     V::setPosition(lRightMenu, 640, 300, false, false, false, true);
     lRightMenu->setTag(st_button_right);
     
-    Menu* lMenu = Menu::create(lLeftMenu, lRightMenu, nullptr);
+    MenuItemImage* lBack = MenuItemImage::create("back.png", "back.png", CC_CALLBACK_1(ReadScene::onButton, this));
+    lBack->setAnchorPoint(Vec2(0, 1));
+    V::setPosition(lBack, 0, 1136, true, false, true, false);
+    lBack->setTag(st_button_back);
+    
+    Menu* lMenu = Menu::create(lLeftMenu, lRightMenu, lBack, nullptr);
     lMenu->setPosition(Vec2::ZERO);
     this->addChild(lMenu);
 }
 
+void ReadScene::updateLeftContent()
+{
+    int index = _currentPage + 1;
+    if (index > _currentPic.size())
+    {
+        index = (int)_currentPic.size() - 1;
+    }
+    _leftLayer->updateContent(_currentPic.at(index));
+}
+
+void ReadScene::updateRightContent()
+{
+    int index= _currentPage - 1;
+    if (index < 0)
+    {
+        index = 0;
+    }
+    
+    _rightLayer->updateContent(_currentPic.at(index));
+}
 
 void ReadScene::onButton(Ref* ref)
 {
@@ -86,8 +137,11 @@ void ReadScene::onButton(Ref* ref)
     {
         case st_button_left:
         {
-            if (!_isMoving)
+            if (!_isMoving && _currentPage>1)
             {
+                --_currentPage;
+                updateRightContent();
+
                 _isMoving = true;
                 resetCenterLayer();
                 towardRightMove();
@@ -97,8 +151,11 @@ void ReadScene::onButton(Ref* ref)
             
         case st_button_right:
         {
-            if (!_isMoving)
+            if (!_isMoving && _currentPage < _currentPic.size()-2)
             {
+                ++_currentPage;
+                updateLeftContent();
+                
                 _isMoving = true;
                 resetCenterLayer();
                 towardLeftMove();
@@ -106,6 +163,21 @@ void ReadScene::onButton(Ref* ref)
             
         }
             break;
+            
+        case st_button_back:
+        {
+            saveCurrentPage();
+            
+            if (_preSceneName == "HomeScene")
+            {
+                Director::getInstance()->replaceScene(TransitionProgressOutIn::create(0.3f, HomeScene::create()));
+            }else
+            {
+                Director::getInstance()->replaceScene(TransitionProgressOutIn::create(0.3f, ComicScene::create()));
+            }
+            
+            
+        }
             
         default:
             break;
@@ -136,13 +208,13 @@ void ReadScene::resetLayerPointer(bool towardLeftMove)
 {
     if (towardLeftMove)
     {
-        LayerColor* layer = _leftLayer;
+        ContentLayer* layer = _leftLayer;
         _leftLayer = _centerLayer;
         _centerLayer = _rightLayer;
         _rightLayer = layer;
     }else
     {
-        LayerColor* layer = _rightLayer;
+        ContentLayer* layer = _rightLayer;
         _rightLayer = _centerLayer;
         _centerLayer = _leftLayer;
         _leftLayer = layer;
@@ -236,6 +308,16 @@ void ReadScene::resetCenterLayer()
 }
 
 
+void ReadScene::saveCurrentPage()
+{
+    xCartoon->getCurrentReadingCartoon().pageNumber = to_string(_currentPage);
+    
+    ReadingCartoonInfo info = xCartoon->getCurrentReadingCartoon();
+    string data =info.folder + "@" + info.csvPath + "@" + info.pageNumber;
+    
+    UserDefault::getInstance()->setStringForKey("CurrentCartoonProgress", data);
+    UserDefault::getInstance()->flush();
+}
 
 
 

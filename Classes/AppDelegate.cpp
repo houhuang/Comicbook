@@ -3,6 +3,7 @@
 #include "HomeScene.hpp"
 #include "SearchPathManager.hpp"
 #include "STVisibleRect.h"
+#include "ReadScene.hpp"
 
 USING_NS_CC;
 
@@ -69,6 +70,15 @@ bool AppDelegate::applicationDidFinishLaunching() {
 // This function will be called when the app is inactive. When comes a phone call,it's be invoked too
 void AppDelegate::applicationDidEnterBackground() {
     Director::getInstance()->stopAnimation();
+    
+    if (Director::getInstance()->getRunningScene()->getName() == "ReadScene")
+    {
+        ReadScene* scene = (ReadScene*)Director::getInstance()->getRunningScene();
+        if (scene)
+        {
+            scene->saveCurrentPage();
+        }
+    }
 
     // if you use SimpleAudioEngine, it must be pause
     // SimpleAudioEngine::getInstance()->pauseBackgroundMusic();

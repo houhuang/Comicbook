@@ -13,6 +13,7 @@
 #include "network/HttpRequest.h"
 #include "network/HttpClient.h"
 #include "cocos-ext.h"
+#include "CartoonManager.hpp"
 USING_NS_CC;
 
 #define xDownload DownloadManager::getInstance()
@@ -47,6 +48,8 @@ public:
     vector<DownloadCoverInfo> _downloadCoverInfo;
     bool _isDownloadingCover;
     
+    //download picture
+    void downloadPicture(Picture picture);
 private:
     bool createDirectory(const char *path);
     string UrlGB2312(const char * str);
