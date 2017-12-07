@@ -113,7 +113,7 @@ void ShowCartoonInfoLayer::initUI()
     lOnlineRead->setPosition(Vec2(lSprite->getContentSize().width/2, 320));
     lOnlineRead->setTag(st_button_onLineRead);
     
-    Label* lReadText = Label::createWithTTF("在线阅读", "fonts/d2.ttf", 60);
+    Label* lReadText = Label::createWithTTF("开始阅读", "fonts/d2.ttf", 60);
     lReadText->setPosition(lOnlineRead->getContentSize()/2);
     lOnlineRead->addChild(lReadText);
     
@@ -142,7 +142,11 @@ void ShowCartoonInfoLayer::onButton(Ref* ref)
         {
             xCartoon->getCurrentReadingCartoon().folder = _cartoonInfo.folder;
             xCartoon->getCurrentReadingCartoon().csvPath = "piccsv/" + _cartoonInfo.folder + "_picture.csv";
-            Director::getInstance()->replaceScene(TransitionProgressInOut::create(0.2f, ReadScene::create(0, "ComicScene")));
+            
+            string data = _cartoonInfo.folder + "pagenumber";
+            int page = UserDefault::getInstance()->getIntegerForKey(data.c_str(), 0);
+            
+            Director::getInstance()->replaceScene(TransitionProgressInOut::create(0.2f, ReadScene::create(page, "ComicScene")));
         }
             break;
             

@@ -13,6 +13,7 @@
 
 #define THIS_SIZE   this->getContentSize()
 #define MOVE_TIME   0.3f
+#define TOP_HEIGHT  (V::isIpad()? 65 : 86)
 
 enum
 {
@@ -39,6 +40,8 @@ ReadScene::ReadScene()
     _centerLayer = nullptr;
     _rightLayer = nullptr;
     
+    _topLayer = nullptr;
+    
     _isMoving = false;
     _currentPage = 0;
     
@@ -59,6 +62,7 @@ bool ReadScene::init(int page, string sceneName)
     this->addChild(layer);
     
     initUILayer();
+    initTopLayer();
     addListener();
     
     return true;
@@ -99,14 +103,49 @@ void ReadScene::initUILayer()
     V::setPosition(lRightMenu, 640, 300, false, false, false, true);
     lRightMenu->setTag(st_button_right);
     
-    MenuItemImage* lBack = MenuItemImage::create("back.png", "back.png", CC_CALLBACK_1(ReadScene::onButton, this));
-    lBack->setAnchorPoint(Vec2(0, 1));
-    V::setPosition(lBack, 0, 1136, true, false, true, false);
-    lBack->setTag(st_button_back);
-    
-    Menu* lMenu = Menu::create(lLeftMenu, lRightMenu, lBack, nullptr);
+    Menu* lMenu = Menu::create(lLeftMenu, lRightMenu, NULL);
     lMenu->setPosition(Vec2::ZERO);
-    this->addChild(lMenu);
+    addChild(lMenu);
+    
+}
+
+void ReadScene::initTopLayer()
+{
+    LayerColor* topLayer = LayerColor::create(Color4B(82, 145, 240, 255), this->getContentSize().width, TOP_HEIGHT);
+    topLayer->ignoreAnchorPointForPosition(false);
+    topLayer->setAnchorPoint(Vec2(0.5, 1));
+    topLayer->setPosition(Vec2(this->getContentSize().width/2, this->getContentSize().height));
+    this->addChild(topLayer, 10);
+    _topLayer = topLayer;
+    
+    Sprite* topBar = Sprite::create("top_bar.png");
+    topBar->setScaleX((this->getContentSize().width+10)/topBar->getContentSize().width);
+    topBar->setAnchorPoint(Vec2(0.5, 0));
+    topBar->setPosition(Vec2(topLayer->getContentSize().width/2, -5));
+    topLayer->addChild(topBar, -1);
+    
+    
+    MenuItemImage* back = MenuItemImage::create("back_bg.png", "back_bg.png", CC_CALLBACK_1(ReadScene::onButton, this));
+    back->setPosition(Vec2(30, topLayer->getContentSize().height/2));
+    back->setTag(st_button_back);
+    back->setScale(topLayer->getContentSize().height*0.6/back->getContentSize().height);
+    
+    Sprite* back_sprite = Sprite::create("back.png");
+    back_sprite->setPosition(back->getContentSize()/2);
+    back->addChild(back_sprite);
+    
+    Menu* lMenu = Menu::create(back, NULL);
+    lMenu->setPosition(Vec2::ZERO);
+    topLayer->addChild(lMenu, 10);
+    
+    string text = to_string(_currentPage) + "/" + to_string(_currentPic.size()-2);
+    float fontSize = V::isIpad()? 30:40;
+    Label* page = Label::createWithTTF(text, "fonts/font1.ttf", fontSize);
+    page->setPosition(Vec2(topLayer->getContentSize()/2) + Vec2(0, -7));
+    topLayer->addChild(page, 10);
+    _pageLabel = page;
+    
+    this->scheduleUpdate();
 }
 
 void ReadScene::updateLeftContent()
@@ -145,6 +184,12 @@ void ReadScene::onButton(Ref* ref)
                 _isMoving = true;
                 resetCenterLayer();
                 towardRightMove();
+                
+                if (_pageLabel)
+                {
+                    string text = to_string(_currentPage) + "/" + to_string(_currentPic.size()-2);
+                    _pageLabel->setString(text);
+                }
             }
         }
             break;
@@ -159,6 +204,12 @@ void ReadScene::onButton(Ref* ref)
                 _isMoving = true;
                 resetCenterLayer();
                 towardLeftMove();
+                
+                if (_pageLabel)
+                {
+                    string text = to_string(_currentPage) + "/" + to_string(_currentPic.size()-2);
+                    _pageLabel->setString(text);
+                }
             }
             
         }
@@ -224,12 +275,12 @@ void ReadScene::resetLayerPointer(bool towardLeftMove)
 void ReadScene::addListener()
 {
     auto listener = EventListenerTouchAllAtOnce::create();
-    listener->onTouchesBegan = [&](const vector<Touch*>& touches, Event* events){
-        
+    listener->onTouchesBegan = [this](const vector<Touch*>& touches, Event* events){
+        _firstPos = touches[0]->getLocation();
 
     };
     
-    listener->onTouchesMoved = [&](const vector<Touch*>& touches, Event* events){
+    listener->onTouchesMoved = [this](const vector<Touch*>& touches, Event* events){
         
         if (touches.size() == 1)
         {
@@ -289,17 +340,53 @@ void ReadScene::addListener()
         }
     };
     
-    listener->onTouchesEnded = [&](const vector<Touch*>& touches, Event* events){
-        
+    listener->onTouchesEnded = [this](const vector<Touch*>& touches, Event* events){
+        float distance = _firstPos.distance(touches[0]->getLocation());
+        if (touches.size() == 1 && distance < 10)
+        {
+            showTopLayer();
+        }
     };
     
-    listener->onTouchesCancelled = [&](const vector<Touch*>& touches, Event* events){
+    listener->onTouchesCancelled = [this](const vector<Touch*>& touches, Event* events){
         
     };
     
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 }
 
+void ReadScene::update(float dt)
+{
+    _time += dt;
+    if (_time > 5)
+    {
+        hideTopLayer();
+        _time = 0.0;
+    }
+    
+    _time2 += dt;
+    if (_time2 > 100)
+    {
+        _time2 = 0.0;
+        saveCurrentPage();
+    }
+}
+
+void ReadScene::hideTopLayer()
+{
+    if (_topLayer)
+    {
+        _topLayer->runAction(EaseSineOut::create(MoveTo::create(0.2f, Vec2(_topLayer->getPosition().x, this->getContentSize().height + _topLayer->getContentSize().height))));
+    }
+}
+
+void ReadScene::showTopLayer()
+{
+    if (_topLayer)
+    {
+        _topLayer->runAction(EaseSineOut::create(MoveTo::create(0.2f, Vec2(_topLayer->getPosition().x, this->getContentSize().height))));
+    }
+}
 
 void ReadScene::resetCenterLayer()
 {
@@ -316,6 +403,11 @@ void ReadScene::saveCurrentPage()
     string data =info.folder + "@" + info.csvPath + "@" + info.pageNumber;
     
     UserDefault::getInstance()->setStringForKey("CurrentCartoonProgress", data);
+    UserDefault::getInstance()->flush();
+    
+    
+    string data2 = info.folder + "pagenumber";
+    UserDefault::getInstance()->setIntegerForKey(data2.c_str(), _currentPage);
     UserDefault::getInstance()->flush();
 }
 

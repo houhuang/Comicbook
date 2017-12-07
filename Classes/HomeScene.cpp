@@ -99,7 +99,7 @@ void HomeScene::onDialog(const string& name)
 void HomeScene::tableCellTouched(TableView* table, TableViewCell* cell)
 {
     xCartoon->setCurrentCategory(1);
-    Director::getInstance()->replaceScene(ComicScene::create());
+    Director::getInstance()->replaceScene(TransitionSlideInR::create(0.2f, ComicScene::create()));
 }
 
 Size HomeScene::tableCellSizeForIndex(TableView *table, ssize_t idx)

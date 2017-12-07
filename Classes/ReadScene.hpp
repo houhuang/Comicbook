@@ -24,6 +24,12 @@ public:
     
     ReadScene();
     void initUILayer();
+    
+    void initTopLayer();
+    void hideTopLayer();
+    void showTopLayer();
+    
+    void update(float dt);
 public:
     void addListener();
     void onButton(Ref* ref);
@@ -52,6 +58,14 @@ private:
     vector<Picture> _currentPic;
     
     string  _preSceneName;
+    
+    LayerColor* _topLayer;
+    
+    float   _time = 0.0;
+    float   _time2 = 0.0;
+    Vec2    _firstPos = Vec2(0, 0);
+    
+    Label*  _pageLabel;
 };
 
 #endif /* ReadScene_hpp */

@@ -66,6 +66,11 @@ void NewDialog::initUIWithiPhone(const string& tText, const string& lText, const
     this->addChild(bg);
     _dialogBG = bg;
     
+    if (V::isIpad())
+    {
+        bg->setScale(bg->getScale() * 0.7);
+    }
+    
     Label* tl = Label::createWithTTF(tText, "fonts/d2.ttf", 13 * 2);
     tl->setColor(Color3B(103, 103, 103));
     tl->setDimensions(bg->getContentSize().width * 0.8 * 0.9, bg->getContentSize().height * 0.7);

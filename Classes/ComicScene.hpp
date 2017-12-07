@@ -28,6 +28,8 @@ public:
     
     void responseSpriteClick(Ref* ref);
     void responseRemoveCartoonLayer(EventCustom* event);
+    
+    void onButton(Ref* ref);
 public:
     virtual void tableCellTouched(TableView* table, TableViewCell* cell);
     virtual Size tableCellSizeForIndex(TableView *table, ssize_t idx);

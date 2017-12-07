@@ -10,11 +10,15 @@
 #include "STVisibleRect.h"
 #include "CartoonManager.hpp"
 #include "CoverSprite.hpp"
+#include "HomeScene.hpp"
 
-
-#define TOP_HEIGHT              (V::isIpad()? 55 : 86)
+#define TOP_HEIGHT              (V::isIpad()? 65 : 86)
 #define col                     (V::isIpad()? 3 : 2)
 #define SPACE                   40
+
+enum{
+    st_button_back = 10,
+};
 
 ComicScene::ComicScene()
 {
@@ -28,37 +32,73 @@ bool ComicScene::init()
     LayerColor* layer = LayerColor::create(Color4B(245, 245, 245, 255));
     this->addChild(layer);
     
+    LayerColor* topLayer = LayerColor::create(Color4B(82, 145, 240, 255), this->getContentSize().width, TOP_HEIGHT);
+    topLayer->ignoreAnchorPointForPosition(false);
+    topLayer->setAnchorPoint(Vec2(0.5, 1));
+    topLayer->setPosition(Vec2(this->getContentSize().width/2, this->getContentSize().height));
+    this->addChild(topLayer, 10);
+    
     Sprite* topBar = Sprite::create("top_bar.png");
     topBar->setScaleX((this->getContentSize().width+10)/topBar->getContentSize().width);
-    topBar->setScaleY((TOP_HEIGHT+10)/topBar->getContentSize().height);
-    topBar->setAnchorPoint(Vec2(0.5, 1));
-    topBar->setPosition(Vec2(this->getContentSize().width/2, this->getContentSize().height + 5));
-    this->addChild(topBar);
+    topBar->setAnchorPoint(Vec2(0.5, 0));
+    topBar->setPosition(Vec2(topLayer->getContentSize().width/2, -5));
+    topLayer->addChild(topBar, -1);
     
-    Label* title = Label::createWithTTF(xCartoon->getCurrentCategory().name, "fonts/font1.ttf", 50);
-    title->setPosition(Vec2(topBar->getContentSize().width/2, topBar->getContentSize().height/2));
-    topBar->addChild(title);
+    float fontSize = V::isIpad()? 30:40;
+    Label* title = Label::createWithTTF(xCartoon->getCurrentCategory().name, "fonts/font1.ttf", fontSize);
+    title->setPosition(Vec2(topLayer->getContentSize()/2) + Vec2(0, -7));
+    topLayer->addChild(title, 10);
 
     auto removeCartoonEvent = EventListenerCustom::create("remove_cartoonLayer", CC_CALLBACK_1(ComicScene::responseRemoveCartoonLayer, this));
     _eventDispatcher->addEventListenerWithSceneGraphPriority(removeCartoonEvent, this);
     this->createTableView();
+    
+    MenuItemImage* back = MenuItemImage::create("back_bg.png", "back_bg.png", CC_CALLBACK_1(ComicScene::onButton, this));
+    back->setPosition(Vec2(30, topLayer->getContentSize().height/2));
+    back->setTag(st_button_back);
+    back->setScale(topLayer->getContentSize().height*0.6/back->getContentSize().height);
+    
+    Sprite* back_sprite = Sprite::create("back.png");
+    back_sprite->setPosition(back->getContentSize()/2);
+    back->addChild(back_sprite);
+    
+    Menu* lMenu = Menu::create(back, NULL);
+    lMenu->setPosition(Vec2::ZERO);
+    topLayer->addChild(lMenu, 10);
+    
+    
     
     return true;
 }
 
 void ComicScene::createTableView()
 {
-    TableView* table = TableView::create(this, Size(this->getContentSize().width, this->getContentSize().height - TOP_HEIGHT));
+    TableView* table = TableView::create(this, Size(this->getContentSize().width, this->getContentSize().height - TOP_HEIGHT + 8));
     table->setDirection(cocos2d::extension::ScrollView::Direction::VERTICAL);
     table->setVerticalFillOrder(cocos2d::extension::TableView::VerticalFillOrder::TOP_DOWN);
     
     table->setDelegate(this);
     table->ignoreAnchorPointForPosition(false);
     table->setAnchorPoint(Vec2(0.5, 1));
-    table->setPosition(Vec2(this->getContentSize().width/2, this->getContentSize().height - TOP_HEIGHT));
+    table->setPosition(Vec2(this->getContentSize().width/2, this->getContentSize().height - TOP_HEIGHT + 8));
     table->reloadData();
 
     this->addChild(table);
+}
+
+void ComicScene::onButton(Ref* ref)
+{
+    MenuItemImage* lMenuItem = (MenuItemImage*)ref;
+    switch (lMenuItem->getTag()) {
+        case st_button_back:
+        {
+            Director::getInstance()->replaceScene(TransitionSlideInL::create(0.2f, HomeScene::create()));
+        }
+            break;
+            
+        default:
+            break;
+    }
 }
 
 void ComicScene::responseRemoveCartoonLayer(EventCustom* event)
@@ -77,7 +117,7 @@ void ComicScene::responseSpriteClick(Ref* ref)
     xCartoon->setCurrentCartoon(index);
     
     ShowCartoonInfoLayer* layer = ShowCartoonInfoLayer::create(xCartoon->getCurrentCategory()._cartoonVec.at(index));
-    this->addChild(layer);
+    this->addChild(layer, 100);
     _cartoonLayer = layer;
 }
 
@@ -91,7 +131,12 @@ Size ComicScene::tableCellSizeForIndex(TableView *table, ssize_t idx)
     float height = ((this->getContentSize().width - (col + 1)*SPACE)/col)*608./346 + SPACE;
     if (idx == this->numberOfCellsInTableView(nullptr) -1)
     {
-        height += 100;
+        height += 120;
+    }
+    
+    if (idx == 0)
+    {
+        height += 10;
     }
     
     return Size(this->getContentSize().width, height);
@@ -127,12 +172,16 @@ TableViewCell* ComicScene::tableCellAtIndex(TableView *table, ssize_t idx)
         lSprite->setPosition(Vec2((i + 1)*SPACE + (i + 0.5)*width, 0));
         lSprite->addListener(this, callfuncO_selector(ComicScene::responseSpriteClick));
         
-        Label* name = Label::createWithSystemFont(info.name, "Arial", 40);
+        Label* name = Label::createWithTTF(info.name, "fonts/d2.ttf", 40);
         name->setPosition(Vec2(lSprite->getContentSize().width/2, 52));
         name->setColor(Color3B(43, 43, 43));
         lSprite->addChild(name, 11);
         
-        
+        if (name->getContentSize().width > (width + 20))
+        {
+            name->setScale((width + 20)/name->getContentSize().width);
+        }
+
         if (idx == this->numberOfCellsInTableView(NULL)-1)
         {
             lSprite->setPosition(Vec2((i + 1)*SPACE + (i + 0.5)*width, 100));
