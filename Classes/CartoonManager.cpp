@@ -145,3 +145,13 @@ string CartoonManager::getCurrentFolder()
         return _currentFolder;
     }
 }
+
+void CartoonManager::setReadMode(Mode mode)
+{
+    _mode = mode;
+}
+
+CartoonManager::Mode CartoonManager::getReadMode()
+{
+    return _mode;
+}

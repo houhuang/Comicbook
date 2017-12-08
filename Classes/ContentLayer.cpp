@@ -63,6 +63,7 @@ void ContentLayer::onEnterTransitionDidFinish()
     display();
 }
 
+
 void ContentLayer::updateContent(Picture& picture)
 {
     if (_contentSprite)
@@ -106,7 +107,18 @@ void ContentLayer::imageLoadedCallback(Texture2D* texture)
     {
         float scaleX = this->getContentSize().width/lSprite->getContentSize().width;
         float scaleY = this->getContentSize().height/lSprite->getContentSize().height;
-        float scale = scaleX < scaleY ? scaleX : scaleY;
+        float scale;
+        if (xCartoon->getReadMode() == CartoonManager::Mode::VERTICAL)
+        {
+            scale =this->getContentSize().height/lSprite->getContentSize().height;
+        }else if (xCartoon->getReadMode() == CartoonManager::Mode::HORIZONTAL)
+        {
+            scale = this->getContentSize().width/lSprite->getContentSize().width;
+        }else if (xCartoon->getReadMode() == CartoonManager::Mode::AUTOMODE)
+        {
+            scale = scaleX < scaleY ? scaleX : scaleY;
+        }
+        
         lSprite->setScale(scale);
         lSprite->setPosition(this->getContentSize()/2);
         this->addChild(lSprite);

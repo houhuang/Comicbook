@@ -14,6 +14,7 @@
 USING_NS_CC;
 using namespace std;
 
+
 class ContentLayer : public LayerColor
 {
 public:
@@ -31,6 +32,7 @@ public:
     void responseDownloadSuc(EventCustom* event);
     
     void updateContent(Picture& picture);
+    
 private:
     string getPath();
     Picture _picture;

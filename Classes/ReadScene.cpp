@@ -93,12 +93,12 @@ void ReadScene::initUILayer()
     this->addChild(rightLayer);
     _rightLayer = rightLayer;
     
-    MenuItemImage* lLeftMenu = MenuItemImage::create("read_btn.png", "read_btn.png", CC_CALLBACK_1(ReadScene::onButton, this));
+    MenuItemImage* lLeftMenu = MenuItemImage::create("arrow_left.png", "arrow_left_c.png", CC_CALLBACK_1(ReadScene::onButton, this));
     lLeftMenu->setAnchorPoint(Vec2(0, 0.5));
     V::setPosition(lLeftMenu, 0, 300, false, false, true, false);
     lLeftMenu->setTag(st_button_left);
     
-    MenuItemImage* lRightMenu = MenuItemImage::create("read_btn.png", "read_btn.png", CC_CALLBACK_1(ReadScene::onButton, this));
+    MenuItemImage* lRightMenu = MenuItemImage::create("arrow_right.png", "arrow_right_c.png", CC_CALLBACK_1(ReadScene::onButton, this));
     lRightMenu->setAnchorPoint(Vec2(1, 0.5));
     V::setPosition(lRightMenu, 640, 300, false, false, false, true);
     lRightMenu->setTag(st_button_right);

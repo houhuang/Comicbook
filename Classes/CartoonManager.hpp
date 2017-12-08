@@ -57,6 +57,15 @@ public:
 class CartoonManager
 {
 public:
+    
+    enum class Mode
+    {
+        HORIZONTAL,
+        VERTICAL,
+        AUTOMODE,
+    };
+    
+public:
     static CartoonManager* getInstance();
     
 public:
@@ -79,6 +88,8 @@ public:
     
 public:
     
+    void setReadMode(Mode mode);
+    Mode getReadMode();
 protected:
     vector<CartoonInfo> _cartoonInfo;
 
@@ -95,7 +106,7 @@ private:
     
     string _currentFolder = "";
     
-    
+    Mode    _mode = Mode::AUTOMODE;
 };
 
 #endif /* CartoonManager_hpp */
