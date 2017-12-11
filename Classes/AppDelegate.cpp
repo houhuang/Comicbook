@@ -1,9 +1,9 @@
 #include "AppDelegate.h"
-#include "DownloadManager.hpp"
-#include "HomeScene.hpp"
-#include "SearchPathManager.hpp"
+#include "DownloadManager.h"
+#include "HomeScene.h"
+#include "SearchPathManager.h"
 #include "STVisibleRect.h"
-#include "ReadScene.hpp"
+#include "ReadScene.h"
 
 USING_NS_CC;
 
@@ -44,7 +44,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     }
 
     // turn on display FPS
-    director->setDisplayStats(true);
+    director->setDisplayStats(false);
 
     // set FPS. the default value is 1.0/60 if you don't call this
     director->setAnimationInterval(1.0 / 60);
@@ -61,7 +61,10 @@ bool AppDelegate::applicationDidFinishLaunching() {
     // create a scene. it's an autorelease object
 //    auto scene = HelloWorld::createScene();
 
+    
     // run
+    xCartoon->readCategoryCsv();
+    
     director->runWithScene(HomeScene::create());
 
     return true;

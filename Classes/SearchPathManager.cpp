@@ -6,7 +6,7 @@
 //
 //
 
-#include "SearchPathManager.hpp"
+#include "SearchPathManager.h"
 
 static SearchPathManager* _instance = nullptr;
 

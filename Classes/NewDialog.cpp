@@ -6,7 +6,7 @@
 //
 //
 
-#include "NewDialog.hpp"
+#include "NewDialog.h"
 #include "STVisibleRect.h"
 
 enum

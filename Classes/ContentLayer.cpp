@@ -6,9 +6,9 @@
 //
 //
 
-#include "ContentLayer.hpp"
-#include "ThreadManager.hpp"
-#include "DownloadManager.hpp"
+#include "ContentLayer.h"
+#include "ThreadManager.h"
+#include "DownloadManager.h"
 
 ContentLayer* ContentLayer::create(Picture& picture)
 {

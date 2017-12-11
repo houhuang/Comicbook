@@ -26,6 +26,7 @@
 		2749CDFF1FD1499200833B44 /* ThreadManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2749CDFD1FD1499200833B44 /* ThreadManager.cpp */; };
 		274F5B331FD778EA0042C9C6 /* ReadScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 274F5B311FD778EA0042C9C6 /* ReadScene.cpp */; };
 		274F5B3B1FD7D39D0042C9C6 /* ContentLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 274F5B391FD7D39D0042C9C6 /* ContentLayer.cpp */; };
+		2797F5AA1FDA6DFD002ED8FD /* EventSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2797F5A81FDA6DFD002ED8FD /* EventSprite.cpp */; };
 		27C30AE41FD54D83005AF86D /* cover in Resources */ = {isa = PBXBuildFile; fileRef = 27C30AE31FD54D83005AF86D /* cover */; };
 		27DE91441FD6966F001A859A /* piccsv in Resources */ = {isa = PBXBuildFile; fileRef = 27DE91431FD6966F001A859A /* piccsv */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
@@ -120,31 +121,33 @@
 		270D77E41FD4D39B008E1BD9 /* ui */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ui; sourceTree = "<group>"; };
 		270D77E71FD4D62A008E1BD9 /* data */ = {isa = PBXFileReference; lastKnownFileType = folder; path = data; sourceTree = "<group>"; };
 		270D77E91FD4E5CE008E1BD9 /* ComicScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ComicScene.cpp; sourceTree = "<group>"; };
-		270D77EA1FD4E5CE008E1BD9 /* ComicScene.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ComicScene.hpp; sourceTree = "<group>"; };
 		270D77ED1FD4FC62008E1BD9 /* ShwoCartoonInfoLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ShwoCartoonInfoLayer.cpp; sourceTree = "<group>"; };
-		270D77EE1FD4FC62008E1BD9 /* ShwoCartoonInfoLayer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ShwoCartoonInfoLayer.hpp; sourceTree = "<group>"; };
 		27335BF91FD8D23E00D9E87B /* NewDialog.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NewDialog.cpp; sourceTree = "<group>"; };
-		27335BFA1FD8D23E00D9E87B /* NewDialog.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = NewDialog.hpp; sourceTree = "<group>"; };
 		2749CDE31FD1413100833B44 /* DownloadManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DownloadManager.cpp; sourceTree = "<group>"; };
-		2749CDE41FD1413100833B44 /* DownloadManager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = DownloadManager.hpp; sourceTree = "<group>"; };
 		2749CDE71FD1436C00833B44 /* CartoonManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CartoonManager.cpp; sourceTree = "<group>"; };
-		2749CDE81FD1436C00833B44 /* CartoonManager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CartoonManager.hpp; sourceTree = "<group>"; };
 		2749CDEB1FD1454E00833B44 /* CSVParse.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CSVParse.cpp; sourceTree = "<group>"; };
 		2749CDEC1FD1454E00833B44 /* CSVParse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSVParse.h; sourceTree = "<group>"; };
 		2749CDED1FD1454E00833B44 /* STVisibleRect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = STVisibleRect.cpp; sourceTree = "<group>"; };
 		2749CDEE1FD1454E00833B44 /* STVisibleRect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STVisibleRect.h; sourceTree = "<group>"; };
 		2749CDF11FD1458700833B44 /* SearchPathManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SearchPathManager.cpp; sourceTree = "<group>"; };
-		2749CDF21FD1458700833B44 /* SearchPathManager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SearchPathManager.hpp; sourceTree = "<group>"; };
 		2749CDF51FD146C300833B44 /* HomeScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HomeScene.cpp; sourceTree = "<group>"; };
-		2749CDF61FD146C300833B44 /* HomeScene.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = HomeScene.hpp; sourceTree = "<group>"; };
 		2749CDF91FD1473800833B44 /* CoverSprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CoverSprite.cpp; sourceTree = "<group>"; };
-		2749CDFA1FD1473800833B44 /* CoverSprite.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CoverSprite.hpp; sourceTree = "<group>"; };
 		2749CDFD1FD1499200833B44 /* ThreadManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ThreadManager.cpp; sourceTree = "<group>"; };
-		2749CDFE1FD1499200833B44 /* ThreadManager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ThreadManager.hpp; sourceTree = "<group>"; };
 		274F5B311FD778EA0042C9C6 /* ReadScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ReadScene.cpp; sourceTree = "<group>"; };
-		274F5B321FD778EA0042C9C6 /* ReadScene.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ReadScene.hpp; sourceTree = "<group>"; };
 		274F5B391FD7D39D0042C9C6 /* ContentLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ContentLayer.cpp; sourceTree = "<group>"; };
-		274F5B3A1FD7D39D0042C9C6 /* ContentLayer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ContentLayer.hpp; sourceTree = "<group>"; };
+		2797F59A1FDA62CF002ED8FD /* ReadScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReadScene.h; sourceTree = "<group>"; };
+		2797F59B1FDA62D6002ED8FD /* SearchPathManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchPathManager.h; sourceTree = "<group>"; };
+		2797F59C1FDA62DC002ED8FD /* ShwoCartoonInfoLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShwoCartoonInfoLayer.h; sourceTree = "<group>"; };
+		2797F59D1FDA62E8002ED8FD /* CartoonManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CartoonManager.h; sourceTree = "<group>"; };
+		2797F59E1FDA62E8002ED8FD /* ThreadManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ThreadManager.h; sourceTree = "<group>"; };
+		2797F59F1FDA62EE002ED8FD /* ComicScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ComicScene.h; sourceTree = "<group>"; };
+		2797F5A01FDA62F3002ED8FD /* ContentLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ContentLayer.h; sourceTree = "<group>"; };
+		2797F5A11FDA62F8002ED8FD /* CoverSprite.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CoverSprite.h; sourceTree = "<group>"; };
+		2797F5A21FDA62FE002ED8FD /* DownloadManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DownloadManager.h; sourceTree = "<group>"; };
+		2797F5A31FDA6303002ED8FD /* HomeScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomeScene.h; sourceTree = "<group>"; };
+		2797F5A41FDA630A002ED8FD /* NewDialog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NewDialog.h; sourceTree = "<group>"; };
+		2797F5A81FDA6DFD002ED8FD /* EventSprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EventSprite.cpp; sourceTree = "<group>"; };
+		2797F5A91FDA6DFD002ED8FD /* EventSprite.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EventSprite.hpp; sourceTree = "<group>"; };
 		27C30AE31FD54D83005AF86D /* cover */ = {isa = PBXFileReference; lastKnownFileType = folder; path = cover; sourceTree = "<group>"; };
 		27DE91431FD6966F001A859A /* piccsv */ = {isa = PBXFileReference; lastKnownFileType = folder; path = piccsv; sourceTree = "<group>"; };
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -278,12 +281,12 @@
 		270D77EC1FD4FC3F008E1BD9 /* layer */ = {
 			isa = PBXGroup;
 			children = (
+				2797F5A41FDA630A002ED8FD /* NewDialog.h */,
+				2797F5A01FDA62F3002ED8FD /* ContentLayer.h */,
+				2797F59C1FDA62DC002ED8FD /* ShwoCartoonInfoLayer.h */,
 				27335BF91FD8D23E00D9E87B /* NewDialog.cpp */,
-				27335BFA1FD8D23E00D9E87B /* NewDialog.hpp */,
 				270D77ED1FD4FC62008E1BD9 /* ShwoCartoonInfoLayer.cpp */,
-				270D77EE1FD4FC62008E1BD9 /* ShwoCartoonInfoLayer.hpp */,
 				274F5B391FD7D39D0042C9C6 /* ContentLayer.cpp */,
-				274F5B3A1FD7D39D0042C9C6 /* ContentLayer.hpp */,
 			);
 			name = layer;
 			sourceTree = "<group>";
@@ -291,14 +294,14 @@
 		2749CDE21FD13FE500833B44 /* manager */ = {
 			isa = PBXGroup;
 			children = (
+				2797F5A21FDA62FE002ED8FD /* DownloadManager.h */,
+				2797F59D1FDA62E8002ED8FD /* CartoonManager.h */,
+				2797F59E1FDA62E8002ED8FD /* ThreadManager.h */,
+				2797F59B1FDA62D6002ED8FD /* SearchPathManager.h */,
 				2749CDFD1FD1499200833B44 /* ThreadManager.cpp */,
-				2749CDFE1FD1499200833B44 /* ThreadManager.hpp */,
 				2749CDF11FD1458700833B44 /* SearchPathManager.cpp */,
-				2749CDF21FD1458700833B44 /* SearchPathManager.hpp */,
 				2749CDE31FD1413100833B44 /* DownloadManager.cpp */,
-				2749CDE41FD1413100833B44 /* DownloadManager.hpp */,
 				2749CDE71FD1436C00833B44 /* CartoonManager.cpp */,
-				2749CDE81FD1436C00833B44 /* CartoonManager.hpp */,
 			);
 			name = manager;
 			sourceTree = "<group>";
@@ -317,12 +320,12 @@
 		2749CDF41FD146A800833B44 /* scene */ = {
 			isa = PBXGroup;
 			children = (
+				2797F5A31FDA6303002ED8FD /* HomeScene.h */,
+				2797F59F1FDA62EE002ED8FD /* ComicScene.h */,
+				2797F59A1FDA62CF002ED8FD /* ReadScene.h */,
 				2749CDF51FD146C300833B44 /* HomeScene.cpp */,
-				2749CDF61FD146C300833B44 /* HomeScene.hpp */,
 				270D77E91FD4E5CE008E1BD9 /* ComicScene.cpp */,
-				270D77EA1FD4E5CE008E1BD9 /* ComicScene.hpp */,
 				274F5B311FD778EA0042C9C6 /* ReadScene.cpp */,
-				274F5B321FD778EA0042C9C6 /* ReadScene.hpp */,
 			);
 			name = scene;
 			sourceTree = "<group>";
@@ -330,8 +333,10 @@
 		2749CDF81FD1472400833B44 /* Sprite */ = {
 			isa = PBXGroup;
 			children = (
+				2797F5A11FDA62F8002ED8FD /* CoverSprite.h */,
 				2749CDF91FD1473800833B44 /* CoverSprite.cpp */,
-				2749CDFA1FD1473800833B44 /* CoverSprite.hpp */,
+				2797F5A81FDA6DFD002ED8FD /* EventSprite.cpp */,
+				2797F5A91FDA6DFD002ED8FD /* EventSprite.hpp */,
 			);
 			name = Sprite;
 			sourceTree = "<group>";
@@ -606,6 +611,7 @@
 				2749CDE91FD1436C00833B44 /* CartoonManager.cpp in Sources */,
 				2749CDEF1FD1454E00833B44 /* CSVParse.cpp in Sources */,
 				2749CDE51FD1413100833B44 /* DownloadManager.cpp in Sources */,
+				2797F5AA1FDA6DFD002ED8FD /* EventSprite.cpp in Sources */,
 				27335BFB1FD8D23E00D9E87B /* NewDialog.cpp in Sources */,
 				2749CDFB1FD1473800833B44 /* CoverSprite.cpp in Sources */,
 				274F5B331FD778EA0042C9C6 /* ReadScene.cpp in Sources */,

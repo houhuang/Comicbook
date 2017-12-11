@@ -6,10 +6,10 @@
 //
 //
 
-#include "ReadScene.hpp"
+#include "ReadScene.h"
 #include "STVisibleRect.h"
-#include "ComicScene.hpp"
-#include "HomeScene.hpp"
+#include "ComicScene.h"
+#include "HomeScene.h"
 
 #define THIS_SIZE   this->getContentSize()
 #define MOVE_TIME   0.3f

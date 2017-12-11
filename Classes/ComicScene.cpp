@@ -6,11 +6,11 @@
 //
 //
 
-#include "ComicScene.hpp"
+#include "ComicScene.h"
 #include "STVisibleRect.h"
-#include "CartoonManager.hpp"
-#include "CoverSprite.hpp"
-#include "HomeScene.hpp"
+#include "CartoonManager.h"
+#include "CoverSprite.h"
+#include "HomeScene.h"
 
 #define TOP_HEIGHT              (V::isIpad()? 65 : 86)
 #define col                     (V::isIpad()? 3 : 2)

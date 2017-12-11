@@ -6,13 +6,14 @@
 //
 //
 
-#include "HomeScene.hpp"
-#include "CartoonManager.hpp"
-#include "CoverSprite.hpp"
+#include "HomeScene.h"
+#include "CartoonManager.h"
+#include "CoverSprite.h"
 #include "STVisibleRect.h"
-#include "ComicScene.hpp"
-#include "NewDialog.hpp"
-#include "ReadScene.hpp"
+#include "ComicScene.h"
+#include "NewDialog.h"
+#include "ReadScene.h"
+#include "EventSprite.hpp"
 
 #define top_bar     228
 #define SPACE       40
@@ -40,8 +41,6 @@ bool HomeScene::init()
     topBanner->setPosition(Vec2(this->getContentSize().width/2, this->getContentSize().height));
     this->addChild(topBanner);
     topBar_realHeight = topBanner->getBoundingBox().size.height;
-    
-    xCartoon->readCategoryCsv();
     
     createTable();
     checkProgress();
@@ -96,10 +95,20 @@ void HomeScene::onDialog(const string& name)
     }
 }
 
+void HomeScene::responseCoverSprite(Node* node)
+{
+    EventSprite* lSprite = (EventSprite*)node;
+    if (lSprite)
+    {
+        xCartoon->setCurrentCategory(lSprite->getTag());
+        Director::getInstance()->replaceScene(TransitionSlideInR::create(0.2f, ComicScene::create()));
+    }
+    
+}
+
 void HomeScene::tableCellTouched(TableView* table, TableViewCell* cell)
 {
-    xCartoon->setCurrentCategory(1);
-    Director::getInstance()->replaceScene(TransitionSlideInR::create(0.2f, ComicScene::create()));
+    
 }
 
 Size HomeScene::tableCellSizeForIndex(TableView *table, ssize_t idx)
@@ -140,12 +149,15 @@ TableViewCell* HomeScene::tableCellAtIndex(TableView *table, ssize_t idx)
         lBg->setAnchorPoint(Vec2(0.5, 0.0174));
         lBg->setPosition(Vec2((i + 1)*SPACE + (i + 0.5)*width, 0));
         
-        Sprite* cover = Sprite::create(xCartoon->getCategoryInfo().at(index).cover);
+        EventSprite* cover = EventSprite::create(xCartoon->getCategoryInfo().at(index).cover);
         cover->setAnchorPoint(Vec2(0.5, 1));
         cover->setScaleX(346./cover->getContentSize().width);
         cover->setScaleY(502./cover->getContentSize().height);
         cover->setPosition(Vec2(lBg->getContentSize().width/2, lBg->getContentSize().height - 11));
         lBg->addChild(cover, -1);
+        cover->setTag(index);
+        
+        cover->addListener(callfuncN_selector(HomeScene::responseCoverSprite), this);
         
         if (idx == this->numberOfCellsInTableView(NULL)-1)
         {

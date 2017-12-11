@@ -6,7 +6,7 @@
 //
 //
 
-#include "DownloadManager.hpp"
+#include "DownloadManager.h"
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8) && (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
 #include <sys/types.h>

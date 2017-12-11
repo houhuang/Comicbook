@@ -6,7 +6,7 @@
 //
 //
 
-#include "ThreadManager.hpp"
+#include "ThreadManager.h"
 
 static ThreadManager* _instance = NULL;
 

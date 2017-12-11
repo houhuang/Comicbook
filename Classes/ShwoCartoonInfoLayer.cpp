@@ -6,10 +6,10 @@
 //
 //
 
-#include "ShwoCartoonInfoLayer.hpp"
+#include "ShwoCartoonInfoLayer.h"
 #include "STVisibleRect.h"
-#include "DownloadManager.hpp"
-#include "ReadScene.hpp"
+#include "DownloadManager.h"
+#include "ReadScene.h"
 
 enum{
     st_button_onLineRead = 10,

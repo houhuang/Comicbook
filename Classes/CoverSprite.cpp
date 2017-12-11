@@ -6,9 +6,9 @@
 //
 //
 
-#include "CoverSprite.hpp"
-#include "ThreadManager.hpp"
-#include "DownloadManager.hpp"
+#include "CoverSprite.h"
+#include "ThreadManager.h"
+#include "DownloadManager.h"
 
 CoverSprite* CoverSprite::create(const string folder, string url, Size size)
 {
