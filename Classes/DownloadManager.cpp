@@ -196,6 +196,13 @@ void DownloadManager::downloadPicture(Picture picture)
         std::vector<char>* buffer = response->getResponseData();
         std::string buffff(buffer->begin(), buffer->end());
         
+        long int index = (long int)buffff.find("NoSuchKey");
+        if (index > 0)
+        {
+            lRequest->release();
+            return ;
+        }
+        
         string rr = lRequest->getTag();
         rr = rr.substr(0, rr.find("/") + 1);
         string path = FileUtils::getInstance()->getWritablePath() + "picture/";

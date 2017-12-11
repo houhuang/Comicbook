@@ -25,6 +25,7 @@ public:
     ComicScene();
     virtual bool init();
     
+    void onEnterTransitionDidFinish();
 public:
     void createTableView();
     

@@ -77,6 +77,12 @@ bool ComicScene::init()
     return true;
 }
 
+void ComicScene::onEnterTransitionDidFinish()
+{
+    Scene::onEnterTransitionDidFinish();
+    Director::getInstance()->getTextureCache()->removeUnusedTextures();
+}
+
 void ComicScene::createTableView()
 {
     TableView* table = TableView::create(this, Size(this->getContentSize().width, this->getContentSize().height - TOP_HEIGHT + 8));
