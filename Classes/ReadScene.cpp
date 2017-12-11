@@ -43,7 +43,7 @@ ReadScene::ReadScene()
     _topLayer = nullptr;
     
     _isMoving = false;
-    _currentPage = 0;
+    _currentPage = 1;
     
     _folder = xCartoon->getCurrentCartoon().folder;
     _currentPic = xCartoon->getCurrentPictureInfo();
@@ -176,7 +176,7 @@ void ReadScene::onButton(Ref* ref)
     {
         case st_button_left:
         {
-            if (!_isMoving && _currentPage>1)
+            if (!_isMoving && _currentPage > 0)
             {
                 --_currentPage;
                 updateRightContent();
@@ -196,7 +196,7 @@ void ReadScene::onButton(Ref* ref)
             
         case st_button_right:
         {
-            if (!_isMoving && _currentPage < _currentPic.size()-2)
+            if (!_isMoving && _currentPage <_currentPic.size() -2)
             {
                 ++_currentPage;
                 updateLeftContent();

@@ -155,3 +155,27 @@ CartoonManager::Mode CartoonManager::getReadMode()
 {
     return _mode;
 }
+
+void CartoonManager::setCatagoryOffset(int cId, float offsetY)
+{
+    string name = to_string(cId) + "offsetUserData";
+    UserDefault::getInstance()->setFloatForKey(name.c_str(), offsetY);
+    UserDefault::getInstance()->flush();
+}
+
+float CartoonManager::getCatagoryOffset(int cId)
+{
+    string name = to_string(cId) + "offsetUserData";
+    float offsetY = UserDefault::getInstance()->getFloatForKey(name.c_str(), 10.0);
+    return offsetY;
+}
+
+
+
+
+
+
+
+
+
+

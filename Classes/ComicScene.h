@@ -21,6 +21,7 @@ class ComicScene : public Scene, public TableViewDelegate, public TableViewDataS
 {
 public:
     CREATE_FUNC(ComicScene);
+    ~ComicScene();
     ComicScene();
     virtual bool init();
     
@@ -40,6 +41,7 @@ public:
 protected:
     ShowCartoonInfoLayer*   _cartoonLayer;
     
+    TableView*  _table;
 };
 
 

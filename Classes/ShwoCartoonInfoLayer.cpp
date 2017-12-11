@@ -144,7 +144,7 @@ void ShowCartoonInfoLayer::onButton(Ref* ref)
             xCartoon->getCurrentReadingCartoon().csvPath = "piccsv/" + _cartoonInfo.folder + "_picture.csv";
             
             string data = _cartoonInfo.folder + "pagenumber";
-            int page = UserDefault::getInstance()->getIntegerForKey(data.c_str(), 0);
+            int page = UserDefault::getInstance()->getIntegerForKey(data.c_str(), 1);
             
             Director::getInstance()->replaceScene(TransitionProgressInOut::create(0.2f, ReadScene::create(page, "ComicScene")));
         }

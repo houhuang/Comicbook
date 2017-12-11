@@ -88,9 +88,11 @@ public:
     string getCurrentFolder();
     
 public:
-    
     void setReadMode(Mode mode);
     Mode getReadMode();
+    
+    void setCatagoryOffset(int cId, float offsetY);
+    float getCatagoryOffset(int cId);
 protected:
     vector<CartoonInfo> _cartoonInfo;
 

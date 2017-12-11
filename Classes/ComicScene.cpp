@@ -20,9 +20,15 @@ enum{
     st_button_back = 10,
 };
 
+ComicScene::~ComicScene()
+{
+    xCartoon->setCatagoryOffset(stoi(xCartoon->getCurrentCategory().id), _table->getContentOffset().y);
+}
+
 ComicScene::ComicScene()
 {
     _cartoonLayer = nullptr;
+    _table = nullptr;
 }
 
 bool ComicScene::init()
@@ -76,6 +82,7 @@ void ComicScene::createTableView()
     TableView* table = TableView::create(this, Size(this->getContentSize().width, this->getContentSize().height - TOP_HEIGHT + 8));
     table->setDirection(cocos2d::extension::ScrollView::Direction::VERTICAL);
     table->setVerticalFillOrder(cocos2d::extension::TableView::VerticalFillOrder::TOP_DOWN);
+    _table = table;
     
     table->setDelegate(this);
     table->ignoreAnchorPointForPosition(false);
@@ -83,6 +90,15 @@ void ComicScene::createTableView()
     table->setPosition(Vec2(this->getContentSize().width/2, this->getContentSize().height - TOP_HEIGHT + 8));
     table->reloadData();
 
+    float offsetY = xCartoon->getCatagoryOffset(stoi(xCartoon->getCurrentCategory().id));
+    if (offsetY > 0)
+    {
+        table->setContentOffset(Vec2(table->getContentOffset().x, table->minContainerOffset().y));
+    }else
+    {
+        table->setContentOffset(Vec2(table->getContentOffset().x, offsetY));
+    }
+    
     this->addChild(table);
 }
 
