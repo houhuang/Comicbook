@@ -157,6 +157,11 @@ TableViewCell* HomeScene::tableCellAtIndex(TableView *table, ssize_t idx)
         lBg->addChild(cover, -1);
         cover->setTag(index);
         
+        Label* name = Label::createWithTTF(xCartoon->getCategoryInfo().at(index).name, "fonts/d2.ttf", 50);
+        name->setPosition(Vec2(lBg->getContentSize().width/2, 62));
+        name->setColor(Color3B(43, 43, 43));
+        lBg->addChild(name, 11);
+        
         cover->addListener(callfuncN_selector(HomeScene::responseCoverSprite), this);
         
         if (idx == this->numberOfCellsInTableView(NULL)-1)
