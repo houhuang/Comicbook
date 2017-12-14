@@ -47,6 +47,7 @@ public class AppActivity extends Cocos2dxActivity {
     private static AppActivity mActivity = null;
     private AdView adView;
 
+    private AdRequest adRequest;
 
     private InterstitialAd mInterstitialAd;
 
@@ -72,7 +73,7 @@ public class AppActivity extends Cocos2dxActivity {
         view_para.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM,RelativeLayout.TRUE);
         adView.setLayoutParams(view_para);
 
-        AdRequest adRequest = new AdRequest.Builder().build();
+        adRequest = new AdRequest.Builder().build();
         adView.loadAd(adRequest);
         adView.setAdListener(new AdListener() {
             @Override
@@ -101,15 +102,14 @@ public class AppActivity extends Cocos2dxActivity {
             }
         });
 
-
         mInterstitialAd = new InterstitialAd(this);
         mInterstitialAd.setAdUnitId("ca-app-pub-9291877653530829/5798846191");
-        mInterstitialAd.loadAd(new AdRequest.Builder().build());
+        mInterstitialAd.loadAd(adRequest);
         mInterstitialAd.setAdListener(new AdListener() {
             @Override
             public void onAdClosed() {
                 super.onAdClosed();
-                mInterstitialAd.loadAd(new AdRequest.Builder().build());
+                mInterstitialAd.loadAd(adRequest);
             }
 
             @Override
@@ -175,7 +175,8 @@ public class AppActivity extends Cocos2dxActivity {
                     mInterstitialAd.show();
                 }else
                 {
-                    mInterstitialAd.loadAd(new AdRequest.Builder().build());
+                    mInterstitialAd.loadAd(adRequest);
+
                 }
             }
         });

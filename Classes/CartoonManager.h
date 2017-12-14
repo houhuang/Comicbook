@@ -66,6 +66,8 @@ public:
         AUTOMODE,
     };
     
+    static int adsCount;
+    
 public:
     static CartoonManager* getInstance();
     

@@ -56,10 +56,10 @@ bool ComicScene::init()
     title->setPosition(Vec2(topLayer->getContentSize()/2) + Vec2(0, -7));
     topLayer->addChild(title, 10);
 
-    auto removeCartoonEvent = EventListenerCustom::create("remove_cartoonLayer", CC_CALLBACK_1(ComicScene::responseRemoveCartoonLayer, this));
+    auto removeCartoonEvent = EventListenerCustom::create(st_remove_showCartoonLayer, CC_CALLBACK_1(ComicScene::responseRemoveCartoonLayer, this));
     _eventDispatcher->addEventListenerWithSceneGraphPriority(removeCartoonEvent, this);
     
-    this->createTableView();
+//    this->createTableView();
     
     MenuItemImage* back = MenuItemImage::create("back_bg.png", "back_bg.png", CC_CALLBACK_1(ComicScene::onButton, this));
     back->setPosition(Vec2(30, topLayer->getContentSize().height/2));
@@ -80,9 +80,11 @@ bool ComicScene::init()
 void ComicScene::onEnterTransitionDidFinish()
 {
     Scene::onEnterTransitionDidFinish();
-
+    
+    createTableView();
+    
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-
+    
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     STSystemFunction sf;
     sf.showFullScreen();
@@ -104,20 +106,21 @@ void ComicScene::createTableView()
     table->ignoreAnchorPointForPosition(false);
     table->setAnchorPoint(Vec2(0.5, 1));
     table->setPosition(Vec2(this->getContentSize().width/2, this->getContentSize().height - TOP_HEIGHT + 8));
-    table->reloadData();
 
-    float offsetY = xCartoon->getCatagoryOffset(stoi(xCartoon->getCurrentCategory().id));
-    if (offsetY > 0)
-    {
-//        table->setContentOffset(Vec2(table->getContentOffset().x, table->minContainerOffset().y));
-        table->setContentOffsetInDuration(Vec2(table->getContentOffset().x, table->minContainerOffset().y), 0.0f);
-    }else
-    {
-//        table->setContentOffset(Vec2(table->getContentOffset().x, offsetY));
-        table->setContentOffsetInDuration(Vec2(table->getContentOffset().x, offsetY), 0.0f);
-    }
+//    float offsetY = xCartoon->getCatagoryOffset(stoi(xCartoon->getCurrentCategory().id));
+//    if (offsetY > 0)
+//    {
+////        table->setContentOffset(Vec2(table->getContentOffset().x, table->minContainerOffset().y));
+//        table->setContentOffsetInDuration(Vec2(table->getContentOffset().x, table->minContainerOffset().y), 0.0f);
+//    }else
+//    {
+////        table->setContentOffset(Vec2(table->getContentOffset().x, offsetY));
+//        table->setContentOffsetInDuration(Vec2(table->getContentOffset().x, offsetY), 0.0f);
+//    }
     
     this->addChild(table);
+    
+    table->reloadData();
 }
 
 void ComicScene::onButton(Ref* ref)
@@ -153,6 +156,9 @@ void ComicScene::responseSpriteClick(Ref* ref)
     ShowCartoonInfoLayer* layer = ShowCartoonInfoLayer::create(xCartoon->getCurrentCategory()._cartoonVec.at(index));
     this->addChild(layer, 100);
     _cartoonLayer = layer;
+
+    string userText = xCartoon->getCurrentCategory()._cartoonVec.at(index).folder + "isNewCartoon";
+    UserDefault::getInstance()->setBoolForKey(userText.c_str(), false);
 }
 
 void ComicScene::tableCellTouched(TableView* table, TableViewCell* cell)
@@ -206,6 +212,23 @@ TableViewCell* ComicScene::tableCellAtIndex(TableView *table, ssize_t idx)
         lSprite->setPosition(Vec2((i + 1)*SPACE + (i + 0.5)*width, 0));
         lSprite->addListener(this, callfuncO_selector(ComicScene::responseSpriteClick));
         
+        string userText = info.folder + "isNewCartoon";
+        bool isNew = UserDefault::getInstance()->getBoolForKey(userText.c_str(), true);
+        
+        bool isNewCartoon = false;
+        if (info.isNew == "true")
+        {
+            isNewCartoon = true;
+        }
+        
+        if (isNew && isNewCartoon)
+        {
+            Sprite* newSprite = Sprite::create("new.png");
+            newSprite->setPosition(Vec2(0, lSprite->getContentSize().height) + Vec2(8, -8));
+            newSprite->setScale(0.6f);
+            lSprite->addChild(newSprite, 10);
+        }
+        
         Label* name = Label::createWithTTF(info.name, "fonts/d2.ttf", 40);
         name->setPosition(Vec2(lSprite->getContentSize().width/2, 52));
         name->setColor(Color3B(43, 43, 43));
@@ -249,7 +272,14 @@ void ComicScene::addBackListener()
         
         if (code == EventKeyboard::KeyCode::KEY_BACK)
         {
-            Director::getInstance()->replaceScene(TransitionSlideInL::create(0.2f, HomeScene::create()));
+            if (_cartoonLayer)
+            {
+                _cartoonLayer->removeFromParentAndCleanup(true);
+                _cartoonLayer = nullptr;
+            }else
+            {
+                Director::getInstance()->replaceScene(TransitionSlideInL::create(0.2f, HomeScene::create()));
+            }
         }
     };
     

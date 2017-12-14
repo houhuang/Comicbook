@@ -11,6 +11,8 @@
 
 static CartoonManager* _instance = nullptr;
 
+int CartoonManager::adsCount = 0;
+
 CartoonManager* CartoonManager::getInstance()
 {
     if (!_instance)

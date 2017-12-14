@@ -163,7 +163,7 @@ void ShowCartoonInfoLayer::onButton(Ref* ref)
             
         case st_button_cancel:
         {
-            
+            _eventDispatcher->dispatchCustomEvent(st_remove_showCartoonLayer);
         }
             break;
             
@@ -224,7 +224,7 @@ void ShowCartoonInfoLayer::addListener()
         float distance = _firstVec.distance(touch->getLocation());
         if (distance < 10 && !_isClickThis)
         {
-            Director::getInstance()->getEventDispatcher()->dispatchCustomEvent("remove_cartoonLayer");
+            Director::getInstance()->getEventDispatcher()->dispatchCustomEvent(st_remove_showCartoonLayer);
         }
     };
     
@@ -232,7 +232,7 @@ void ShowCartoonInfoLayer::addListener()
         float distance = _firstVec.distance(touch->getLocation());
         if (distance < 10 && !_isClickThis)
         {
-            Director::getInstance()->getEventDispatcher()->dispatchCustomEvent("remove_cartoonLayer");
+            Director::getInstance()->getEventDispatcher()->dispatchCustomEvent(st_remove_showCartoonLayer);
         }
     };
     

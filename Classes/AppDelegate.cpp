@@ -74,12 +74,16 @@ bool AppDelegate::applicationDidFinishLaunching() {
 void AppDelegate::applicationDidEnterBackground() {
     Director::getInstance()->stopAnimation();
     
-    if (Director::getInstance()->getRunningScene()->getName() == "ReadScene")
+    Scene* lScene = dynamic_cast<Scene*>(Director::getInstance()->getRunningScene());
+    if (lScene)
     {
-        ReadScene* scene = (ReadScene*)Director::getInstance()->getRunningScene();
-        if (scene)
+        if (lScene->getName() == "ReadScene")
         {
-            scene->saveCurrentPage();
+            ReadScene* scene = (ReadScene*)Director::getInstance()->getRunningScene();
+            if (scene)
+            {
+                scene->saveCurrentPage();
+            }
         }
     }
 

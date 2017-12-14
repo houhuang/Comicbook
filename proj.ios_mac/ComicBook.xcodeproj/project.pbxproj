@@ -26,6 +26,7 @@
 		2749CDFF1FD1499200833B44 /* ThreadManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2749CDFD1FD1499200833B44 /* ThreadManager.cpp */; };
 		274F5B331FD778EA0042C9C6 /* ReadScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 274F5B311FD778EA0042C9C6 /* ReadScene.cpp */; };
 		274F5B3B1FD7D39D0042C9C6 /* ContentLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 274F5B391FD7D39D0042C9C6 /* ContentLayer.cpp */; };
+		275898E81FE2720E00E76356 /* SettingLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 275898E61FE2720E00E76356 /* SettingLayer.cpp */; };
 		2797F5AA1FDA6DFD002ED8FD /* EventSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2797F5A81FDA6DFD002ED8FD /* EventSprite.cpp */; };
 		27C30AE41FD54D83005AF86D /* cover in Resources */ = {isa = PBXBuildFile; fileRef = 27C30AE31FD54D83005AF86D /* cover */; };
 		27DE91441FD6966F001A859A /* piccsv in Resources */ = {isa = PBXBuildFile; fileRef = 27DE91431FD6966F001A859A /* piccsv */; };
@@ -136,6 +137,8 @@
 		2749CDFD1FD1499200833B44 /* ThreadManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ThreadManager.cpp; sourceTree = "<group>"; };
 		274F5B311FD778EA0042C9C6 /* ReadScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ReadScene.cpp; sourceTree = "<group>"; };
 		274F5B391FD7D39D0042C9C6 /* ContentLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ContentLayer.cpp; sourceTree = "<group>"; };
+		275898E61FE2720E00E76356 /* SettingLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SettingLayer.cpp; sourceTree = "<group>"; };
+		275898E71FE2720E00E76356 /* SettingLayer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SettingLayer.hpp; sourceTree = "<group>"; };
 		2797F59A1FDA62CF002ED8FD /* ReadScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReadScene.h; sourceTree = "<group>"; };
 		2797F59B1FDA62D6002ED8FD /* SearchPathManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchPathManager.h; sourceTree = "<group>"; };
 		2797F59C1FDA62DC002ED8FD /* ShwoCartoonInfoLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShwoCartoonInfoLayer.h; sourceTree = "<group>"; };
@@ -291,6 +294,8 @@
 				274F5B391FD7D39D0042C9C6 /* ContentLayer.cpp */,
 				2797F5A41FDA630A002ED8FD /* NewDialog.h */,
 				27335BF91FD8D23E00D9E87B /* NewDialog.cpp */,
+				275898E61FE2720E00E76356 /* SettingLayer.cpp */,
+				275898E71FE2720E00E76356 /* SettingLayer.hpp */,
 			);
 			name = layer;
 			sourceTree = "<group>";
@@ -642,6 +647,7 @@
 				2749CDF31FD1458700833B44 /* SearchPathManager.cpp in Sources */,
 				2749CDFF1FD1499200833B44 /* ThreadManager.cpp in Sources */,
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
+				275898E81FE2720E00E76356 /* SettingLayer.cpp in Sources */,
 				503AE10117EB989F00D1A890 /* main.m in Sources */,
 				2749CDF01FD1454E00833B44 /* STVisibleRect.cpp in Sources */,
 				2749CDF71FD146C300833B44 /* HomeScene.cpp in Sources */,

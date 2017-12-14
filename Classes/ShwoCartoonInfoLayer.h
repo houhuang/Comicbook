@@ -13,6 +13,9 @@
 #include "cocos2d.h"
 #include "CartoonManager.h"
 USING_NS_CC;
+
+#define st_remove_showCartoonLayer  "remove_cartoonLayer"
+
 class ShowCartoonInfoLayer : public LayerColor
 {
 public:

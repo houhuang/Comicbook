@@ -10,6 +10,7 @@
 #include "STVisibleRect.h"
 #include "ComicScene.h"
 #include "HomeScene.h"
+#include "STSystemFunction.h"
 
 #define THIS_SIZE   this->getContentSize()
 #define MOVE_TIME   0.3f
@@ -201,6 +202,18 @@ void ReadScene::onButton(Ref* ref)
         {
             if (!_isMoving && _currentPage <_currentPic.size() -2)
             {
+                ++CartoonManager::adsCount;
+                if (CartoonManager::adsCount > 10)
+                {
+                    CartoonManager::adsCount = 0;
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+                    
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+                    STSystemFunction sf;
+                    sf.showFullScreen();
+#endif
+                }
+                
                 ++_currentPage;
                 updateLeftContent();
                 

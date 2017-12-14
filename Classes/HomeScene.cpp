@@ -18,18 +18,29 @@
 #define SPACE       40
 #define col         (V::isIpad()? 3:2)
 
-
+enum{
+    st_button_setting = 10,
+};
 
 HomeScene::HomeScene()
 {
     topBar_realHeight = 0.0f;
     _dialog = nullptr;
+    _bannerSprite = nullptr;
+    _tableView = nullptr;
+    _settingLayer = nullptr;
 }
 
 void HomeScene::registerNotification()
 {
     auto removeDialogEvent = EventListenerCustom::create(st_remove_dialog, CC_CALLBACK_1(HomeScene::removeDailog, this));
     _eventDispatcher->addEventListenerWithSceneGraphPriority(removeDialogEvent, this);
+    
+    auto removeSettingLayerEvent = EventListenerCustom::create(st_remove_settingLayer, CC_CALLBACK_1(HomeScene::removeSettingLayer, this));
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(removeSettingLayerEvent, this);
+    
+    auto removeShowClearDataDialogEvent = EventListenerCustom::create(st_showDialog_clearDataDialog, CC_CALLBACK_1(HomeScene::showClearDataDialog, this));
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(removeShowClearDataDialogEvent, this);
 }
 
 bool HomeScene::init()
@@ -40,13 +51,6 @@ bool HomeScene::init()
     
     LayerColor* layer = LayerColor::create(Color4B(245, 245, 245, 255));
     this->addChild(layer);
-    
-    Sprite* topBanner = Sprite::create("title.png");
-    topBanner->setAnchorPoint(Vec2(0.5, 1));
-    topBanner->setScale(this->getContentSize().width/topBanner->getContentSize().width);
-    topBanner->setPosition(Vec2(this->getContentSize().width/2, this->getContentSize().height));
-    this->addChild(topBanner);
-    topBar_realHeight = topBanner->getBoundingBox().size.height;
     
     createTable();
     checkProgress();
@@ -99,17 +103,35 @@ void HomeScene::removeDailog(EventCustom* event)
     }
 }
 
+void HomeScene::removeSettingLayer(EventCustom* event)
+{
+    if (_settingLayer)
+    {
+        _settingLayer->removeFromParentAndCleanup(true);
+        _settingLayer = nullptr;
+    }
+}
+
+void HomeScene::showClearDataDialog(EventCustom* event)
+{
+    NewDialog* lDialog = NewDialog::create("清理缓存？", "否", "清理");
+    lDialog->addButtonListener(CC_CALLBACK_1(HomeScene::onDialog, this));
+    this->addChild(lDialog, 101);
+    _dialog = lDialog;
+}
+
 void HomeScene::createTable()
 {
-    TableView* table = TableView::create(this, Size(this->getContentSize().width, this->getContentSize().height - topBar_realHeight));
+    TableView* table = TableView::create(this, Size(this->getContentSize().width, this->getContentSize().height));
     table->setDirection(cocos2d::extension::ScrollView::Direction::VERTICAL);
     table->setVerticalFillOrder(cocos2d::extension::TableView::VerticalFillOrder::TOP_DOWN);
     
     table->setDelegate(this);
     table->ignoreAnchorPointForPosition(false);
     table->setAnchorPoint(Vec2(0.5, 1));
-    table->setPosition(Vec2(this->getContentSize().width/2, this->getContentSize().height - topBar_realHeight));
+    table->setPosition(Vec2(this->getContentSize().width/2, this->getContentSize().height));
     table->reloadData();
+    _tableView = table;
     
     this->addChild(table);
 }
@@ -125,12 +147,40 @@ void HomeScene::onDialog(const string& name)
         
         
         xCartoon->setCurrentFolder("");
-    }else if (name == "是")
+    }else if (name == "清理")
+    {
+        string path = FileUtils::getInstance()->getWritablePath() + "picture/";
+        FileUtils::getInstance()->removeDirectory(path);
+    }
+    else if (name == "是")
     {
         Director::getInstance()->end();
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
         exit(0);
 #endif
+    }
+}
+
+void HomeScene::onButton(Ref* ref)
+{
+    MenuItemImage* lMenuItem = (MenuItemImage*)ref;
+    
+    switch (lMenuItem->getTag())
+    {
+        case st_button_setting:
+        {
+            if (lMenuItem)
+            {
+                Vec2 lPos = lMenuItem->convertToWorldSpace(lMenuItem->getContentSize()/2);
+                SettingLayer* layer = SettingLayer::create(lPos);
+                this->addChild(layer, 90);
+                _settingLayer = layer;
+            }
+        }
+            break;
+            
+        default:
+            break;
     }
 }
 
@@ -155,7 +205,12 @@ Size HomeScene::tableCellSizeForIndex(TableView *table, ssize_t idx)
     float height = ((this->getContentSize().width - (col + 1)*SPACE)/col)*608./346 + SPACE;
     if (idx == this->numberOfCellsInTableView(nullptr) -1)
     {
-        height += 100;
+        height += 120;
+    }
+    
+    if (idx == 0)
+    {
+        height = this->getContentSize().width/1125.0*456.0;
     }
 
     return Size(this->getContentSize().width, height);
@@ -170,14 +225,43 @@ TableViewCell* HomeScene::tableCellAtIndex(TableView *table, ssize_t idx)
         cell->autorelease();
     }
     
+    Sprite* lSprite = (Sprite*)cell->getChildByTag(99);
+    if (lSprite)
+    {
+        lSprite->removeFromParent();
+        _bannerSprite = nullptr;
+    }
+    
     cell->removeAllChildrenWithCleanup(true);
+    
+    if (idx == 0)
+    {
+        Sprite* topBanner = Sprite::create("title.png");
+        topBanner->setAnchorPoint(Vec2(0.5, 0));
+        topBanner->setScale(this->getContentSize().width/topBanner->getContentSize().width);
+        topBanner->setPosition(Vec2(this->getContentSize().width/2, 0));
+        topBanner->setTag(99);
+        cell->addChild(topBanner);
+        _bannerSprite = topBanner;
+        
+        MenuItemImage* lSetting = MenuItemImage::create("back_bg.png", "back_bg.png", CC_CALLBACK_1(HomeScene::onButton, this));
+        lSetting->setAnchorPoint(Vec2(0, 1));
+        lSetting->setPosition(Vec2(20, 436));
+        lSetting->setTag(st_button_setting);
+        
+        Menu* lMenu = Menu::create(lSetting, NULL);
+        lMenu->setPosition(Vec2::ZERO);
+        topBanner->addChild(lMenu);
+        
+        return cell;
+    }
     
     float width = (this->getContentSize().width - (col+1)*SPACE)/col;
     
-    
+    int newIdx = idx - 1;
     for (int i = 0; i < col; ++i)
     {
-        int index = (int)idx*col + i;
+        int index = (int)newIdx*col + i;
         if (index >= xCartoon->getCategoryInfo().size())
         {
             break;
@@ -226,7 +310,7 @@ ssize_t HomeScene::numberOfCellsInTableView(TableView *table)
         length = length/col + 1;
     }
     
-    return length;
+    return length + 1;
 }
 
 
@@ -241,6 +325,10 @@ void HomeScene::addBackListener()
             {
                 _dialog->removeFromParentAndCleanup(true);
                 _dialog = nullptr;
+            }else if (_settingLayer)
+            {
+                _settingLayer->removeFromParentAndCleanup(true);
+                _settingLayer = nullptr;
             }else
             {
                 NewDialog* lDialog = NewDialog::create("退出游戏？", "否", "是");
@@ -254,8 +342,22 @@ void HomeScene::addBackListener()
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 }
 
-
-
+void HomeScene::scrollViewDidScroll(ScrollView* view)
+{
+    if (_bannerSprite && _tableView)
+    {
+        float offsetY = _tableView->minContainerOffset().y - _tableView->getContentOffset().y;
+        
+        if (offsetY > 0)
+        {
+            _bannerSprite->setPositionY(offsetY);
+        }else
+        {
+            _bannerSprite->setPositionY(0);
+        }
+    }
+    
+}
 
 
 
