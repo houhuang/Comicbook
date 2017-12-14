@@ -24,6 +24,7 @@ public:
     virtual bool init();
     
     HomeScene();
+    void onEnterTransitionDidFinish();
     
     void registerNotification();
 public:

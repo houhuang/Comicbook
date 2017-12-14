@@ -58,6 +58,16 @@ bool HomeScene::init()
     return true;
 }
 
+void HomeScene::onEnterTransitionDidFinish()
+{
+    Scene::onEnterTransitionDidFinish();
+    
+    this->runAction(Sequence::create(DelayTime::create(1.0f), CallFunc::create([](){
+        Director::getInstance()->getTextureCache()->removeUnusedTextures();
+    }), NULL));
+    
+}
+
 void HomeScene::checkProgress()
 {
     string data = UserDefault::getInstance()->getStringForKey("CurrentCartoonProgress", "");

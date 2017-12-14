@@ -59,7 +59,6 @@ bool ComicScene::init()
     auto removeCartoonEvent = EventListenerCustom::create("remove_cartoonLayer", CC_CALLBACK_1(ComicScene::responseRemoveCartoonLayer, this));
     _eventDispatcher->addEventListenerWithSceneGraphPriority(removeCartoonEvent, this);
     
-    Director::getInstance()->getTextureCache()->removeUnusedTextures();
     this->createTableView();
     
     MenuItemImage* back = MenuItemImage::create("back_bg.png", "back_bg.png", CC_CALLBACK_1(ComicScene::onButton, this));
@@ -74,8 +73,6 @@ bool ComicScene::init()
     Menu* lMenu = Menu::create(back, NULL);
     lMenu->setPosition(Vec2::ZERO);
     topLayer->addChild(lMenu, 10);
-    
-    
     
     return true;
 }
