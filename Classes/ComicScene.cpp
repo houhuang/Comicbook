@@ -11,6 +11,7 @@
 #include "CartoonManager.h"
 #include "CoverSprite.h"
 #include "HomeScene.h"
+#include "STSystemFunction.h"
 
 #define TOP_HEIGHT              (V::isIpad()? 65 : 86)
 #define col                     (V::isIpad()? 3 : 2)
@@ -57,6 +58,8 @@ bool ComicScene::init()
 
     auto removeCartoonEvent = EventListenerCustom::create("remove_cartoonLayer", CC_CALLBACK_1(ComicScene::responseRemoveCartoonLayer, this));
     _eventDispatcher->addEventListenerWithSceneGraphPriority(removeCartoonEvent, this);
+    
+    Director::getInstance()->getTextureCache()->removeUnusedTextures();
     this->createTableView();
     
     MenuItemImage* back = MenuItemImage::create("back_bg.png", "back_bg.png", CC_CALLBACK_1(ComicScene::onButton, this));
@@ -80,7 +83,17 @@ bool ComicScene::init()
 void ComicScene::onEnterTransitionDidFinish()
 {
     Scene::onEnterTransitionDidFinish();
-    Director::getInstance()->getTextureCache()->removeUnusedTextures();
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    STSystemFunction sf;
+    sf.showFullScreen();
+#endif
+    
+    this->runAction(Sequence::create(DelayTime::create(0.2f), CallFunc::create([this](){
+        this->addBackListener();
+    }), NULL));
 }
 
 void ComicScene::createTableView()
@@ -99,10 +112,12 @@ void ComicScene::createTableView()
     float offsetY = xCartoon->getCatagoryOffset(stoi(xCartoon->getCurrentCategory().id));
     if (offsetY > 0)
     {
-        table->setContentOffset(Vec2(table->getContentOffset().x, table->minContainerOffset().y));
+//        table->setContentOffset(Vec2(table->getContentOffset().x, table->minContainerOffset().y));
+        table->setContentOffsetInDuration(Vec2(table->getContentOffset().x, table->minContainerOffset().y), 0.0f);
     }else
     {
-        table->setContentOffset(Vec2(table->getContentOffset().x, offsetY));
+//        table->setContentOffset(Vec2(table->getContentOffset().x, offsetY));
+        table->setContentOffsetInDuration(Vec2(table->getContentOffset().x, offsetY), 0.0f);
     }
     
     this->addChild(table);
@@ -228,4 +243,18 @@ ssize_t ComicScene::numberOfCellsInTableView(TableView *table)
     }
     
     return length;
+}
+
+void ComicScene::addBackListener()
+{
+    auto listener = EventListenerKeyboard::create();
+    listener->onKeyReleased = [this](EventKeyboard::KeyCode code, Event* event){
+        
+        if (code == EventKeyboard::KeyCode::KEY_BACK)
+        {
+            Director::getInstance()->replaceScene(TransitionSlideInL::create(0.2f, HomeScene::create()));
+        }
+    };
+    
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 }

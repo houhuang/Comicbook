@@ -22,7 +22,7 @@ public:
 //    CREATE_FUNC(ReadScene);
     static ReadScene* create(int page, string sceneName);
     virtual bool init(int page, string sceneName);
-    
+
     ReadScene();
     void initUILayer();
     
@@ -35,6 +35,7 @@ public:
     void addListener();
     void onButton(Ref* ref);
     
+    void addBackListener();
 public:
     void towardLeftMove();
     void towardRightMove();

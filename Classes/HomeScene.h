@@ -12,6 +12,7 @@
 #include <stdio.h>
 #include "cocos2d.h"
 #include "cocos-ext.h"
+#include "NewDialog.h"
 USING_NS_CC;
 USING_NS_CC_EXT;
 using namespace std;
@@ -23,6 +24,8 @@ public:
     virtual bool init();
     
     HomeScene();
+    
+    void registerNotification();
 public:
     void createTable();
     
@@ -30,6 +33,9 @@ public:
     void onDialog(const string& name);
     
     void responseCoverSprite(Node* node);
+    void addBackListener();
+    
+    void removeDailog(EventCustom* event);
 public:
     virtual void tableCellTouched(TableView* table, TableViewCell* cell);
     virtual Size tableCellSizeForIndex(TableView *table, ssize_t idx);
@@ -38,6 +44,7 @@ public:
     
 private:
     float topBar_realHeight;
+    NewDialog*  _dialog;
 };
 
 #endif /* HomeScene_h */

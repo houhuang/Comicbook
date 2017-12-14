@@ -12,6 +12,9 @@
 #include <stdio.h>
 #include "cocos2d.h"
 USING_NS_CC;
+
+#define st_remove_dialog    "st_remove_dialog"
+
 using namespace std;
 typedef std::function<void(const string& )> ccDialogCallback;
 

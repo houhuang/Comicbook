@@ -60,10 +60,13 @@ bool ReadScene::init(int page, string sceneName)
     
     LayerColor* layer = LayerColor::create(Color4B(245, 245, 245, 255));
     this->addChild(layer);
-    
     initUILayer();
     initTopLayer();
-    addListener();
+    
+    this->runAction(Sequence::create(DelayTime::create(0.2f), CallFunc::create([this](){
+        this->addListener();
+        this->addBackListener();
+    }), NULL));
     
     return true;
 }
@@ -221,10 +224,10 @@ void ReadScene::onButton(Ref* ref)
             
             if (_preSceneName == "HomeScene")
             {
-                Director::getInstance()->replaceScene(TransitionProgressOutIn::create(0.3f, HomeScene::create()));
+                Director::getInstance()->replaceScene(TransitionProgressOutIn::create(0.2f, HomeScene::create()));
             }else
             {
-                Director::getInstance()->replaceScene(TransitionProgressOutIn::create(0.3f, ComicScene::create()));
+                Director::getInstance()->replaceScene(TransitionProgressOutIn::create(0.2f, ComicScene::create()));
             }
             
             
@@ -411,6 +414,27 @@ void ReadScene::saveCurrentPage()
     UserDefault::getInstance()->flush();
 }
 
+void ReadScene::addBackListener()
+{
+    auto listener = EventListenerKeyboard::create();
+    listener->onKeyReleased = [this](EventKeyboard::KeyCode code, Event* event){
+    
+        if (code == EventKeyboard::KeyCode::KEY_BACK)
+        {
+            saveCurrentPage();
+            
+            if (_preSceneName == "HomeScene")
+            {
+                Director::getInstance()->replaceScene(TransitionProgressOutIn::create(0.2f, HomeScene::create()));
+            }else
+            {
+                Director::getInstance()->replaceScene(TransitionProgressOutIn::create(0.2f, ComicScene::create()));
+            }
+        }
+    };
+    
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+}
 
 
 

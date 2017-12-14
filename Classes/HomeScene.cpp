@@ -11,7 +11,6 @@
 #include "CoverSprite.h"
 #include "STVisibleRect.h"
 #include "ComicScene.h"
-#include "NewDialog.h"
 #include "ReadScene.h"
 #include "EventSprite.hpp"
 
@@ -24,6 +23,13 @@
 HomeScene::HomeScene()
 {
     topBar_realHeight = 0.0f;
+    _dialog = nullptr;
+}
+
+void HomeScene::registerNotification()
+{
+    auto removeDialogEvent = EventListenerCustom::create(st_remove_dialog, CC_CALLBACK_1(HomeScene::removeDailog, this));
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(removeDialogEvent, this);
 }
 
 bool HomeScene::init()
@@ -44,6 +50,11 @@ bool HomeScene::init()
     
     createTable();
     checkProgress();
+    registerNotification();
+    
+    this->runAction(Sequence::create(DelayTime::create(0.2f), CallFunc::create([this](){
+        this->addBackListener();
+    }), NULL));
     return true;
 }
 
@@ -60,9 +71,21 @@ void HomeScene::checkProgress()
         
         xCartoon->getCurrentReadingCartoon() = info;
         
-        NewDialog* lDialog = NewDialog::create("继续阅读？", "否", "是");
-        lDialog->addButtonListener(CC_CALLBACK_1(HomeScene::onDialog, this));
-        this->addChild(lDialog, 101);
+        this->runAction(Sequence::create(DelayTime::create(0.5f), CallFunc::create([this](){
+            NewDialog* lDialog = NewDialog::create("继续阅读？", "否", "继续");
+            lDialog->addButtonListener(CC_CALLBACK_1(HomeScene::onDialog, this));
+            this->addChild(lDialog, 101);
+            _dialog = lDialog;
+        }), NULL));
+    }
+}
+
+void HomeScene::removeDailog(EventCustom* event)
+{
+    if (_dialog)
+    {
+        _dialog->removeFromParentAndCleanup(true);
+        _dialog = nullptr;
     }
 }
 
@@ -83,7 +106,7 @@ void HomeScene::createTable()
 
 void HomeScene::onDialog(const string& name)
 {
-    if (name == "right")
+    if (name == "继续")
     {
         xCartoon->setCurrentFolder(xCartoon->getCurrentReadingCartoon().folder);
         xCartoon->readCurrentPictureCsv(xCartoon->getCurrentReadingCartoon().csvPath);
@@ -92,6 +115,12 @@ void HomeScene::onDialog(const string& name)
         
         
         xCartoon->setCurrentFolder("");
+    }else if (name == "是")
+    {
+        Director::getInstance()->end();
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+        exit(0);
+#endif
     }
 }
 
@@ -191,7 +220,29 @@ ssize_t HomeScene::numberOfCellsInTableView(TableView *table)
 }
 
 
-
+void HomeScene::addBackListener()
+{
+    auto listener = EventListenerKeyboard::create();
+    listener->onKeyReleased = [this](EventKeyboard::KeyCode code, Event* event){
+        
+        if (code == EventKeyboard::KeyCode::KEY_BACK)
+        {
+            if (_dialog)
+            {
+                _dialog->removeFromParentAndCleanup(true);
+                _dialog = nullptr;
+            }else
+            {
+                NewDialog* lDialog = NewDialog::create("退出游戏？", "否", "是");
+                lDialog->addButtonListener(CC_CALLBACK_1(HomeScene::onDialog, this));
+                this->addChild(lDialog, 101);
+                _dialog = lDialog;
+            }
+        }
+    };
+    
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+}
 
 
 

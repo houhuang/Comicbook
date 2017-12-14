@@ -29,6 +29,7 @@
 		2797F5AA1FDA6DFD002ED8FD /* EventSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2797F5A81FDA6DFD002ED8FD /* EventSprite.cpp */; };
 		27C30AE41FD54D83005AF86D /* cover in Resources */ = {isa = PBXBuildFile; fileRef = 27C30AE31FD54D83005AF86D /* cover */; };
 		27DE91441FD6966F001A859A /* piccsv in Resources */ = {isa = PBXBuildFile; fileRef = 27DE91431FD6966F001A859A /* piccsv */; };
+		27F822171FDE6F4E0045D11F /* STSystemFunction.mm in Sources */ = {isa = PBXBuildFile; fileRef = 27F822101FDE6F4E0045D11F /* STSystemFunction.mm */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
 		3EACC98F19EE6D4300EB3C5E /* res in Resources */ = {isa = PBXBuildFile; fileRef = 3EACC98E19EE6D4300EB3C5E /* res */; };
 		3EACC99019EE6D4300EB3C5E /* res in Resources */ = {isa = PBXBuildFile; fileRef = 3EACC98E19EE6D4300EB3C5E /* res */; };
@@ -150,6 +151,8 @@
 		2797F5A91FDA6DFD002ED8FD /* EventSprite.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EventSprite.hpp; sourceTree = "<group>"; };
 		27C30AE31FD54D83005AF86D /* cover */ = {isa = PBXFileReference; lastKnownFileType = folder; path = cover; sourceTree = "<group>"; };
 		27DE91431FD6966F001A859A /* piccsv */ = {isa = PBXFileReference; lastKnownFileType = folder; path = piccsv; sourceTree = "<group>"; };
+		27F822031FDE6E470045D11F /* STSystemFunction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STSystemFunction.h; sourceTree = "<group>"; };
+		27F822101FDE6F4E0045D11F /* STSystemFunction.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STSystemFunction.mm; sourceTree = "<group>"; };
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		3EACC98E19EE6D4300EB3C5E /* res */ = {isa = PBXFileReference; lastKnownFileType = folder; path = res; sourceTree = "<group>"; };
 		46880B8419C43A87006E1F66 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
@@ -248,6 +251,7 @@
 		080E96DDFE201D6D7F000001 /* ios */ = {
 			isa = PBXGroup;
 			children = (
+				27F822061FDE6F4E0045D11F /* Module */,
 				5087E77117EB970100C73F5D /* Icons */,
 				503AE0FA17EB989F00D1A890 /* AppController.h */,
 				503AE0FB17EB989F00D1A890 /* AppController.mm */,
@@ -281,12 +285,12 @@
 		270D77EC1FD4FC3F008E1BD9 /* layer */ = {
 			isa = PBXGroup;
 			children = (
-				2797F5A41FDA630A002ED8FD /* NewDialog.h */,
-				2797F5A01FDA62F3002ED8FD /* ContentLayer.h */,
 				2797F59C1FDA62DC002ED8FD /* ShwoCartoonInfoLayer.h */,
-				27335BF91FD8D23E00D9E87B /* NewDialog.cpp */,
 				270D77ED1FD4FC62008E1BD9 /* ShwoCartoonInfoLayer.cpp */,
+				2797F5A01FDA62F3002ED8FD /* ContentLayer.h */,
 				274F5B391FD7D39D0042C9C6 /* ContentLayer.cpp */,
+				2797F5A41FDA630A002ED8FD /* NewDialog.h */,
+				27335BF91FD8D23E00D9E87B /* NewDialog.cpp */,
 			);
 			name = layer;
 			sourceTree = "<group>";
@@ -295,13 +299,13 @@
 			isa = PBXGroup;
 			children = (
 				2797F5A21FDA62FE002ED8FD /* DownloadManager.h */,
-				2797F59D1FDA62E8002ED8FD /* CartoonManager.h */,
-				2797F59E1FDA62E8002ED8FD /* ThreadManager.h */,
-				2797F59B1FDA62D6002ED8FD /* SearchPathManager.h */,
-				2749CDFD1FD1499200833B44 /* ThreadManager.cpp */,
-				2749CDF11FD1458700833B44 /* SearchPathManager.cpp */,
 				2749CDE31FD1413100833B44 /* DownloadManager.cpp */,
+				2797F59B1FDA62D6002ED8FD /* SearchPathManager.h */,
+				2749CDF11FD1458700833B44 /* SearchPathManager.cpp */,
+				2797F59D1FDA62E8002ED8FD /* CartoonManager.h */,
 				2749CDE71FD1436C00833B44 /* CartoonManager.cpp */,
+				2797F59E1FDA62E8002ED8FD /* ThreadManager.h */,
+				2749CDFD1FD1499200833B44 /* ThreadManager.cpp */,
 			);
 			name = manager;
 			sourceTree = "<group>";
@@ -309,10 +313,10 @@
 		2749CDEA1FD1452800833B44 /* helper */ = {
 			isa = PBXGroup;
 			children = (
-				2749CDEB1FD1454E00833B44 /* CSVParse.cpp */,
-				2749CDEC1FD1454E00833B44 /* CSVParse.h */,
-				2749CDED1FD1454E00833B44 /* STVisibleRect.cpp */,
 				2749CDEE1FD1454E00833B44 /* STVisibleRect.h */,
+				2749CDED1FD1454E00833B44 /* STVisibleRect.cpp */,
+				2749CDEC1FD1454E00833B44 /* CSVParse.h */,
+				2749CDEB1FD1454E00833B44 /* CSVParse.cpp */,
 			);
 			name = helper;
 			sourceTree = "<group>";
@@ -320,12 +324,12 @@
 		2749CDF41FD146A800833B44 /* scene */ = {
 			isa = PBXGroup;
 			children = (
-				2797F5A31FDA6303002ED8FD /* HomeScene.h */,
-				2797F59F1FDA62EE002ED8FD /* ComicScene.h */,
 				2797F59A1FDA62CF002ED8FD /* ReadScene.h */,
-				2749CDF51FD146C300833B44 /* HomeScene.cpp */,
-				270D77E91FD4E5CE008E1BD9 /* ComicScene.cpp */,
 				274F5B311FD778EA0042C9C6 /* ReadScene.cpp */,
+				2797F59F1FDA62EE002ED8FD /* ComicScene.h */,
+				270D77E91FD4E5CE008E1BD9 /* ComicScene.cpp */,
+				2797F5A31FDA6303002ED8FD /* HomeScene.h */,
+				2749CDF51FD146C300833B44 /* HomeScene.cpp */,
 			);
 			name = scene;
 			sourceTree = "<group>";
@@ -333,10 +337,10 @@
 		2749CDF81FD1472400833B44 /* Sprite */ = {
 			isa = PBXGroup;
 			children = (
+				2797F5A91FDA6DFD002ED8FD /* EventSprite.hpp */,
+				2797F5A81FDA6DFD002ED8FD /* EventSprite.cpp */,
 				2797F5A11FDA62F8002ED8FD /* CoverSprite.h */,
 				2749CDF91FD1473800833B44 /* CoverSprite.cpp */,
-				2797F5A81FDA6DFD002ED8FD /* EventSprite.cpp */,
-				2797F5A91FDA6DFD002ED8FD /* EventSprite.hpp */,
 			);
 			name = Sprite;
 			sourceTree = "<group>";
@@ -344,8 +348,26 @@
 		2749CDFC1FD1495B00833B44 /* util */ = {
 			isa = PBXGroup;
 			children = (
+				27F822031FDE6E470045D11F /* STSystemFunction.h */,
 			);
 			name = util;
+			sourceTree = "<group>";
+		};
+		27F822061FDE6F4E0045D11F /* Module */ = {
+			isa = PBXGroup;
+			children = (
+				27F8220F1FDE6F4E0045D11F /* SystemFunction */,
+			);
+			name = Module;
+			path = ios/Module;
+			sourceTree = SOURCE_ROOT;
+		};
+		27F8220F1FDE6F4E0045D11F /* SystemFunction */ = {
+			isa = PBXGroup;
+			children = (
+				27F822101FDE6F4E0045D11F /* STSystemFunction.mm */,
+			);
+			path = SystemFunction;
 			sourceTree = "<group>";
 		};
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
@@ -611,6 +633,7 @@
 				2749CDE91FD1436C00833B44 /* CartoonManager.cpp in Sources */,
 				2749CDEF1FD1454E00833B44 /* CSVParse.cpp in Sources */,
 				2749CDE51FD1413100833B44 /* DownloadManager.cpp in Sources */,
+				27F822171FDE6F4E0045D11F /* STSystemFunction.mm in Sources */,
 				2797F5AA1FDA6DFD002ED8FD /* EventSprite.cpp in Sources */,
 				27335BFB1FD8D23E00D9E87B /* NewDialog.cpp in Sources */,
 				2749CDFB1FD1473800833B44 /* CoverSprite.cpp in Sources */,

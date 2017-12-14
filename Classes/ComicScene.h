@@ -33,6 +33,7 @@ public:
     void responseRemoveCartoonLayer(EventCustom* event);
     
     void onButton(Ref* ref);
+    void addBackListener();
 public:
     virtual void tableCellTouched(TableView* table, TableViewCell* cell);
     virtual Size tableCellSizeForIndex(TableView *table, ssize_t idx);

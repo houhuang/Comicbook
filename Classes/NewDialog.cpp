@@ -139,10 +139,11 @@ void NewDialog::onButton(Ref* ref)
         {
             if (_callBack)
             {
-                _callBack("left");
+                _callBack(_leftText);
             }
             
-            this->removeFromParentAndCleanup(true);
+//            this->removeFromParentAndCleanup(true);
+            _eventDispatcher->dispatchCustomEvent(st_remove_dialog);
             
         }
             break;
@@ -151,10 +152,11 @@ void NewDialog::onButton(Ref* ref)
         {
             if (_callBack)
             {
-                _callBack("right");
+                _callBack(_rightText);
             }
             
-            this->removeFromParentAndCleanup(true);
+//            this->removeFromParentAndCleanup(true);
+            _eventDispatcher->dispatchCustomEvent(st_remove_dialog);
         }
             break;
             
@@ -190,7 +192,8 @@ void NewDialog::addListener()
         
         if (!_dialogBG->getBoundingBox().containsPoint(lPos) && distance < 50)
         {
-            this->removeFromParentAndCleanup(true);
+//            this->removeFromParentAndCleanup(true);
+            _eventDispatcher->dispatchCustomEvent(st_remove_dialog);
         }
     };
     
