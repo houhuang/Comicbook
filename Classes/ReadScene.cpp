@@ -97,7 +97,7 @@ void ReadScene::onEnterTransitionDidFinish()
         xCartoon->setIsShowRateUs(false);
         
         this->runAction(Sequence::create(DelayTime::create(2.0f), CallFunc::create([this](){
-            NewDialog* lDialog = NewDialog::create("评论？", "否", "是");
+            NewDialog* lDialog = NewDialog::create("如果觉得本应用有趣，请给五星好评哟（^_^）", "关闭", "评论");
             lDialog->addButtonListener(CC_CALLBACK_1(ReadScene::onDialog, this));
             this->addChild(lDialog, 101);
             _dialog = lDialog;
@@ -463,7 +463,7 @@ void ReadScene::saveCurrentPage()
 
 void ReadScene::onDialog(const string& name)
 {
-    if (name == "是")
+    if (name == "评论")
     {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
         STSystemFunction sf;

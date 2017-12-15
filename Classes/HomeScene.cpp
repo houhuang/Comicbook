@@ -100,8 +100,16 @@ void HomeScene::checkProgress()
             
             xCartoon->getCurrentReadingCartoon() = info;
             
-            this->runAction(Sequence::create(DelayTime::create(0.1f), CallFunc::create([this](){
-                NewDialog* lDialog = NewDialog::create("继续阅读？", "否", "继续");
+            this->runAction(Sequence::create(DelayTime::create(0.05f), CallFunc::create([this](){
+                NewDialog* lDialog = NewDialog::create("是否继续上次的阅读？", "关闭", "继续");
+                lDialog->addButtonListener(CC_CALLBACK_1(HomeScene::onDialog, this));
+                this->addChild(lDialog, 101);
+                _dialog = lDialog;
+            }), NULL));
+        }else
+        {
+            this->runAction(Sequence::create(DelayTime::create(0.05f), CallFunc::create([this](){
+                NewDialog* lDialog = NewDialog::create("你还没有阅读记录。", "", "关闭");
                 lDialog->addButtonListener(CC_CALLBACK_1(HomeScene::onDialog, this));
                 this->addChild(lDialog, 101);
                 _dialog = lDialog;
@@ -128,7 +136,16 @@ void HomeScene::checkProgress()
             
             
 //            xCartoon->setCurrentFolder("");
+        }else
+        {
+            this->runAction(Sequence::create(DelayTime::create(0.05f), CallFunc::create([this](){
+                NewDialog* lDialog = NewDialog::create("你还没有阅读记录。", "", "关闭");
+                lDialog->addButtonListener(CC_CALLBACK_1(HomeScene::onDialog, this));
+                this->addChild(lDialog, 101);
+                _dialog = lDialog;
+            }), NULL));
         }
+        
     }
     
     
@@ -154,7 +171,7 @@ void HomeScene::removeSettingLayer(EventCustom* event)
 
 void HomeScene::showClearDataDialog(EventCustom* event)
 {
-    NewDialog* lDialog = NewDialog::create("清理缓存？", "否", "清理");
+    NewDialog* lDialog = NewDialog::create("长期使用会占用大量磁盘空间，是否释放磁盘空间？", "关闭", "释放");
     lDialog->addButtonListener(CC_CALLBACK_1(HomeScene::onDialog, this));
     this->addChild(lDialog, 101);
     _dialog = lDialog;
@@ -193,12 +210,12 @@ void HomeScene::onDialog(const string& name)
         
         
 //        xCartoon->setCurrentFolder("");
-    }else if (name == "清理")
+    }else if (name == "释放")
     {
         string path = FileUtils::getInstance()->getWritablePath() + "picture/";
         FileUtils::getInstance()->removeDirectory(path);
     }
-    else if (name == "是")
+    else if (name == "退出")
     {
         Director::getInstance()->end();
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
@@ -293,8 +310,9 @@ TableViewCell* HomeScene::tableCellAtIndex(TableView *table, ssize_t idx)
         
         MenuItemImage* lSetting = MenuItemImage::create("menu_btn.png", "menu_btn.png", CC_CALLBACK_1(HomeScene::onButton, this));
         lSetting->setAnchorPoint(Vec2(0, 1));
-        lSetting->setPosition(Vec2(20, 436));
+        lSetting->setPosition(Vec2(40, 416));
         lSetting->setTag(st_button_setting);
+        lSetting->setScale(1.2f);
         
         Menu* lMenu = Menu::create(lSetting, NULL);
         lMenu->setPosition(Vec2::ZERO);
@@ -378,7 +396,7 @@ void HomeScene::addBackListener()
                 _settingLayer = nullptr;
             }else
             {
-                NewDialog* lDialog = NewDialog::create("退出游戏？", "否", "是");
+                NewDialog* lDialog = NewDialog::create("是否退出游戏？", "关闭", "退出");
                 lDialog->addButtonListener(CC_CALLBACK_1(HomeScene::onDialog, this));
                 this->addChild(lDialog, 101);
                 _dialog = lDialog;

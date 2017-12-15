@@ -71,12 +71,12 @@ void NewDialog::initUIWithiPhone(const string& tText, const string& lText, const
         bg->setScale(bg->getScale() * 0.7);
     }
     
-    Label* tl = Label::createWithTTF(tText, "fonts/d2.ttf", 13 * 2);
+    Label* tl = Label::createWithTTF(tText, "fonts/d2.ttf", 15 * 2);
     tl->setColor(Color3B(103, 103, 103));
     tl->setDimensions(bg->getContentSize().width * 0.8 * 0.9, bg->getContentSize().height * 0.7);
     tl->setAlignment(cocos2d::TextHAlignment::CENTER);
     tl->setVerticalAlignment(cocos2d::TextVAlignment::CENTER);
-    tl->setPosition(Vec2(bg->getContentSize().width/2, bg->getContentSize().height*0.6));
+    tl->setPosition(Vec2(bg->getContentSize().width/2, bg->getContentSize().height*0.58));
     bg->addChild(tl, 111);
     tl->setLineHeight(43);
 //    tl->setScale(0.5);
@@ -89,7 +89,7 @@ void NewDialog::initUIWithiPhone(const string& tText, const string& lText, const
         right->setPosition(Vec2(bg->getContentSize().width/2, bg->getContentSize().height*0.25));
         right->setTag(st_dialog_right);
         
-        Label* right_label = Label::createWithTTF(rText, "fonts/d2.ttf", 13*2);
+        Label* right_label = Label::createWithTTF(rText, "fonts/d2.ttf", 17*2);
         right_label->setPosition(right->getContentSize()/2);
         right->addChild(right_label);
         right_label->setColor(Color3B(82, 145, 240));
@@ -106,7 +106,7 @@ void NewDialog::initUIWithiPhone(const string& tText, const string& lText, const
         left->setPosition(Vec2(bg->getContentSize().width/4 + 30, bg->getContentSize().height*0.25));
         left->setTag(st_dialog_left);
         
-        Label* left_label = Label::createWithTTF(lText, "fonts/d2.ttf", 13*2);
+        Label* left_label = Label::createWithTTF(lText, "fonts/d2.ttf", 17*2);
         left_label->setPosition(left->getContentSize()/2);
         left->addChild(left_label, 101);
         left_label->setColor(Color3B(103, 103, 103));
@@ -117,7 +117,7 @@ void NewDialog::initUIWithiPhone(const string& tText, const string& lText, const
         right->setPosition(Vec2(bg->getContentSize().width/4*3 - 30, bg->getContentSize().height*0.25));
         right->setTag(st_dialog_right);
         
-        Label* right_label = Label::createWithTTF(rText, "fonts/d2.ttf", 13*2);
+        Label* right_label = Label::createWithTTF(rText, "fonts/d2.ttf", 17*2);
         right_label->setPosition(right->getContentSize()/2);
         right->addChild(right_label, 101);
         right_label->setColor(Color3B(82, 145, 240));

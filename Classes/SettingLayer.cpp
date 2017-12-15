@@ -54,7 +54,7 @@ void SettingLayer::initUI(Vec2 lPos)
 {
     Sprite* lSprite = Sprite::create("setting.png");
     lSprite->setAnchorPoint(Vec2(0.127, 1));
-    lSprite->setPosition(lPos);
+    lSprite->setPosition(lPos + Vec2(-2, -20));
     addChild(lSprite);
     _contentSprite = lSprite;
     
@@ -64,7 +64,7 @@ void SettingLayer::initUI(Vec2 lPos)
     lSprite->runAction(ScaleTo::create(0.15, this->getContentSize().width*scale/lSprite->getContentSize().width));
     
     MenuItemImage* clearData = MenuItemImage::create("setting_btn.png", "setting_btn.png", CC_CALLBACK_1(SettingLayer::onButton, this));
-    clearData->setPosition(Vec2(lSprite->getContentSize().width/2, 246));
+    clearData->setPosition(Vec2(lSprite->getContentSize().width/2, 240));
     clearData->setTag(st_button_clearData);
     
     Label* clearData_label = Label::createWithTTF("清理数据", "fonts/d2.ttf", 90);
