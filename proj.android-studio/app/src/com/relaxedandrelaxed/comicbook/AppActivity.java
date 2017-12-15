@@ -51,6 +51,7 @@ public class AppActivity extends Cocos2dxActivity {
 
     private AdRequest adRequest;
 
+
     private InterstitialAd mInterstitialAd;
 
     protected void onCreate(Bundle savedInstanceState) {
