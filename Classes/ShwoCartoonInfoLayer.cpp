@@ -150,7 +150,7 @@ void ShowCartoonInfoLayer::onButton(Ref* ref)
             xCartoon->getCurrentReadingCartoon().csvPath = "piccsv/" + _cartoonInfo.folder + "_picture.csv";
             
             string data = _cartoonInfo.folder + "pagenumber";
-            int page = UserDefault::getInstance()->getIntegerForKey(data.c_str(), 1);
+            int page = UserDefault::getInstance()->getIntegerForKey(data.c_str(), 0);
             
             Director::getInstance()->replaceScene(TransitionProgressInOut::create(0.2f, ReadScene::create(page, "ComicScene")));
         }
@@ -189,7 +189,7 @@ void ShowCartoonInfoLayer::loadPictureCsv()
         +"区域:" + _cartoonInfo.area + "\n"
         +"类型:" + xCartoon->getCurrentCategory().name + "\n"
         + "是否完结:是" + "\n"
-        + "页数:" + to_string(xCartoon->getCurrentPictureInfo().size());
+        + "页数:" + to_string(xCartoon->getCurrentPictureInfo().size()-2);
         
         if (_label)
         {

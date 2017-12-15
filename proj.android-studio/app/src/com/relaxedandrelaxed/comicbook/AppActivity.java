@@ -23,6 +23,8 @@ THE SOFTWARE.
 ****************************************************************************/
 package com.relaxedandrelaxed.comicbook;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.view.View;
 import android.view.ViewGroup;
 import android.os.Bundle;
@@ -180,6 +182,14 @@ public class AppActivity extends Cocos2dxActivity {
                 }
             }
         });
+    }
+
+    public void openGooglePlayStore()
+    {
+        String url = "https://play.google.com/store/apps/details?id=" + this.getPackageName();
+        Uri uri = Uri.parse(url);
+        Intent it = new Intent(Intent.ACTION_VIEW, uri);
+        mActivity.startActivity(it);
     }
 
 }

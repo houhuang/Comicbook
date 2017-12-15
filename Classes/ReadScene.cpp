@@ -110,7 +110,6 @@ void ReadScene::initUILayer()
 {
     int lIndex = (_currentPage - 1) < 0 ? 0:(_currentPage-1);
     
-    log("%d, %lu", lIndex, _currentPic.size());
     ContentLayer* leftLayer = ContentLayer::create(_currentPic.at(lIndex));
     leftLayer->ignoreAnchorPointForPosition(false);
     leftLayer->setAnchorPoint(Vec2(0.5, 0.5));
@@ -118,7 +117,6 @@ void ReadScene::initUILayer()
     this->addChild(leftLayer);
     _leftLayer = leftLayer;
     
-    log("%d", _currentPage);
     ContentLayer* centerLayer = ContentLayer::create(_currentPic.at(_currentPage));;
     centerLayer->ignoreAnchorPointForPosition(false);
     centerLayer->setAnchorPoint(Vec2(0.5, 0.5));
@@ -126,8 +124,7 @@ void ReadScene::initUILayer()
     this->addChild(centerLayer);
     _centerLayer = centerLayer;
     
-    int rIndex = (_currentPage + 1) > _currentPic.size() ? (int)_currentPic.size()-1:(_currentPage);
-    log("%d", rIndex);
+    int rIndex = (_currentPage + 1) > _currentPic.size() ? (int)_currentPic.size()-1:(_currentPage+1);
     ContentLayer* rightLayer = ContentLayer::create(_currentPic.at(rIndex));;
     rightLayer->ignoreAnchorPointForPosition(false);
     rightLayer->setAnchorPoint(Vec2(0.5, 0.5));
@@ -148,8 +145,7 @@ void ReadScene::initUILayer()
     Menu* lMenu = Menu::create(lLeftMenu, lRightMenu, NULL);
     lMenu->setPosition(Vec2::ZERO);
     addChild(lMenu);
-    
-    log("%d, %d, %d", lIndex, _currentPage, rIndex);
+
 }
 
 void ReadScene::initTopLayer()
