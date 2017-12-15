@@ -159,7 +159,7 @@ void ContentLayer::responseDownloadSuc(EventCustom* event)
 
 string ContentLayer::getPath()
 {
-    string path = "picture/" + xCartoon->getCurrentCartoon().folder + "/" + _picture.chaID + "_" + _picture.index + ".jpg";
+    string path = "picture/" + xCartoon->getCurrentFolder() + "/" + _picture.chaID + "_" + _picture.index + ".jpg";
     return path;
 }
 

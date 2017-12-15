@@ -68,17 +68,12 @@ bool ReadScene::init(int page, string sceneName)
     
     _currentPage = page;
     
+
     LayerColor* layer = LayerColor::create(Color4B(245, 245, 245, 255));
     this->addChild(layer);
     
     registerNotification();
-    initUILayer();
-    initTopLayer();
     
-    this->runAction(Sequence::create(DelayTime::create(0.2f), CallFunc::create([this](){
-        this->addListener();
-        this->addBackListener();
-    }), NULL));
     
     return true;
 }
@@ -87,6 +82,14 @@ void ReadScene::onEnterTransitionDidFinish()
 {
     Scene::onEnterTransitionDidFinish();
     
+    initUILayer();
+    initTopLayer();
+    
+    this->runAction(Sequence::create(DelayTime::create(0.2f), CallFunc::create([this](){
+        this->addListener();
+        this->addBackListener();
+    }), NULL));
+
     bool isRated = UserDefault::getInstance()->getBoolForKey("israted", false);
     
     if (!xCartoon->getIsFirstInGame() && xCartoon->getIsShowRateUs() && !isRated)
@@ -106,6 +109,8 @@ void ReadScene::onEnterTransitionDidFinish()
 void ReadScene::initUILayer()
 {
     int lIndex = (_currentPage - 1) < 0 ? 0:(_currentPage-1);
+    
+    log("%d, %lu", lIndex, _currentPic.size());
     ContentLayer* leftLayer = ContentLayer::create(_currentPic.at(lIndex));
     leftLayer->ignoreAnchorPointForPosition(false);
     leftLayer->setAnchorPoint(Vec2(0.5, 0.5));
@@ -113,6 +118,7 @@ void ReadScene::initUILayer()
     this->addChild(leftLayer);
     _leftLayer = leftLayer;
     
+    log("%d", _currentPage);
     ContentLayer* centerLayer = ContentLayer::create(_currentPic.at(_currentPage));;
     centerLayer->ignoreAnchorPointForPosition(false);
     centerLayer->setAnchorPoint(Vec2(0.5, 0.5));
@@ -121,6 +127,7 @@ void ReadScene::initUILayer()
     _centerLayer = centerLayer;
     
     int rIndex = (_currentPage + 1) > _currentPic.size() ? (int)_currentPic.size()-1:(_currentPage);
+    log("%d", rIndex);
     ContentLayer* rightLayer = ContentLayer::create(_currentPic.at(rIndex));;
     rightLayer->ignoreAnchorPointForPosition(false);
     rightLayer->setAnchorPoint(Vec2(0.5, 0.5));
@@ -142,6 +149,7 @@ void ReadScene::initUILayer()
     lMenu->setPosition(Vec2::ZERO);
     addChild(lMenu);
     
+    log("%d, %d, %d", lIndex, _currentPage, rIndex);
 }
 
 void ReadScene::initTopLayer()

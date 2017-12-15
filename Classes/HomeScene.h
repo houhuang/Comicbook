@@ -24,6 +24,7 @@ public:
     CREATE_FUNC(HomeScene);
     virtual bool init();
     
+    ~HomeScene();
     HomeScene();
     void onEnterTransitionDidFinish();
     

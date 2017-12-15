@@ -22,6 +22,11 @@ enum{
     st_button_setting = 10,
 };
 
+HomeScene::~HomeScene()
+{
+    _eventDispatcher->removeEventListenersForTarget(this);
+}
+
 HomeScene::HomeScene()
 {
     topBar_realHeight = 0.0f;
@@ -122,7 +127,7 @@ void HomeScene::checkProgress()
             Director::getInstance()->replaceScene(TransitionProgressInOut::create(0.2f, ReadScene::create(stoi(xCartoon->getCurrentReadingCartoon().pageNumber), "HomeScene")));
             
             
-            xCartoon->setCurrentFolder("");
+//            xCartoon->setCurrentFolder("");
         }
     }
     
@@ -187,7 +192,7 @@ void HomeScene::onDialog(const string& name)
         Director::getInstance()->replaceScene(TransitionProgressInOut::create(0.2f, ReadScene::create(stoi(xCartoon->getCurrentReadingCartoon().pageNumber), "HomeScene")));
         
         
-        xCartoon->setCurrentFolder("");
+//        xCartoon->setCurrentFolder("");
     }else if (name == "清理")
     {
         string path = FileUtils::getInstance()->getWritablePath() + "picture/";
@@ -286,7 +291,7 @@ TableViewCell* HomeScene::tableCellAtIndex(TableView *table, ssize_t idx)
         cell->addChild(topBanner);
         _bannerSprite = topBanner;
         
-        MenuItemImage* lSetting = MenuItemImage::create("back_bg.png", "back_bg.png", CC_CALLBACK_1(HomeScene::onButton, this));
+        MenuItemImage* lSetting = MenuItemImage::create("menu_btn.png", "menu_btn.png", CC_CALLBACK_1(HomeScene::onButton, this));
         lSetting->setAnchorPoint(Vec2(0, 1));
         lSetting->setPosition(Vec2(20, 436));
         lSetting->setTag(st_button_setting);
