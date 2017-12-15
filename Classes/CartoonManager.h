@@ -71,6 +71,7 @@ public:
 public:
     static CartoonManager* getInstance();
     
+    CartoonManager();
 public:
     void readCategoryCsv();
     vector<Category>& getCategoryInfo();
@@ -95,6 +96,13 @@ public:
     
     void setCatagoryOffset(int cId, float offsetY);
     float getCatagoryOffset(int cId);
+    
+    void setFirstInGame();
+    bool getIsFirstInGame();
+    
+    CC_SYNTHESIZE(string, _preSceneName, PreSceneName);
+    CC_SYNTHESIZE(bool, _isShowRateUs, IsShowRateUs);
+    
 protected:
     vector<CartoonInfo> _cartoonInfo;
 
@@ -112,6 +120,8 @@ private:
     string _currentFolder = "";
     
     Mode    _mode = Mode::AUTOMODE;
+    
+    bool    _isFirstInGame;
 };
 
 #endif /* CartoonManager_h */

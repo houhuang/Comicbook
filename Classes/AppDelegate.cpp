@@ -4,6 +4,7 @@
 #include "SearchPathManager.h"
 #include "STVisibleRect.h"
 #include "ReadScene.h"
+#include "CartoonManager.h"
 
 USING_NS_CC;
 
@@ -58,11 +59,9 @@ bool AppDelegate::applicationDidFinishLaunching() {
     
 //    xDownload->downloadCarttonCsv();
 
-    // create a scene. it's an autorelease object
-//    auto scene = HelloWorld::createScene();
 
+    xCartoon->setFirstInGame();
     
-    // run
     xCartoon->readCategoryCsv();
     
     director->runWithScene(HomeScene::create());

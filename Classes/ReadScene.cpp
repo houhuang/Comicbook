@@ -42,6 +42,7 @@ ReadScene::ReadScene()
     _rightLayer = nullptr;
     
     _topLayer = nullptr;
+    _dialog = nullptr;
     
     _isMoving = false;
     _currentPage = 1;
@@ -49,6 +50,14 @@ ReadScene::ReadScene()
     _folder = xCartoon->getCurrentCartoon().folder;
     _currentPic = xCartoon->getCurrentPictureInfo();
 }
+
+void ReadScene::registerNotification()
+{
+    auto removeDialogEvent = EventListenerCustom::create(st_remove_dialog, CC_CALLBACK_1(ReadScene::removeDailog, this));
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(removeDialogEvent, this);
+    
+}
+
 
 bool ReadScene::init(int page, string sceneName)
 {
@@ -61,6 +70,8 @@ bool ReadScene::init(int page, string sceneName)
     
     LayerColor* layer = LayerColor::create(Color4B(245, 245, 245, 255));
     this->addChild(layer);
+    
+    registerNotification();
     initUILayer();
     initTopLayer();
     
@@ -70,6 +81,23 @@ bool ReadScene::init(int page, string sceneName)
     }), NULL));
     
     return true;
+}
+
+void ReadScene::onEnterTransitionDidFinish()
+{
+    Scene::onEnterTransitionDidFinish();
+    
+    bool isRated = UserDefault::getInstance()->getBoolForKey("israted", false);
+    
+    if (!xCartoon->getIsFirstInGame() && xCartoon->getIsShowRateUs() && !isRated)
+    {
+        xCartoon->setIsShowRateUs(false);
+        
+        NewDialog* lDialog = NewDialog::create("评论？", "否", "是");
+        lDialog->addButtonListener(CC_CALLBACK_1(ReadScene::onDialog, this));
+        this->addChild(lDialog, 101);
+        _dialog = lDialog;
+    }
 }
 
 void ReadScene::initUILayer()
@@ -206,9 +234,7 @@ void ReadScene::onButton(Ref* ref)
                 if (CartoonManager::adsCount > 10)
                 {
                     CartoonManager::adsCount = 0;
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-                    
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
                     STSystemFunction sf;
                     sf.showFullScreen();
 #endif
@@ -235,6 +261,7 @@ void ReadScene::onButton(Ref* ref)
         {
             saveCurrentPage();
             
+            xCartoon->setPreSceneName("ReadScene");
             if (_preSceneName == "HomeScene")
             {
                 Director::getInstance()->replaceScene(TransitionProgressOutIn::create(0.2f, HomeScene::create()));
@@ -427,6 +454,28 @@ void ReadScene::saveCurrentPage()
     UserDefault::getInstance()->flush();
 }
 
+void ReadScene::onDialog(const string& name)
+{
+    if (name == "是")
+    {
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+        STSystemFunction sf;
+        sf.openGooglePlayStore();
+#endif
+        UserDefault::getInstance()->setBoolForKey("israted", true);
+        UserDefault::getInstance()->flush();
+    }
+}
+
+void ReadScene::removeDailog(EventCustom* event)
+{
+    if (_dialog)
+    {
+        _dialog->removeFromParentAndCleanup(true);
+        _dialog = nullptr;
+    }
+}
+
 void ReadScene::addBackListener()
 {
     auto listener = EventListenerKeyboard::create();
@@ -434,15 +483,24 @@ void ReadScene::addBackListener()
     
         if (code == EventKeyboard::KeyCode::KEY_BACK)
         {
-            saveCurrentPage();
-            
-            if (_preSceneName == "HomeScene")
+            if (_dialog)
             {
-                Director::getInstance()->replaceScene(TransitionProgressOutIn::create(0.2f, HomeScene::create()));
+                _dialog->removeFromParentAndCleanup(true);
+                _dialog = nullptr;
             }else
             {
-                Director::getInstance()->replaceScene(TransitionProgressOutIn::create(0.2f, ComicScene::create()));
+                saveCurrentPage();
+                xCartoon->setPreSceneName("ReadScene");
+                
+                if (_preSceneName == "HomeScene")
+                {
+                    Director::getInstance()->replaceScene(TransitionProgressOutIn::create(0.2f, HomeScene::create()));
+                }else
+                {
+                    Director::getInstance()->replaceScene(TransitionProgressOutIn::create(0.2f, ComicScene::create()));
+                }
             }
+ 
         }
     };
     

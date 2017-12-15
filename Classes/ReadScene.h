@@ -13,6 +13,7 @@
 #include "cocos2d.h"
 #include "CartoonManager.h"
 #include "ContentLayer.h"
+#include "NewDialog.h"
 USING_NS_CC;
 using namespace std;
 
@@ -24,8 +25,11 @@ public:
     virtual bool init(int page, string sceneName);
 
     ReadScene();
-    void initUILayer();
+    void onEnterTransitionDidFinish();
     
+    void registerNotification();
+    
+    void initUILayer();
     void initTopLayer();
     void hideTopLayer();
     void showTopLayer();
@@ -35,7 +39,10 @@ public:
     void addListener();
     void onButton(Ref* ref);
     
+    void onDialog(const string& name);
     void addBackListener();
+    
+    void removeDailog(EventCustom* event);
 public:
     void towardLeftMove();
     void towardRightMove();
@@ -68,6 +75,7 @@ private:
     Vec2    _firstPos = Vec2(0, 0);
     
     Label*  _pageLabel;
+    NewDialog*  _dialog;
 };
 
 #endif /* ReadScene_h */

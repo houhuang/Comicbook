@@ -24,6 +24,12 @@ CartoonManager* CartoonManager::getInstance()
     return _instance;
 }
 
+CartoonManager::CartoonManager()
+{
+    _preSceneName = "";
+    _isShowRateUs = true;
+}
+
 void CartoonManager::readCartoonCsv()
 {
     CSVParse* lCsv = CSVParse::create("cartoon.csv");
@@ -172,7 +178,18 @@ float CartoonManager::getCatagoryOffset(int cId)
     return offsetY;
 }
 
+void CartoonManager::setFirstInGame()
+{
+    _isFirstInGame = UserDefault::getInstance()->getBoolForKey("IsFirstInGame", true);
+    
+    UserDefault::getInstance()->setBoolForKey("IsFirstInGame", false);
+    UserDefault::getInstance()->flush();
+}
 
+bool CartoonManager::getIsFirstInGame()
+{
+    return _isFirstInGame;
+}
 
 
 

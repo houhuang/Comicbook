@@ -14,8 +14,8 @@
 #include "STSystemFunction.h"
 
 #define TOP_HEIGHT              (V::isIpad()? 65 : 86)
-#define col                     (V::isIpad()? 3 : 2)
-#define SPACE                   40
+#define col                     (V::isIpad()? 4 : 3)
+#define SPACE                   20
 
 enum{
     st_button_back = 10,
@@ -35,6 +35,8 @@ ComicScene::ComicScene()
 bool ComicScene::init()
 {
     if (!Scene::init())  return false;
+    
+    setName("ComicScene");
     
     LayerColor* layer = LayerColor::create(Color4B(245, 245, 245, 255));
     this->addChild(layer);
@@ -107,20 +109,23 @@ void ComicScene::createTableView()
     table->setAnchorPoint(Vec2(0.5, 1));
     table->setPosition(Vec2(this->getContentSize().width/2, this->getContentSize().height - TOP_HEIGHT + 8));
 
-//    float offsetY = xCartoon->getCatagoryOffset(stoi(xCartoon->getCurrentCategory().id));
-//    if (offsetY > 0)
-//    {
-////        table->setContentOffset(Vec2(table->getContentOffset().x, table->minContainerOffset().y));
-//        table->setContentOffsetInDuration(Vec2(table->getContentOffset().x, table->minContainerOffset().y), 0.0f);
-//    }else
-//    {
-////        table->setContentOffset(Vec2(table->getContentOffset().x, offsetY));
-//        table->setContentOffsetInDuration(Vec2(table->getContentOffset().x, offsetY), 0.0f);
-//    }
+    table->reloadData();
     
+    if (xCartoon->getPreSceneName() == "ReadScene")
+    {
+        float offsetY = xCartoon->getCatagoryOffset(stoi(xCartoon->getCurrentCategory().id));
+        if (offsetY > 0)
+        {
+            table->setContentOffset(Vec2(table->getContentOffset().x, table->minContainerOffset().y));
+            
+        }else
+        {
+            table->setContentOffset(Vec2(table->getContentOffset().x, offsetY));
+        }
+    }
+
     this->addChild(table);
     
-    table->reloadData();
 }
 
 void ComicScene::onButton(Ref* ref)
@@ -129,6 +134,7 @@ void ComicScene::onButton(Ref* ref)
     switch (lMenuItem->getTag()) {
         case st_button_back:
         {
+            xCartoon->setPreSceneName("ComicScene");
             Director::getInstance()->replaceScene(TransitionSlideInL::create(0.2f, HomeScene::create()));
         }
             break;
@@ -229,14 +235,14 @@ TableViewCell* ComicScene::tableCellAtIndex(TableView *table, ssize_t idx)
             lSprite->addChild(newSprite, 10);
         }
         
-        Label* name = Label::createWithTTF(info.name, "fonts/d2.ttf", 40);
+        Label* name = Label::createWithTTF(info.name, "fonts/d2.ttf", 50);
         name->setPosition(Vec2(lSprite->getContentSize().width/2, 52));
         name->setColor(Color3B(43, 43, 43));
         lSprite->addChild(name, 11);
         
         if (name->getContentSize().width > (width + 20))
         {
-            name->setScale((width + 20)/name->getContentSize().width);
+            name->setScale((width + 100)/name->getContentSize().width);
         }
 
         if (idx == this->numberOfCellsInTableView(NULL)-1)
@@ -278,6 +284,7 @@ void ComicScene::addBackListener()
                 _cartoonLayer = nullptr;
             }else
             {
+                xCartoon->setPreSceneName("ComicScene");
                 Director::getInstance()->replaceScene(TransitionSlideInL::create(0.2f, HomeScene::create()));
             }
         }

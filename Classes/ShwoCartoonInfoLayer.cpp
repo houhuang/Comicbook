@@ -128,8 +128,8 @@ void ShowCartoonInfoLayer::initUI()
     lDownload->addChild(lDownloadText);
     
     MenuItemImage* lCancel = MenuItemImage::create("close.png", "close.png", CC_CALLBACK_1(ShowCartoonInfoLayer::onButton, this));
-    lCancel->setAnchorPoint(Vec2(0, 1));
-    lCancel->setPosition(Vec2(60, 1556));
+    lCancel->setAnchorPoint(Vec2(1, 1));
+    lCancel->setPosition(Vec2(1077, 1556));
     lCancel->setTag(st_button_cancel);
     lCancel->setScale(0.4f);
     

@@ -143,6 +143,7 @@ void HomeScene::onDialog(const string& name)
         xCartoon->setCurrentFolder(xCartoon->getCurrentReadingCartoon().folder);
         xCartoon->readCurrentPictureCsv(xCartoon->getCurrentReadingCartoon().csvPath);
         
+        xCartoon->setPreSceneName("HomeScene");
         Director::getInstance()->replaceScene(TransitionProgressInOut::create(0.2f, ReadScene::create(stoi(xCartoon->getCurrentReadingCartoon().pageNumber), "HomeScene")));
         
         
@@ -189,6 +190,7 @@ void HomeScene::responseCoverSprite(Node* node)
     EventSprite* lSprite = (EventSprite*)node;
     if (lSprite)
     {
+        xCartoon->setPreSceneName("HomeScene");
         xCartoon->setCurrentCategory(lSprite->getTag());
         Director::getInstance()->replaceScene(TransitionSlideInR::create(0.2f, ComicScene::create()));
     }
