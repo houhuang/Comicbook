@@ -14,7 +14,9 @@
 USING_NS_CC;
 
 #define st_remove_settingLayer          "st_remove_settingLayer"
+
 #define st_showDialog_clearDataDialog   "st_showDialog_clearDataDialog"
+#define st_showDialog_continueRead      "st_showDialog_continueRead"
 
 class SettingLayer : public LayerColor
 {

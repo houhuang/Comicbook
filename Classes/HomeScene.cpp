@@ -39,8 +39,12 @@ void HomeScene::registerNotification()
     auto removeSettingLayerEvent = EventListenerCustom::create(st_remove_settingLayer, CC_CALLBACK_1(HomeScene::removeSettingLayer, this));
     _eventDispatcher->addEventListenerWithSceneGraphPriority(removeSettingLayerEvent, this);
     
-    auto removeShowClearDataDialogEvent = EventListenerCustom::create(st_showDialog_clearDataDialog, CC_CALLBACK_1(HomeScene::showClearDataDialog, this));
-    _eventDispatcher->addEventListenerWithSceneGraphPriority(removeShowClearDataDialogEvent, this);
+    
+    auto showClearDataDialogEvent = EventListenerCustom::create(st_showDialog_clearDataDialog, CC_CALLBACK_1(HomeScene::showClearDataDialog, this));
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(showClearDataDialogEvent, this);
+    
+    auto showContinueReadDialogEvent = EventListenerCustom::create(st_showDialog_continueRead, CC_CALLBACK_1(HomeScene::showContinueReadDialog, this));
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(showContinueReadDialogEvent, this);
 }
 
 bool HomeScene::init()
@@ -53,7 +57,7 @@ bool HomeScene::init()
     this->addChild(layer);
     
     createTable();
-    checkProgress();
+//    checkProgress();
     registerNotification();
     
     this->runAction(Sequence::create(DelayTime::create(0.2f), CallFunc::create([this](){
@@ -74,24 +78,55 @@ void HomeScene::onEnterTransitionDidFinish()
 
 void HomeScene::checkProgress()
 {
-    string data = UserDefault::getInstance()->getStringForKey("CurrentCartoonProgress", "");
-    if (data != "")
+    bool isFirstContinueRead = UserDefault::getInstance()->getBoolForKey("isFirstContinueRead", true);
+    if (isFirstContinueRead)
     {
-        ReadingCartoonInfo info;
-        info.folder = data.substr(0, data.find("@"));
-        string pa = data.substr(data.find("@") + 1, data.length());
-        info.csvPath = pa.substr(0, pa.find("@"));
-        info.pageNumber = pa.substr(pa.find("@") + 1, pa.length());
-        
-        xCartoon->getCurrentReadingCartoon() = info;
-        
-        this->runAction(Sequence::create(DelayTime::create(0.5f), CallFunc::create([this](){
-            NewDialog* lDialog = NewDialog::create("继续阅读？", "否", "继续");
-            lDialog->addButtonListener(CC_CALLBACK_1(HomeScene::onDialog, this));
-            this->addChild(lDialog, 101);
-            _dialog = lDialog;
-        }), NULL));
+        string data = UserDefault::getInstance()->getStringForKey("CurrentCartoonProgress", "");
+        if (data != "")
+        {
+            UserDefault::getInstance()->setBoolForKey("isFirstContinueRead", false);
+            UserDefault::getInstance()->flush();
+            
+            ReadingCartoonInfo info;
+            info.folder     = data.substr(0, data.find("@"));
+            string pa       = data.substr(data.find("@") + 1, data.length());
+            info.csvPath    = pa.substr(0, pa.find("@"));
+            info.pageNumber = pa.substr(pa.find("@") + 1, pa.length());
+            
+            xCartoon->getCurrentReadingCartoon() = info;
+            
+            this->runAction(Sequence::create(DelayTime::create(0.1f), CallFunc::create([this](){
+                NewDialog* lDialog = NewDialog::create("继续阅读？", "否", "继续");
+                lDialog->addButtonListener(CC_CALLBACK_1(HomeScene::onDialog, this));
+                this->addChild(lDialog, 101);
+                _dialog = lDialog;
+            }), NULL));
+        }
+    }else
+    {
+        string data = UserDefault::getInstance()->getStringForKey("CurrentCartoonProgress", "");
+        if (data != "")
+        {
+            ReadingCartoonInfo info;
+            info.folder = data.substr(0, data.find("@"));
+            string pa = data.substr(data.find("@") + 1, data.length());
+            info.csvPath = pa.substr(0, pa.find("@"));
+            info.pageNumber = pa.substr(pa.find("@") + 1, pa.length());
+            
+            xCartoon->getCurrentReadingCartoon() = info;
+            
+            xCartoon->setCurrentFolder(xCartoon->getCurrentReadingCartoon().folder);
+            xCartoon->readCurrentPictureCsv(xCartoon->getCurrentReadingCartoon().csvPath);
+            
+            xCartoon->setPreSceneName("HomeScene");
+            Director::getInstance()->replaceScene(TransitionProgressInOut::create(0.2f, ReadScene::create(stoi(xCartoon->getCurrentReadingCartoon().pageNumber), "HomeScene")));
+            
+            
+            xCartoon->setCurrentFolder("");
+        }
     }
+    
+    
 }
 
 void HomeScene::removeDailog(EventCustom* event)
@@ -118,6 +153,11 @@ void HomeScene::showClearDataDialog(EventCustom* event)
     lDialog->addButtonListener(CC_CALLBACK_1(HomeScene::onDialog, this));
     this->addChild(lDialog, 101);
     _dialog = lDialog;
+}
+
+void HomeScene::showContinueReadDialog(EventCustom* event)
+{
+    checkProgress();
 }
 
 void HomeScene::createTable()
@@ -291,7 +331,7 @@ TableViewCell* HomeScene::tableCellAtIndex(TableView *table, ssize_t idx)
         
         if (idx == this->numberOfCellsInTableView(NULL)-1)
         {
-            lBg->setPosition(Vec2((i + 1)*SPACE + (i + 0.5)*width, 100));
+            lBg->setPosition(Vec2((i + 1)*SPACE + (i + 0.5)*width, 120));
         }
         
         cell->addChild(lBg);

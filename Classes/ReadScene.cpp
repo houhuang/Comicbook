@@ -47,7 +47,7 @@ ReadScene::ReadScene()
     _isMoving = false;
     _currentPage = 1;
     
-    _folder = xCartoon->getCurrentCartoon().folder;
+    _folder = xCartoon->getCurrentFolder();
     _currentPic = xCartoon->getCurrentPictureInfo();
 }
 
@@ -93,10 +93,13 @@ void ReadScene::onEnterTransitionDidFinish()
     {
         xCartoon->setIsShowRateUs(false);
         
-        NewDialog* lDialog = NewDialog::create("评论？", "否", "是");
-        lDialog->addButtonListener(CC_CALLBACK_1(ReadScene::onDialog, this));
-        this->addChild(lDialog, 101);
-        _dialog = lDialog;
+        this->runAction(Sequence::create(DelayTime::create(2.0f), CallFunc::create([this](){
+            NewDialog* lDialog = NewDialog::create("评论？", "否", "是");
+            lDialog->addButtonListener(CC_CALLBACK_1(ReadScene::onDialog, this));
+            this->addChild(lDialog, 101);
+            _dialog = lDialog;
+        }), NULL));
+        
     }
 }
 

@@ -40,7 +40,9 @@ public:
     
     void removeDailog(EventCustom* event);
     void removeSettingLayer(EventCustom* event);
+    
     void showClearDataDialog(EventCustom* event);
+    void showContinueReadDialog(EventCustom* event);
 public:
     virtual void tableCellTouched(TableView* table, TableViewCell* cell);
     virtual Size tableCellSizeForIndex(TableView *table, ssize_t idx);

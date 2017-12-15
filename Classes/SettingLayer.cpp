@@ -11,6 +11,7 @@
 
 enum{
     st_button_clearData = 10,
+    st_button_continueRead,
 };
 
 SettingLayer* SettingLayer::create(Vec2 lPos)
@@ -66,14 +67,25 @@ void SettingLayer::initUI(Vec2 lPos)
     clearData->setPosition(Vec2(lSprite->getContentSize().width/2, 246));
     clearData->setTag(st_button_clearData);
     
-    Menu* lMenu = Menu::create(clearData, NULL);
-    lMenu->setPosition(Vec2::ZERO);
-    lSprite->addChild(lMenu);
-    
-    Label* clearData_label = Label::createWithTTF("清理数据", "fonts/d2.ttf", 100);
+    Label* clearData_label = Label::createWithTTF("清理数据", "fonts/d2.ttf", 90);
     clearData_label->setPosition(Vec2(clearData->getContentSize()/2));
     clearData_label->setColor(Color3B(76, 76, 76));
     clearData->addChild(clearData_label);
+    
+    MenuItemImage* continueReadMenuitem = MenuItemImage::create("setting_btn.png", "setting_btn.png", CC_CALLBACK_1(SettingLayer::onButton, this));
+    continueReadMenuitem->setPosition(Vec2(lSprite->getContentSize().width/2, 91));
+    continueReadMenuitem->setTag(st_button_continueRead);
+    
+    Label* continueReadMenuitem_label = Label::createWithTTF("继续阅读", "fonts/d2.ttf", 90);
+    continueReadMenuitem_label->setPosition(Vec2(continueReadMenuitem->getContentSize()/2));
+    continueReadMenuitem_label->setColor(Color3B(76, 76, 76));
+    continueReadMenuitem->addChild(continueReadMenuitem_label);
+    
+    Menu* lMenu = Menu::create(clearData, continueReadMenuitem, NULL);
+    lMenu->setPosition(Vec2::ZERO);
+    lSprite->addChild(lMenu);
+    
+    
     
 }
 
@@ -86,6 +98,14 @@ void SettingLayer::onButton(Ref* ref)
         {
             _eventDispatcher->dispatchCustomEvent(st_remove_settingLayer);
             _eventDispatcher->dispatchCustomEvent(st_showDialog_clearDataDialog);
+        }
+            break;
+            
+        case st_button_continueRead:
+        {
+            _eventDispatcher->dispatchCustomEvent(st_remove_settingLayer);
+            _eventDispatcher->dispatchCustomEvent(st_showDialog_continueRead);
+            
         }
             break;
             

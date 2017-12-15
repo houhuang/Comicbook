@@ -247,7 +247,7 @@ TableViewCell* ComicScene::tableCellAtIndex(TableView *table, ssize_t idx)
 
         if (idx == this->numberOfCellsInTableView(NULL)-1)
         {
-            lSprite->setPosition(Vec2((i + 1)*SPACE + (i + 0.5)*width, 100));
+            lSprite->setPosition(Vec2((i + 1)*SPACE + (i + 0.5)*width, 120));
         }
 
         cell->addChild(lSprite);
