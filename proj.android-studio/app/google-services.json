@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "605923830907",
+    "firebase_url": "https://cartoonbook-f83f9.firebaseio.com",
+    "project_id": "cartoonbook-f83f9",
+    "storage_bucket": "cartoonbook-f83f9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:605923830907:android:13ae53840dcca2b4",
+        "android_client_info": {
+          "package_name": "com.relaxedandrelaxed.comicbook"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "605923830907-96s2b1hru8t2p4lqgnng6gso7rkqibs8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBI6kSAUbEAaoVg8BdvAJ-9emrbjmE39uU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

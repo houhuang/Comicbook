@@ -57,13 +57,9 @@ public class AppActivity extends Cocos2dxActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-//        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
-
         mActivity = this;
 
         MobileAds.initialize(this, "ca-app-pub-9291877653530829~9147473385");
-
-//        MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713");
 
         adView = new AdView(this);
         adView.setAdUnitId("ca-app-pub-9291877653530829/6517440613");
