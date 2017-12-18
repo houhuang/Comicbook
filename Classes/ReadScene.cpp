@@ -104,6 +104,13 @@ void ReadScene::onEnterTransitionDidFinish()
         }), NULL));
         
     }
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    STSystemFunction sf;
+    sf.showFullScreen();
+#endif
 }
 
 void ReadScene::initUILayer()
@@ -113,14 +120,14 @@ void ReadScene::initUILayer()
     ContentLayer* leftLayer = ContentLayer::create(_currentPic.at(lIndex));
     leftLayer->ignoreAnchorPointForPosition(false);
     leftLayer->setAnchorPoint(Vec2(0.5, 0.5));
-    leftLayer->setPosition(Vec2(-0.5*THIS_SIZE.width, THIS_SIZE.height/2));
+    leftLayer->setPosition(Vec2(-0.5*THIS_SIZE.width, THIS_SIZE.height/2 + 50));
     this->addChild(leftLayer);
     _leftLayer = leftLayer;
     
     ContentLayer* centerLayer = ContentLayer::create(_currentPic.at(_currentPage));;
     centerLayer->ignoreAnchorPointForPosition(false);
     centerLayer->setAnchorPoint(Vec2(0.5, 0.5));
-    centerLayer->setPosition(Vec2(0.5*THIS_SIZE.width, THIS_SIZE.height/2));
+    centerLayer->setPosition(Vec2(0.5*THIS_SIZE.width, THIS_SIZE.height/2 + 50));
     this->addChild(centerLayer);
     _centerLayer = centerLayer;
     
@@ -128,7 +135,7 @@ void ReadScene::initUILayer()
     ContentLayer* rightLayer = ContentLayer::create(_currentPic.at(rIndex));;
     rightLayer->ignoreAnchorPointForPosition(false);
     rightLayer->setAnchorPoint(Vec2(0.5, 0.5));
-    rightLayer->setPosition(Vec2(1.5*THIS_SIZE.width, THIS_SIZE.height/2));
+    rightLayer->setPosition(Vec2(1.5*THIS_SIZE.width, THIS_SIZE.height/2 + 50));
     this->addChild(rightLayer);
     _rightLayer = rightLayer;
     
@@ -238,7 +245,7 @@ void ReadScene::onButton(Ref* ref)
             if (!_isMoving && _currentPage <_currentPic.size() -2)
             {
                 ++CartoonManager::adsCount;
-                if (CartoonManager::adsCount > 10)
+                if (CartoonManager::adsCount > 15)
                 {
                     CartoonManager::adsCount = 0;
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)

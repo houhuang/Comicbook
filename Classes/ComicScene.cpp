@@ -85,13 +85,6 @@ void ComicScene::onEnterTransitionDidFinish()
     
     createTableView();
     
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    STSystemFunction sf;
-    sf.showFullScreen();
-#endif
-    
     this->runAction(Sequence::create(DelayTime::create(0.2f), CallFunc::create([this](){
         this->addBackListener();
     }), NULL));
