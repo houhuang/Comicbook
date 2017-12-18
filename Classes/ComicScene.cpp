@@ -41,7 +41,7 @@ bool ComicScene::init()
     LayerColor* layer = LayerColor::create(Color4B(245, 245, 245, 255));
     this->addChild(layer);
     
-    LayerColor* topLayer = LayerColor::create(Color4B(82, 145, 240, 255), this->getContentSize().width, TOP_HEIGHT);
+    LayerColor* topLayer = LayerColor::create(Color4B(107, 97, 225, 255), this->getContentSize().width, TOP_HEIGHT);
     topLayer->ignoreAnchorPointForPosition(false);
     topLayer->setAnchorPoint(Vec2(0.5, 1));
     topLayer->setPosition(Vec2(this->getContentSize().width/2, this->getContentSize().height));

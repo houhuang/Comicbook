@@ -125,6 +125,13 @@ void DownloadManager::downloadCarttonCsv()
         std::vector<char>* buffer = response->getResponseData();
         std::string buffff(buffer->begin(), buffer->end());
         
+        long int index = (long int)buffff.find("NoSuchKey");
+        if (index > 0)
+        {
+            lRequest->release();
+            return ;
+        }
+        
         string path = FileUtils::getInstance()->getWritablePath() + "cartoon.csv";
         
         FILE* fp = fopen(path.c_str(), "wb+");
