@@ -308,11 +308,17 @@ TableViewCell* HomeScene::tableCellAtIndex(TableView *table, ssize_t idx)
         cell->addChild(topBanner);
         _bannerSprite = topBanner;
         
+        Sprite* shadow = Sprite::create("shadow.png");
+        shadow->setAnchorPoint(Vec2(0.5, 0));
+        shadow->setScaleX((topBanner->getContentSize().width+ 20)/shadow->getContentSize().width);
+        shadow->setPosition(Vec2(topBanner->getContentSize().width/2, -5));
+        topBanner->addChild(shadow, -1);
+        
         MenuItemImage* lSetting = MenuItemImage::create("menu_btn.png", "menu_btn.png", CC_CALLBACK_1(HomeScene::onButton, this));
         lSetting->setAnchorPoint(Vec2(0, 1));
-        lSetting->setPosition(Vec2(40, 416));
+        lSetting->setPosition(Vec2(20, 366));
         lSetting->setTag(st_button_setting);
-        lSetting->setScale(1.2f);
+        lSetting->setScale(0.9f);
         
         Menu* lMenu = Menu::create(lSetting, NULL);
         lMenu->setPosition(Vec2::ZERO);

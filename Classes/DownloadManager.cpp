@@ -230,7 +230,7 @@ void DownloadManager::downloadPicture(Picture picture)
         
     });
     
-    string name = xCartoon->getCurrentCartoon().folder + "/" + picture.chaID + "_" + picture.index + ".jpg";
+    string name = xCartoon->getCurrentFolder() + "/" + picture.chaID + "_" + picture.index + ".jpg";
     lRequest->setTag(name.c_str());
     HttpClient::getInstance()->send(lRequest);
 }
