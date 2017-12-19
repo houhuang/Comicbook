@@ -40,6 +40,7 @@ protected:
     Vec2    _firstVec;
     
     Label*  _label;
+    bool    _isDownloadSuc;
 };
 
 #endif /* ShwoCartoonInfoLayer_hpp */

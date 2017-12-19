@@ -40,6 +40,7 @@ ShowCartoonInfoLayer::ShowCartoonInfoLayer()
     _bgSprite = nullptr;
     _firstVec = Vec2(0, 0);
     _label = nullptr;
+    _isDownloadSuc = false;
 }
 
 bool ShowCartoonInfoLayer::init(CartoonInfo& info)
@@ -146,6 +147,8 @@ void ShowCartoonInfoLayer::onButton(Ref* ref)
     {
         case st_button_onLineRead:
         {
+            if (!_isDownloadSuc) break;
+            
             xCartoon->getCurrentReadingCartoon().folder = _cartoonInfo.folder;
             xCartoon->getCurrentReadingCartoon().csvPath = "piccsv/" + _cartoonInfo.folder + "_picture.csv";
             
@@ -183,6 +186,7 @@ void ShowCartoonInfoLayer::loadPictureCsv()
     string path = "piccsv/" + _cartoonInfo.folder + "_picture.csv";
     if (FileUtils::getInstance()->isFileExist(path))
     {
+        _isDownloadSuc = true;
         xCartoon->readCurrentPictureCsv(path);
         
         string text = "名字:" + _cartoonInfo.name + "\n"
