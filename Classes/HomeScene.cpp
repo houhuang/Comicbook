@@ -13,6 +13,8 @@
 #include "ComicScene.h"
 #include "ReadScene.h"
 #include "EventSprite.hpp"
+#include "DownloadManager.h"
+#include "SearchPathManager.h"
 
 #define top_bar     228
 #define SPACE       40
@@ -50,6 +52,9 @@ void HomeScene::registerNotification()
     
     auto showContinueReadDialogEvent = EventListenerCustom::create(st_showDialog_continueRead, CC_CALLBACK_1(HomeScene::showContinueReadDialog, this));
     _eventDispatcher->addEventListenerWithSceneGraphPriority(showContinueReadDialogEvent, this);
+    
+    auto getResourceFaildEvent = EventListenerCustom::create(st_download_rootCsv_faild, CC_CALLBACK_1(HomeScene::responseGetResourceFaild, this));
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(getResourceFaildEvent, this);
 }
 
 bool HomeScene::init()
@@ -182,6 +187,17 @@ void HomeScene::showContinueReadDialog(EventCustom* event)
     checkProgress();
 }
 
+void HomeScene::responseGetResourceFaild(EventCustom* event)
+{
+    if (!_dialog)
+    {
+        NewDialog* lDialog = NewDialog::create("获取服务器资源失败，请检查你的网络连接是否正确！", "", "关闭");
+        lDialog->addButtonListener(CC_CALLBACK_1(HomeScene::onDialog, this));
+        this->addChild(lDialog, 101);
+        _dialog = lDialog;
+    }
+}
+
 void HomeScene::createTable()
 {
     TableView* table = TableView::create(this, Size(this->getContentSize().width, this->getContentSize().height));
@@ -214,6 +230,8 @@ void HomeScene::onDialog(const string& name)
     {
         string path = FileUtils::getInstance()->getWritablePath() + "picture/";
         FileUtils::getInstance()->removeDirectory(path);
+//        FileUtils::getInstance()->destroyInstance();
+        SearchPathManager::getInstance()->updateSearchPath();
     }
     else if (name == "退出")
     {
@@ -254,7 +272,7 @@ void HomeScene::responseCoverSprite(Node* node)
     {
         xCartoon->setPreSceneName("HomeScene");
         xCartoon->setCurrentCategory(lSprite->getTag());
-        Director::getInstance()->replaceScene(TransitionSlideInR::create(0.2f, ComicScene::create()));
+        Director::getInstance()->replaceScene(TransitionMoveInR::create(0.2f, ComicScene::create()));
     }
     
 }

@@ -120,6 +120,10 @@ void DownloadManager::downloadCarttonCsv()
         if (!response || !response->isSucceed())
         {
             log("response failed!   获取网络资源失败！");
+            Director::getInstance()->getEventDispatcher()->dispatchCustomEvent(st_download_rootCsv_faild);
+            
+            lRequest->release();
+            return ;
         }
         
         std::vector<char>* buffer = response->getResponseData();

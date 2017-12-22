@@ -128,7 +128,7 @@ void ComicScene::onButton(Ref* ref)
         case st_button_back:
         {
             xCartoon->setPreSceneName("ComicScene");
-            Director::getInstance()->replaceScene(TransitionSlideInL::create(0.2f, HomeScene::create()));
+            Director::getInstance()->replaceScene(TransitionMoveInL::create(0.2f, HomeScene::create()));
         }
             break;
             
@@ -278,7 +278,7 @@ void ComicScene::addBackListener()
             }else
             {
                 xCartoon->setPreSceneName("ComicScene");
-                Director::getInstance()->replaceScene(TransitionSlideInL::create(0.2f, HomeScene::create()));
+                Director::getInstance()->replaceScene(TransitionMoveInL::create(0.2f, HomeScene::create()));
             }
         }
     };

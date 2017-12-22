@@ -35,6 +35,7 @@ bool ContentLayer::init(Picture& picture)
 {
     if (!LayerColor::initWithColor(Color4B(245, 245, 245, 255))) return false;
     
+    this->setContentSize(Size(this->getContentSize().width, this->getContentSize().height-100));
     this->ignoreAnchorPointForPosition(false);
     this->setAnchorPoint(Vec2(0.5, 0.5));
     

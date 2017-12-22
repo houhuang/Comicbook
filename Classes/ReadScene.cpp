@@ -294,9 +294,9 @@ void ReadScene::onButton(Ref* ref)
 
 void ReadScene::towardLeftMove()
 {
-    _leftLayer->setPosition(Vec2(1.5*THIS_SIZE.width, THIS_SIZE.height/2));
-    _centerLayer->runAction(EaseSineOut::create(MoveTo::create(MOVE_TIME, Vec2(-0.5*THIS_SIZE.width, THIS_SIZE.height/2))));
-    _rightLayer->runAction(Sequence::create(EaseSineOut::create(MoveTo::create(MOVE_TIME, Vec2(0.5*THIS_SIZE.width, THIS_SIZE.height/2))), CallFunc::create([this](){
+    _leftLayer->setPosition(Vec2(1.5*THIS_SIZE.width, THIS_SIZE.height/2 + 50));
+    _centerLayer->runAction(EaseSineOut::create(MoveTo::create(MOVE_TIME, Vec2(-0.5*THIS_SIZE.width, THIS_SIZE.height/2 + 50))));
+    _rightLayer->runAction(Sequence::create(EaseSineOut::create(MoveTo::create(MOVE_TIME, Vec2(0.5*THIS_SIZE.width, THIS_SIZE.height/2 + 50))), CallFunc::create([this](){
         this->resetLayerPointer(true);
         _isMoving = false;
     }), NULL));
@@ -304,9 +304,9 @@ void ReadScene::towardLeftMove()
 
 void ReadScene::towardRightMove()
 {
-    _rightLayer->setPosition(Vec2(-0.5*THIS_SIZE.width, THIS_SIZE.height/2));
-    _centerLayer->runAction(EaseSineOut::create(MoveTo::create(MOVE_TIME, Vec2(1.5*THIS_SIZE.width, THIS_SIZE.height/2))));
-    _leftLayer->runAction(Sequence::create(EaseSineOut::create(MoveTo::create(MOVE_TIME, Vec2(0.5*THIS_SIZE.width, THIS_SIZE.height/2))), CallFunc::create([this](){
+    _rightLayer->setPosition(Vec2(-0.5*THIS_SIZE.width, THIS_SIZE.height/2 + 50));
+    _centerLayer->runAction(EaseSineOut::create(MoveTo::create(MOVE_TIME, Vec2(1.5*THIS_SIZE.width, THIS_SIZE.height/2 + 50))));
+    _leftLayer->runAction(Sequence::create(EaseSineOut::create(MoveTo::create(MOVE_TIME, Vec2(0.5*THIS_SIZE.width, THIS_SIZE.height/2 + 50))), CallFunc::create([this](){
         this->resetLayerPointer(false);
         _isMoving = false;
     }), NULL));
@@ -448,7 +448,7 @@ void ReadScene::showTopLayer()
 void ReadScene::resetCenterLayer()
 {
     _centerLayer->setScale(1.0f);
-    _centerLayer->setPosition(Vec2(0.5*THIS_SIZE.width, THIS_SIZE.height/2));
+    _centerLayer->setPosition(Vec2(0.5*THIS_SIZE.width, THIS_SIZE.height/2 + 50));
 }
 
 

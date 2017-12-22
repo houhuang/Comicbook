@@ -57,7 +57,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     log("%s",FileUtils::getInstance()->getWritablePath().c_str());
     
     
-//    xDownload->downloadCarttonCsv();
+    xDownload->downloadCarttonCsv();
 
 
     xCartoon->setFirstInGame();

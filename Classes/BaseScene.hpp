@@ -17,6 +17,13 @@ class BaseScene : public Scene
 {
 public:
     CREATE_FUNC(BaseScene);
+    
+    ~BaseScene();
+    BaseScene();
+    bool init();
+
+private:
+    void responseGetResourceFaild(EventCustom* event);
 
 };
 

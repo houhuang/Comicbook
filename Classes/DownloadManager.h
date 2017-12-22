@@ -21,6 +21,7 @@ USING_NS_CC;
 
 #define st_download_cover_finish    "st_download_cover_finish"
 #define st_download_picture_suc     "st_download_picture_suc"
+#define st_download_rootCsv_faild   "st_download_rootCsv_faild"
 
 using namespace std;
 using namespace network;
