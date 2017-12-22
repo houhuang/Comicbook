@@ -76,6 +76,8 @@ public:
     virtual void endSession();
     
     virtual void sendFireBase(std::string jsonString);
+    virtual void sendEmailToUs();
+    virtual void shareToFriend();
 #endif
     
     

@@ -8,10 +8,13 @@
 
 #include "SettingLayer.hpp"
 #include "STVisibleRect.h"
+#include "STSystemFunction.h"
 
 enum{
     st_button_clearData = 10,
     st_button_continueRead,
+    st_button_feedback,
+    st_button_shareToFriend,
 };
 
 SettingLayer* SettingLayer::create(Vec2 lPos)
@@ -64,7 +67,7 @@ void SettingLayer::initUI(Vec2 lPos)
     lSprite->runAction(ScaleTo::create(0.15, this->getContentSize().width*scale/lSprite->getContentSize().width));
     
     MenuItemImage* clearData = MenuItemImage::create("setting_btn.png", "setting_btn.png", CC_CALLBACK_1(SettingLayer::onButton, this));
-    clearData->setPosition(Vec2(lSprite->getContentSize().width/2, 240));
+    clearData->setPosition(Vec2(lSprite->getContentSize().width/2, 567));
     clearData->setTag(st_button_clearData);
     
     Label* clearData_label = Label::createWithTTF("清理数据", "fonts/d2.ttf", 90);
@@ -72,8 +75,9 @@ void SettingLayer::initUI(Vec2 lPos)
     clearData_label->setColor(Color3B(76, 76, 76));
     clearData->addChild(clearData_label);
     
+    
     MenuItemImage* continueReadMenuitem = MenuItemImage::create("setting_btn.png", "setting_btn.png", CC_CALLBACK_1(SettingLayer::onButton, this));
-    continueReadMenuitem->setPosition(Vec2(lSprite->getContentSize().width/2, 91));
+    continueReadMenuitem->setPosition(Vec2(lSprite->getContentSize().width/2, 411));
     continueReadMenuitem->setTag(st_button_continueRead);
     
     Label* continueReadMenuitem_label = Label::createWithTTF("继续阅读", "fonts/d2.ttf", 90);
@@ -81,7 +85,29 @@ void SettingLayer::initUI(Vec2 lPos)
     continueReadMenuitem_label->setColor(Color3B(76, 76, 76));
     continueReadMenuitem->addChild(continueReadMenuitem_label);
     
-    Menu* lMenu = Menu::create(clearData, continueReadMenuitem, NULL);
+    
+    MenuItemImage* feedbackMenuitem = MenuItemImage::create("setting_btn.png", "setting_btn.png", CC_CALLBACK_1(SettingLayer::onButton, this));
+    feedbackMenuitem->setPosition(Vec2(lSprite->getContentSize().width/2, 258));
+    feedbackMenuitem->setTag(st_button_feedback);
+    
+    Label* eedbackMenuitem_label = Label::createWithTTF("意见反馈", "fonts/d2.ttf", 90);
+    eedbackMenuitem_label->setPosition(Vec2(feedbackMenuitem->getContentSize()/2));
+    eedbackMenuitem_label->setColor(Color3B(76, 76, 76));
+    feedbackMenuitem->addChild(eedbackMenuitem_label);
+    
+    
+    MenuItemImage* shareToFriendMenuitem = MenuItemImage::create("setting_btn.png", "setting_btn.png", CC_CALLBACK_1(SettingLayer::onButton, this));
+    shareToFriendMenuitem->setPosition(Vec2(lSprite->getContentSize().width/2, 96));
+    shareToFriendMenuitem->setTag(st_button_shareToFriend);
+    
+    Label* shareToFriendMenuitem_label = Label::createWithTTF("分享给朋友", "fonts/d2.ttf", 90);
+    shareToFriendMenuitem_label->setPosition(Vec2(shareToFriendMenuitem->getContentSize()/2));
+    shareToFriendMenuitem_label->setColor(Color3B(76, 76, 76));
+    shareToFriendMenuitem->addChild(shareToFriendMenuitem_label);
+    shareToFriendMenuitem_label->setScale(eedbackMenuitem_label->getContentSize().width/shareToFriendMenuitem_label->getContentSize().width);
+    
+    
+    Menu* lMenu = Menu::create(clearData, continueReadMenuitem, feedbackMenuitem, shareToFriendMenuitem, NULL);
     lMenu->setPosition(Vec2::ZERO);
     lSprite->addChild(lMenu);
     
@@ -105,6 +131,28 @@ void SettingLayer::onButton(Ref* ref)
         {
             _eventDispatcher->dispatchCustomEvent(st_remove_settingLayer);
             _eventDispatcher->dispatchCustomEvent(st_showDialog_continueRead);
+            
+        }
+            break;
+
+        case st_button_feedback:
+        {
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+            STSystemFunction sf;
+            sf.sendEmailToUs();
+#endif
+            _eventDispatcher->dispatchCustomEvent(st_remove_settingLayer);
+            
+        }
+            break;
+            
+        case st_button_shareToFriend:
+        {
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+            STSystemFunction sf;
+            sf.shareToFriend();
+#endif
+            _eventDispatcher->dispatchCustomEvent(st_remove_settingLayer);
             
         }
             break;

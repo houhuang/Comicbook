@@ -25,6 +25,7 @@ package com.relaxedandrelaxed.comicbook;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.view.View;
 import android.view.ViewGroup;
 import android.os.Bundle;
@@ -136,7 +137,6 @@ public class AppActivity extends Cocos2dxActivity {
 
         });
 
-
     }
 
     public static Object getInstance() {
@@ -189,6 +189,52 @@ public class AppActivity extends Cocos2dxActivity {
         Uri uri = Uri.parse(url);
         Intent it = new Intent(Intent.ACTION_VIEW, uri);
         mActivity.startActivity(it);
+    }
+
+    public void sendEmailToUs()
+    {
+        String[] ss = new String[]{"houhuangzb@gmail.com"};
+
+        Intent email = new Intent(android.content.Intent.ACTION_SEND);
+/*不带附件发送邮件*/
+        email.setType("plain/text");
+/*设置邮件默认地址，多个收件人，String数组*/
+        email.putExtra(android.content.Intent.EXTRA_EMAIL, ss);
+/*邮件标题*/
+        email.putExtra(android.content.Intent.EXTRA_SUBJECT, "你的建议");
+
+//		NSString *emailContent = @"Please describe your problem or suggestion below\n-\n\n\n\n\n\n";
+//		NSString *appName = @"App name: Colorjoy";
+//		NSString *systemType = @"System name:IOS";
+//		NSString *systemsss = @"System version:";
+//		NSString *systemVer = [[UIDevice currentDevice] systemVersion];
+//		NSString *appVer = @"App Version: 2.4.0";
+
+/*邮件正文*/
+        String ssg = new String();
+        ssg += "请描述你遇到的问题或者建议：\n\n";
+
+        email.putExtra(android.content.Intent.EXTRA_TEXT, ssg);
+
+//调用系统的邮件系统
+        startActivity(Intent.createChooser(email, " "));
+    }
+
+    public void shareToFriend()
+    {
+        String ss = new String();
+        ss += "如果你觉得这个APP有趣的话，赶快叫上朋友一起吧！\n";
+        ss += "https://play.google.com/store/apps/details?id=" + this.getPackageName();
+        Intent textIntent = new Intent(Intent.ACTION_SEND);
+        textIntent.setType("text/plain");
+        textIntent.putExtra(Intent.EXTRA_TEXT, ss);
+        startActivity(Intent.createChooser(textIntent, "漫画大全"));
+
+    }
+
+    public static  Uri getResourceUri(int resId)
+    {
+        return Uri.parse("android.resource://"+mActivity.getPackageName()+"/"+resId);
     }
 
 }
