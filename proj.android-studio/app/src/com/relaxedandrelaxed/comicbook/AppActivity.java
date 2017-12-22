@@ -148,14 +148,14 @@ public class AppActivity extends Cocos2dxActivity {
         // TODO Auto-generated method stub
         super.onResume();
 
-//            adView.resume();
+            adView.resume();
     }
 
     @Override
     protected void onDestroy() {
         // TODO Auto-generated method stub
         super.onDestroy();
-//            adView.destroy();
+            adView.destroy();
     }
 
     public void showBanner() {
