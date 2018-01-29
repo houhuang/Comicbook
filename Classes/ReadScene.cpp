@@ -44,6 +44,7 @@ ReadScene::ReadScene()
     _topLayer = nullptr;
     _dialog = nullptr;
     
+    _topBarIsMoving = false;
     _isMoving = false;
     _currentPage = 1;
     
@@ -109,7 +110,7 @@ void ReadScene::onEnterTransitionDidFinish()
     
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     STSystemFunction sf;
-    sf.showFullScreen();
+    sf.showVideoAds();
 #endif
 }
 
@@ -120,14 +121,14 @@ void ReadScene::initUILayer()
     ContentLayer* leftLayer = ContentLayer::create(_currentPic.at(lIndex));
     leftLayer->ignoreAnchorPointForPosition(false);
     leftLayer->setAnchorPoint(Vec2(0.5, 0.5));
-    leftLayer->setPosition(Vec2(-0.5*THIS_SIZE.width, THIS_SIZE.height/2 + 50));
+    leftLayer->setPosition(Vec2(-0.5*THIS_SIZE.width, THIS_SIZE.height/2 + 0));
     this->addChild(leftLayer);
     _leftLayer = leftLayer;
     
     ContentLayer* centerLayer = ContentLayer::create(_currentPic.at(_currentPage));;
     centerLayer->ignoreAnchorPointForPosition(false);
     centerLayer->setAnchorPoint(Vec2(0.5, 0.5));
-    centerLayer->setPosition(Vec2(0.5*THIS_SIZE.width, THIS_SIZE.height/2 + 50));
+    centerLayer->setPosition(Vec2(0.5*THIS_SIZE.width, THIS_SIZE.height/2 + 0));
     this->addChild(centerLayer);
     _centerLayer = centerLayer;
     
@@ -135,7 +136,7 @@ void ReadScene::initUILayer()
     ContentLayer* rightLayer = ContentLayer::create(_currentPic.at(rIndex));;
     rightLayer->ignoreAnchorPointForPosition(false);
     rightLayer->setAnchorPoint(Vec2(0.5, 0.5));
-    rightLayer->setPosition(Vec2(1.5*THIS_SIZE.width, THIS_SIZE.height/2 + 50));
+    rightLayer->setPosition(Vec2(1.5*THIS_SIZE.width, THIS_SIZE.height/2 + 0));
     this->addChild(rightLayer);
     _rightLayer = rightLayer;
     
@@ -245,12 +246,12 @@ void ReadScene::onButton(Ref* ref)
             if (!_isMoving && _currentPage <_currentPic.size() -2)
             {
                 ++CartoonManager::adsCount;
-                if (CartoonManager::adsCount > 15)
+                if (CartoonManager::adsCount > 40)
                 {
                     CartoonManager::adsCount = 0;
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
                     STSystemFunction sf;
-                    sf.showFullScreen();
+                    sf.showVideoAds();
 #endif
                 }
                 
@@ -294,9 +295,9 @@ void ReadScene::onButton(Ref* ref)
 
 void ReadScene::towardLeftMove()
 {
-    _leftLayer->setPosition(Vec2(1.5*THIS_SIZE.width, THIS_SIZE.height/2 + 50));
-    _centerLayer->runAction(EaseSineOut::create(MoveTo::create(MOVE_TIME, Vec2(-0.5*THIS_SIZE.width, THIS_SIZE.height/2 + 50))));
-    _rightLayer->runAction(Sequence::create(EaseSineOut::create(MoveTo::create(MOVE_TIME, Vec2(0.5*THIS_SIZE.width, THIS_SIZE.height/2 + 50))), CallFunc::create([this](){
+    _leftLayer->setPosition(Vec2(1.5*THIS_SIZE.width, THIS_SIZE.height/2 + 0));
+    _centerLayer->runAction(EaseSineOut::create(MoveTo::create(MOVE_TIME, Vec2(-0.5*THIS_SIZE.width, THIS_SIZE.height/2 + 0))));
+    _rightLayer->runAction(Sequence::create(EaseSineOut::create(MoveTo::create(MOVE_TIME, Vec2(0.5*THIS_SIZE.width, THIS_SIZE.height/2 + 0))), CallFunc::create([this](){
         this->resetLayerPointer(true);
         _isMoving = false;
     }), NULL));
@@ -304,9 +305,9 @@ void ReadScene::towardLeftMove()
 
 void ReadScene::towardRightMove()
 {
-    _rightLayer->setPosition(Vec2(-0.5*THIS_SIZE.width, THIS_SIZE.height/2 + 50));
-    _centerLayer->runAction(EaseSineOut::create(MoveTo::create(MOVE_TIME, Vec2(1.5*THIS_SIZE.width, THIS_SIZE.height/2 + 50))));
-    _leftLayer->runAction(Sequence::create(EaseSineOut::create(MoveTo::create(MOVE_TIME, Vec2(0.5*THIS_SIZE.width, THIS_SIZE.height/2 + 50))), CallFunc::create([this](){
+    _rightLayer->setPosition(Vec2(-0.5*THIS_SIZE.width, THIS_SIZE.height/2 + 0));
+    _centerLayer->runAction(EaseSineOut::create(MoveTo::create(MOVE_TIME, Vec2(1.5*THIS_SIZE.width, THIS_SIZE.height/2 + 0))));
+    _leftLayer->runAction(Sequence::create(EaseSineOut::create(MoveTo::create(MOVE_TIME, Vec2(0.5*THIS_SIZE.width, THIS_SIZE.height/2 + 0))), CallFunc::create([this](){
         this->resetLayerPointer(false);
         _isMoving = false;
     }), NULL));
@@ -348,7 +349,7 @@ void ReadScene::addListener()
             auto prevDistance = touches[0]->getPreviousLocation().distance(touches[1]->getPreviousLocation());
          
             float scale = _centerLayer->getScale() * (currDistance / prevDistance);
-            scale = MIN(2, MAX(0.5, scale));
+            scale = MIN(4, MAX(0.5, scale));
             
             Vec2 mPoint1=_centerLayer->convertToNodeSpace(touches[0]->getLocation());
             Vec2 mPoint2=_centerLayer->convertToNodeSpace(touches[1]->getLocation());
@@ -426,29 +427,37 @@ void ReadScene::update(float dt)
     {
         _time2 = 0.0;
         saveCurrentPage();
+        Director::getInstance()->getTextureCache()->removeUnusedTextures();
     }
 }
 
 void ReadScene::hideTopLayer()
 {
-    if (_topLayer)
+    if (_topLayer && !_topBarIsMoving)
     {
-        _topLayer->runAction(EaseSineOut::create(MoveTo::create(0.2f, Vec2(_topLayer->getPosition().x, this->getContentSize().height + _topLayer->getContentSize().height))));
+        _topBarIsMoving = true;
+        _topLayer->runAction(Sequence::create(EaseSineOut::create(MoveTo::create(0.2f, Vec2(_topLayer->getPosition().x, this->getContentSize().height + _topLayer->getContentSize().height))), CallFunc::create([this](){
+            _topBarIsMoving = false;
+        }), NULL));
     }
 }
 
 void ReadScene::showTopLayer()
 {
-    if (_topLayer)
+    if (_topLayer && !_topBarIsMoving)
     {
-        _topLayer->runAction(EaseSineOut::create(MoveTo::create(0.2f, Vec2(_topLayer->getPosition().x, this->getContentSize().height))));
+        _topBarIsMoving = true;
+        _topLayer->runAction(Sequence::create(EaseSineOut::create(MoveTo::create(0.2f, Vec2(_topLayer->getPosition().x, this->getContentSize().height))), CallFunc::create([this](){
+            _topBarIsMoving = false;
+        }), NULL));
     }
+    
 }
 
 void ReadScene::resetCenterLayer()
 {
     _centerLayer->setScale(1.0f);
-    _centerLayer->setPosition(Vec2(0.5*THIS_SIZE.width, THIS_SIZE.height/2 + 50));
+    _centerLayer->setPosition(Vec2(0.5*THIS_SIZE.width, THIS_SIZE.height/2 + 0));
 }
 
 

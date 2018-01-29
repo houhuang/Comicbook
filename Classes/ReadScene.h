@@ -76,6 +76,8 @@ private:
     
     Label*  _pageLabel;
     NewDialog*  _dialog;
+    
+    bool    _topBarIsMoving;
 };
 
 #endif /* ReadScene_h */

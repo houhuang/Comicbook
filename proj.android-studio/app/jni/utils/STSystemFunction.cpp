@@ -263,6 +263,32 @@ void STSystemFunction::showFullScreen()
     }
 }
 
+void STSystemFunction::showVideoAds()
+{
+    // NOT implement yet.
+    JniMethodInfo info;
+
+    bool ret = JniHelper::getStaticMethodInfo(info,AppActivityPath,"getInstance","()Ljava/lang/Object;");
+
+    //先获得类的对象，然后用这个对象去调用它的非静态函数
+
+    jobject jobj;
+
+    if(ret)
+
+    {
+        jobj = info.env->CallStaticObjectMethod(info.classID,info.methodID);
+    }
+    //getMethodInfo判断java定义的类非静态函数是否存在，返回bool
+
+    bool re = JniHelper::getMethodInfo(info,AppActivityPath,"showVideoAds","()V");
+
+    if(re)
+    {
+        info.env->CallVoidMethod(jobj,info.methodID);
+    }
+}
+
 string STSystemFunction::getPlatformBundleID()
 {
     // NOT implement yet.

@@ -168,6 +168,13 @@ void DownloadManager::downloadPictureCsv(string folder)
         std::vector<char>* buffer = response->getResponseData();
         std::string buffff(buffer->begin(), buffer->end());
         
+        long int index = (long int)buffff.find("NoSuchKey");
+        if (index > 0)
+        {
+            lRequest->release();
+            return ;
+        }
+        
         string path = FileUtils::getInstance()->getWritablePath() + "piccsv/";
         if (!FileUtils::getInstance()->isFileExist(path))
         {

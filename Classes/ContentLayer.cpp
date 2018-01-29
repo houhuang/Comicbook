@@ -54,6 +54,8 @@ bool ContentLayer::init(Picture& picture)
     rotate->runAction(RepeatForever::create(RotateBy::create(1, 360)));
     _rotateSprite = rotate;
     
+    
+    
     return true;
 }
 

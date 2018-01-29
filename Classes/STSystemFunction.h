@@ -69,6 +69,7 @@ public:
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) // Android
     virtual void showBanner();
     virtual void showFullScreen();
+    virtual void showVideoAds();
     virtual void go2PrivacyPage();
     virtual void openGooglePlayStore();
     

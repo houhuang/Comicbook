@@ -33,6 +33,9 @@ import android.os.Bundle;
 import org.cocos2dx.lib.Cocos2dxActivity;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.*;
+import com.google.android.gms.ads.reward.RewardItem;
+import com.google.android.gms.ads.reward.RewardedVideoAd;
+import com.google.android.gms.ads.reward.RewardedVideoAdListener;
 
 import android.widget.RelativeLayout;
 import android.view.ViewGroup.LayoutParams;
@@ -51,7 +54,7 @@ public class AppActivity extends Cocos2dxActivity {
     private AdView adView;
 
     private AdRequest adRequest;
-
+    private RewardedVideoAd mRewardedVideoAd;
 
     private InterstitialAd mInterstitialAd;
 
@@ -62,48 +65,51 @@ public class AppActivity extends Cocos2dxActivity {
 
         MobileAds.initialize(this, "ca-app-pub-9291877653530829~9147473385");
 
-        adView = new AdView(this);
-        adView.setAdUnitId("ca-app-pub-9291877653530829/6517440613");
-        adView.setAdSize(AdSize.BANNER);
-
-        RelativeLayout layout = new RelativeLayout(this);
-        addContentView(layout, new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT));
-        layout.addView(adView);
-
-        RelativeLayout.LayoutParams view_para = new RelativeLayout.LayoutParams(AdSize.BANNER.getWidthInPixels(this), AdSize.BANNER.getHeightInPixels(this));
-        view_para.addRule(RelativeLayout.CENTER_HORIZONTAL, RelativeLayout.TRUE);
-        view_para.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM,RelativeLayout.TRUE);
-        adView.setLayoutParams(view_para);
+//        adView = new AdView(this);
+//        adView.setAdUnitId("ca-app-pub-9291877653530829/6517440613");
+//        adView.setAdSize(AdSize.BANNER);
+//
+//        RelativeLayout layout = new RelativeLayout(this);
+//        addContentView(layout, new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT));
+//        layout.addView(adView);
+//
+//
+//
+//        RelativeLayout.LayoutParams view_para = new RelativeLayout.LayoutParams(AdSize.BANNER.getWidthInPixels(this), AdSize.BANNER.getHeightInPixels(this));
+//        view_para.addRule(RelativeLayout.CENTER_HORIZONTAL, RelativeLayout.TRUE);
+//        view_para.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM,RelativeLayout.TRUE);
+//        adView.setLayoutParams(view_para);
+//
+//        adRequest = new AdRequest.Builder().build();
+//        adView.loadAd(adRequest);
+//        adView.setAdListener(new AdListener() {
+//            @Override
+//            public void onAdClosed() {
+//                super.onAdClosed();
+//            }
+//
+//            @Override
+//            public void onAdFailedToLoad(int i) {
+//                super.onAdFailedToLoad(i);
+//            }
+//
+//            @Override
+//            public void onAdLeftApplication() {
+//                super.onAdLeftApplication();
+//            }
+//
+//            @Override
+//            public void onAdOpened() {
+//                super.onAdOpened();
+//            }
+//
+//            @Override
+//            public void onAdLoaded() {
+//                super.onAdLoaded();
+//            }
+//        });
 
         adRequest = new AdRequest.Builder().build();
-        adView.loadAd(adRequest);
-        adView.setAdListener(new AdListener() {
-            @Override
-            public void onAdClosed() {
-                super.onAdClosed();
-            }
-
-            @Override
-            public void onAdFailedToLoad(int i) {
-                super.onAdFailedToLoad(i);
-            }
-
-            @Override
-            public void onAdLeftApplication() {
-                super.onAdLeftApplication();
-            }
-
-            @Override
-            public void onAdOpened() {
-                super.onAdOpened();
-            }
-
-            @Override
-            public void onAdLoaded() {
-                super.onAdLoaded();
-            }
-        });
-
         mInterstitialAd = new InterstitialAd(this);
         mInterstitialAd.setAdUnitId("ca-app-pub-9291877653530829/5798846191");
         mInterstitialAd.loadAd(adRequest);
@@ -137,6 +143,7 @@ public class AppActivity extends Cocos2dxActivity {
 
         });
 
+        initVideoAds();
     }
 
     public static Object getInstance() {
@@ -148,14 +155,15 @@ public class AppActivity extends Cocos2dxActivity {
         // TODO Auto-generated method stub
         super.onResume();
 
-            adView.resume();
+//            adView.resume();
     }
 
     @Override
     protected void onDestroy() {
         // TODO Auto-generated method stub
         super.onDestroy();
-            adView.destroy();
+//            adView.destroy();
+        mRewardedVideoAd.destroy(this);
     }
 
     public void showBanner() {
@@ -183,9 +191,82 @@ public class AppActivity extends Cocos2dxActivity {
         });
     }
 
+    public void showVideoAds()
+    {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (mRewardedVideoAd.isLoaded())
+                {
+                    mRewardedVideoAd.show();
+                }else
+                {
+                    if (mInterstitialAd.isLoaded())
+                    {
+                        mInterstitialAd.show();
+                    }else
+                    {
+                        mInterstitialAd.loadAd(adRequest);
+
+                    }
+
+//                    mRewardedVideoAd.loadAd("ca-app-pub-9291877653530829/8795289014",
+//                            new AdRequest.Builder().build());
+                }
+            }
+        });
+
+    }
+
+    public void initVideoAds()
+    {
+        mRewardedVideoAd = MobileAds.getRewardedVideoAdInstance(this);
+        mRewardedVideoAd.setRewardedVideoAdListener(new RewardedVideoAdListener() {
+            @Override
+            public void onRewardedVideoAdLoaded() {
+                Log.d("","");
+            }
+
+            @Override
+            public void onRewardedVideoAdOpened() {
+                Log.d("","");
+            }
+
+            @Override
+            public void onRewardedVideoStarted() {
+                Log.d("","");
+            }
+
+            @Override
+            public void onRewardedVideoAdClosed() {
+                mRewardedVideoAd.loadAd("ca-app-pub-9291877653530829/8795289014", adRequest);
+                Log.d("","");
+            }
+
+            @Override
+            public void onRewarded(RewardItem rewardItem) {
+                Log.d("","");
+            }
+
+            @Override
+            public void onRewardedVideoAdLeftApplication() {
+                Log.d("","");
+            }
+
+            @Override
+            public void onRewardedVideoAdFailedToLoad(int i) {
+                Log.d("","");
+                mRewardedVideoAd.loadAd("ca-app-pub-9291877653530829/8795289014", adRequest);
+            }
+        });
+
+        mRewardedVideoAd.loadAd("ca-app-pub-9291877653530829/8795289014", adRequest);
+    }
+
     public void openGooglePlayStore()
     {
         String url = "https://play.google.com/store/apps/details?id=" + this.getPackageName();
+//        String url = "amzn://apps/android?asin=B078H3N6Z4";
         Uri uri = Uri.parse(url);
         Intent it = new Intent(Intent.ACTION_VIEW, uri);
         mActivity.startActivity(it);
@@ -225,6 +306,7 @@ public class AppActivity extends Cocos2dxActivity {
         String ss = new String();
         ss += "如果你觉得这个APP有趣的话，赶快叫上朋友一起吧！\n";
         ss += "https://play.google.com/store/apps/details?id=" + this.getPackageName();
+//        ss += "amzn://apps/android?asin=B078H3N6Z4";
         Intent textIntent = new Intent(Intent.ACTION_SEND);
         textIntent.setType("text/plain");
         textIntent.putExtra(Intent.EXTRA_TEXT, ss);
