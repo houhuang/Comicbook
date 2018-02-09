@@ -33,6 +33,8 @@ public:
     
     void addButtonListener(const ccDialogCallback callBack);
     
+    void setNotEnable
+    
 public:
     void initUIWithiPhone(const string& tText, const string& lText, const string rText, float fontTSize);
 protected:

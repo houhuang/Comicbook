@@ -91,21 +91,6 @@ void ReadScene::onEnterTransitionDidFinish()
         this->addBackListener();
     }), NULL));
 
-    bool isRated = UserDefault::getInstance()->getBoolForKey("israted", false);
-    
-    if (!xCartoon->getIsFirstInGame() && xCartoon->getIsShowRateUs() && !isRated)
-    {
-        xCartoon->setIsShowRateUs(false);
-        
-        this->runAction(Sequence::create(DelayTime::create(2.0f), CallFunc::create([this](){
-            NewDialog* lDialog = NewDialog::create("如果觉得本应用有趣，请给五星好评哟（^_^）", "关闭", "评论");
-            lDialog->addButtonListener(CC_CALLBACK_1(ReadScene::onDialog, this));
-            this->addChild(lDialog, 101);
-            _dialog = lDialog;
-        }), NULL));
-        
-    }
-    
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
@@ -246,13 +231,31 @@ void ReadScene::onButton(Ref* ref)
             if (!_isMoving && _currentPage <_currentPic.size() -2)
             {
                 ++CartoonManager::adsCount;
-                if (CartoonManager::adsCount > 40)
+                if (CartoonManager::adsCount > 30)
                 {
                     CartoonManager::adsCount = 0;
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
                     STSystemFunction sf;
                     sf.showVideoAds();
 #endif
+                }
+                
+                if (_currentPage > 50)
+                {
+                    bool isRated = UserDefault::getInstance()->getBoolForKey("israted", false);
+                    
+                    if (!xCartoon->getIsFirstInGame() && xCartoon->getIsShowRateUs() && !isRated)
+                    {
+                        xCartoon->setIsShowRateUs(false);
+                        
+                        this->runAction(Sequence::create(DelayTime::create(2.0f), CallFunc::create([this](){
+                            NewDialog* lDialog = NewDialog::create("如果觉得本应用有趣，请给五星好评哟（^_^）", "关闭", "评论");
+                            lDialog->addButtonListener(CC_CALLBACK_1(ReadScene::onDialog, this));
+                            this->addChild(lDialog, 101);
+                            _dialog = lDialog;
+                        }), NULL));
+                        
+                    }
                 }
                 
                 ++_currentPage;

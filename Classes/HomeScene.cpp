@@ -287,7 +287,7 @@ Size HomeScene::tableCellSizeForIndex(TableView *table, ssize_t idx)
     float height = ((this->getContentSize().width - (col + 1)*SPACE)/col)*608./346 + SPACE;
     if (idx == this->numberOfCellsInTableView(nullptr) -1)
     {
-        height += 120;
+        height += SPACE;
     }
     
     if (idx == 0)
@@ -378,7 +378,7 @@ TableViewCell* HomeScene::tableCellAtIndex(TableView *table, ssize_t idx)
         
         if (idx == this->numberOfCellsInTableView(NULL)-1)
         {
-            lBg->setPosition(Vec2((i + 1)*SPACE + (i + 0.5)*width, 120));
+            lBg->setPosition(Vec2((i + 1)*SPACE + (i + 0.5)*width, SPACE));
         }
         
         cell->addChild(lBg);

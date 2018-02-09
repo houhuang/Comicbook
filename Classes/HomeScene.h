@@ -60,6 +60,8 @@ private:
     TableView*      _tableView;
     Sprite*         _bannerSprite;
     SettingLayer*   _settingLayer;
+    
+    
 };
 
 #endif /* HomeScene_h */

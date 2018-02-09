@@ -5,6 +5,7 @@
 #include "STVisibleRect.h"
 #include "ReadScene.h"
 #include "CartoonManager.h"
+#include "STSystemFunction.h"
 
 USING_NS_CC;
 
@@ -57,7 +58,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     log("%s",FileUtils::getInstance()->getWritablePath().c_str());
     
     
-//    xDownload->downloadCarttonCsv();
+    xDownload->downloadCarttonCsv();
 
 
     xCartoon->setFirstInGame();

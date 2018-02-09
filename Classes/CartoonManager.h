@@ -102,6 +102,7 @@ public:
     
     CC_SYNTHESIZE(string, _preSceneName, PreSceneName);
     CC_SYNTHESIZE(bool, _isShowRateUs, IsShowRateUs);
+    CC_SYNTHESIZE(int, _forgroundAdsCount, ForgroundAdsCount);
     
 protected:
     vector<CartoonInfo> _cartoonInfo;

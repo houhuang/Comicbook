@@ -123,6 +123,7 @@ public class AppActivity extends Cocos2dxActivity {
             @Override
             public void onAdFailedToLoad(int i) {
                 super.onAdFailedToLoad(i);
+                mInterstitialAd.loadAd(adRequest);
             }
 
             @Override
@@ -153,17 +154,23 @@ public class AppActivity extends Cocos2dxActivity {
     @Override
     protected void onResume() {
         // TODO Auto-generated method stub
+        mRewardedVideoAd.resume(this);
         super.onResume();
+    }
 
-//            adView.resume();
+    @Override
+    public void onPause() {
+        mRewardedVideoAd.pause(this);
+        super.onPause();
     }
 
     @Override
     protected void onDestroy() {
         // TODO Auto-generated method stub
-        super.onDestroy();
-//            adView.destroy();
         mRewardedVideoAd.destroy(this);
+        super.onDestroy();
+
+
     }
 
     public void showBanner() {
@@ -193,6 +200,7 @@ public class AppActivity extends Cocos2dxActivity {
 
     public void showVideoAds()
     {
+
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -210,8 +218,6 @@ public class AppActivity extends Cocos2dxActivity {
 
                     }
 
-//                    mRewardedVideoAd.loadAd("ca-app-pub-9291877653530829/8795289014",
-//                            new AdRequest.Builder().build());
                 }
             }
         });

@@ -28,6 +28,7 @@ CartoonManager::CartoonManager()
 {
     _preSceneName = "";
     _isShowRateUs = true;
+    _forgroundAdsCount = 0;
 }
 
 void CartoonManager::readCartoonCsv()
